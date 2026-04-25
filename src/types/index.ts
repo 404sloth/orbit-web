@@ -105,7 +105,7 @@ export interface SpeechRecognitionLike {
 export type GeneratedReport = {
   url: string;
   filename: string;
-  type: "excel" | "image" | "image_bundle";
+  type: "excel" | "image" | "image_bundle" | "pdf";
   timestamp: string;
 };
 

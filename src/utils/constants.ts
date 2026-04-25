@@ -13,7 +13,6 @@ export const NAV = [
   { id: "conversations", icon: MessageSquare, label: "Chat" },
   { id: "dashboard", icon: LayoutDashboard, label: "Pulse" },
   { id: "knowledge", icon: Database, label: "Assets" },
-  { id: "research", icon: Globe, label: "Market" },
 ] as const;
 
 export const RESEARCH_CATEGORIES = [

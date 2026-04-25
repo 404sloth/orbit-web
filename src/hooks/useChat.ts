@@ -47,15 +47,43 @@ export function useChat(token: string | null) {
   const loadHistory = useCallback(async (threadId: string) => {
     try {
       const history = await chatApi.getHistory(threadId);
-      setMessages(
-        history.map((entry) => ({
-          id: nextMessageId(),
-          sender: inferSender(entry.role),
-          text: entry.message,
-          ts: entry.timestamp,
-          status: entry.role === "user" ? "delivered" : undefined,
-        })),
-      );
+      const mappedMessages: Message[] = history.map((entry) => ({
+        id: nextMessageId(),
+        sender: inferSender(entry.role),
+        text: entry.message,
+        ts: entry.timestamp,
+        status: entry.role === "user" ? "delivered" : undefined,
+        metadata: (entry as any).metadata,
+      }));
+      setMessages(mappedMessages);
+
+      // Persist Insights (Rationale) from last agent message
+      const lastAgentMsg = [...mappedMessages].reverse().find(m => m.sender === "agent");
+      if (lastAgentMsg?.metadata?.reasoning) {
+        setLastRouting({ thought: lastAgentMsg.metadata.reasoning as string });
+      }
+
+      // Extract reports for persistence
+      const reports: GeneratedReport[] = [];
+      mappedMessages.forEach(msg => {
+        const regex = /\[.*?\]\((https?:\/\/.*?\/reports\/download\/([^\s)]+))\)/g;
+        let match;
+        while ((match = regex.exec(msg.text)) !== null) {
+          const url = match[1];
+          const filename = match[2];
+          const type = filename.endsWith(".pdf") ? "pdf" : (filename.endsWith(".xlsx") ? "excel" : "image");
+          if (!reports.find(r => r.url === url)) {
+            reports.push({
+              url,
+              filename,
+              type,
+              timestamp: msg.ts
+            });
+          }
+        }
+      });
+      setGeneratedReports(reports);
+      
     } catch (error) {
       console.error("Failed to load history", error);
       setMessages([]);
@@ -125,7 +153,7 @@ export function useChat(token: string | null) {
     refreshSessionFromMessage(activeSession, prompt);
     setIsThinking(true);
     setLiveTrace([
-      { name: "Strategic Analysis", status: "running", details: "Analyzing request intent and routing strategy..." }
+      { name: "Consulting with Supervisor...", status: "running", details: "Analyzing request intent..." }
     ]);
 
     window.setTimeout(() => replacePendingUserStatus("sent"), 250);
@@ -156,6 +184,10 @@ export function useChat(token: string | null) {
             const event = JSON.parse(line.slice(6));
 
             if (event.type === "node_start") {
+              const nodeName = event.node.toLowerCase();
+              // Skip internal orchestration nodes for a cleaner executive trace
+              if (nodeName === "supervisor" || nodeName === "router") continue;
+
               setLiveTrace((prev) => {
                 const filtered = prev.filter(s => s.name !== "Strategic Analysis" || s.status === "completed");
                 return [

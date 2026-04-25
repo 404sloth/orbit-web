@@ -203,10 +203,6 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
       
       {!selectedPid ? (
         <>
-          <div style={{ marginBottom: 40 }}>
-            <h1 style={{ fontSize: 32, fontWeight: 800, color: "#1e293b", marginBottom: 8, letterSpacing: "-0.02em" }}>Project Pulse</h1>
-            <p style={{ color: "#64748b", fontSize: 15 }}>Monitor strategic vectors and organizational milestones.</p>
-          </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 24 }}>
             {projects.map((project) => (
               <ProjectCard key={project.id} project={project} isSelected={false} onClick={() => onSelect(project.id)} />

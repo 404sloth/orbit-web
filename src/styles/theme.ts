@@ -284,7 +284,7 @@ export const chatColumnStyle: CSSProperties = {
 };
 
 export const composerOuterWrapStyle: CSSProperties = {
-  padding: "0 40px 32px",
+  padding: "0 40px 24px",
   background: "transparent",
   flexShrink: 0,
 };
@@ -293,8 +293,8 @@ export const contextualSuggestionsWrap: CSSProperties = {
   display: "flex",
   flexWrap: "nowrap",
   gap: 8,
-  padding: "12px 0",
-  background: "#ffffff",
+  padding: "8px 0",
+  background: "transparent",
   overflowX: "auto",
 };
 

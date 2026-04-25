@@ -33,13 +33,11 @@ export function inferSender(role: string): MsgSender {
 export function prettifyAgent(agent?: string | null): string | undefined {
   if (!agent) return undefined;
   const map: Record<string, string> = {
-    "supervisor": "Strategic Dispatcher",
     "sql": "Data Intelligence",
     "rag": "Knowledge Specialist",
     "hybrid": "Strategic Intelligence",
     "human": "Executive Approval",
-    "vendor_management": "Supply Chain Analyst",
-    "meetings_communication": "Communications Lead"
+    "report": "Strategic Analyst",
   };
   return map[agent.toLowerCase()] ?? agent.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
 }

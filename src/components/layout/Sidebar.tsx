@@ -81,7 +81,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
               Orbit
             </div>
             <div style={{ fontSize: 10, fontWeight: 700, color: "#6366f1", letterSpacing: "0.04em", textTransform: "uppercase" }}>
-              Intelligence
             </div>
           </div>
         )}
@@ -148,7 +147,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </nav>
 
       <div style={sessionsContainerStyle} className="hide-scrollbar">
-        {!isCollapsed && <div style={sectionLabelStyle}>Recent Threads</div>}
+        {!isCollapsed && <div style={sectionLabelStyle}>Chats</div>}
         {sessions.map((session) => (
           <div
             key={session.id}

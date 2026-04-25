@@ -62,7 +62,7 @@ export const Composer: React.FC<ComposerProps> = ({
         {suggestions.length > 0 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginRight: 12, color: '#6366f1' }}>
             <Lightbulb size={14} />
-            <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Suggested</span>
+            <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}></span>
           </div>
         )}
         {suggestions.slice(0, 5).map((suggestion, i) => (
@@ -74,10 +74,11 @@ export const Composer: React.FC<ComposerProps> = ({
             disabled={isThinking}
             style={{
               ...inlineSuggestionButtonStyle,
-              background: '#fff',
-              border: '1px solid #e2e8f0',
+              background: 'rgba(255,255,255,0.7)',
+              backdropFilter: 'blur(4px)',
+              border: '1px solid rgba(226, 232, 240, 0.8)',
               color: '#475569',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.02)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
               fontSize: '12px',
               padding: '6px 14px',
               opacity: isThinking ? 0.6 : 1,
@@ -138,7 +139,7 @@ export const Composer: React.FC<ComposerProps> = ({
         </div>
       ) : null}
 
-      <form className="input-area" style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }} onSubmit={handleSubmit}>
+      <form className="input-area" style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', padding: '4px 12px' }} onSubmit={handleSubmit}>
         <div style={agentPickerWrapStyle}>
           <button
             type="button"
@@ -156,7 +157,7 @@ export const Composer: React.FC<ComposerProps> = ({
                 exit={{ opacity: 0, y: 12, scale: 0.95 }}
                 style={agentPickerMenuStyle}
               >
-                <div style={pickerHeaderStyle}>Specialized Agents</div>
+                <div style={pickerHeaderStyle}>Agents & Skills</div>
                 {AGENT_OPTIONS.map((option) => (
                   <button
                     key={option.id}

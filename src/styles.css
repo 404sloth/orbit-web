@@ -212,7 +212,7 @@ html, body, #root {
   color: #9aa0a6;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  marginBottom: 4px;
+  margin-bottom: 4px;
 }
 
 .vector-text {
@@ -230,7 +230,7 @@ html, body, #root {
 .data-preview {
   margin-top: 10px;
   padding: 12px;
-  borderRadius: 12px;
+  border-radius: 12px;
   background: rgba(0, 0, 0, 0.03);
   border: 1px solid rgba(0, 0, 0, 0.05);
   overflow-x: auto;
@@ -408,7 +408,7 @@ html, body, #root {
 .input-area {
   background: var(--bg-card);
   border-top: 1px solid var(--border-light);
-  padding: 20px 32px;
+  padding: 4px 32px;
   display: flex;
   align-items: center;
   gap: 12px;

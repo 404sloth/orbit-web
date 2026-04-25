@@ -54,10 +54,16 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports }) => {
                   display: "flex", 
                   alignItems: "center", 
                   justifyContent: "center",
-                  background: report.type === "excel" ? "#ecfdf5" : "#eef2ff",
-                  border: `1px solid ${report.type === "excel" ? "#d1fae5" : "#e0e7ff"}`
+                  background: 
+                    report.type === "excel" ? "#ecfdf5" : 
+                    report.type === "pdf" ? "#fef2f2" : "#eef2ff",
+                  border: `1px solid ${
+                    report.type === "excel" ? "#d1fae5" : 
+                    report.type === "pdf" ? "#fee2e2" : "#e0e7ff"
+                  }`
                 }}>
                   {report.type === "excel" && <FileText size={20} color="#10b981" />}
+                  {report.type === "pdf" && <FileText size={20} color="#ef4444" />}
                   {report.type === "image" && <ImageIcon size={20} color="#6366f1" />}
                   {report.type === "image_bundle" && <Archive size={20} color="#6366f1" />}
                 </div>

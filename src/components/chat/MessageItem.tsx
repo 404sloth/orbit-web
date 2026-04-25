@@ -102,12 +102,13 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
           }}
         >
           <span style={messageSenderStyle(isUser, agentColor)}>
-            {isUser ? "Executive Director" : (msg.agent || "Strategic Partner")}
+            {isUser ? "" : (msg.agent || "")}
           </span>
           <span style={messageMetaStyle(isUser)}>
-            {new Date(msg.ts).toLocaleTimeString([], {
+            {new Date(msg.ts).toLocaleTimeString("en-IN", {
               hour: "2-digit",
               minute: "2-digit",
+              timeZone: "Asia/Kolkata",
             })}
           </span>
           {isUser && msg.status && <StatusIcon status={msg.status} />}
