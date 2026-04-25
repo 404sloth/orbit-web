@@ -1,0 +1,114 @@
+import React, { useRef, useState } from "react";
+import { Upload, FileText, Plus, Loader2, ChevronRight, Database } from "lucide-react";
+import {
+  contentWrapStyle, contentCardStyle, cardHeaderStyle, cardHeaderTitleStyle,
+  kbIntroText, fieldLabelStyle, textInputStyle, textareaStyle, primaryActionButton
+} from "../../styles/theme";
+
+interface KnowledgeBaseProps {
+  kbText: string;
+  setKbText: (v: string) => void;
+  kbSource: string;
+  setKbSource: (v: string) => void;
+  kbFile: File | null;
+  setKbFile: (f: File | null) => void;
+  kbLoading: boolean;
+  handleKbSubmit: () => Promise<boolean | undefined>;
+  setToast: (toast: { message: string, type: "success" | "error" } | null) => void;
+}
+
+export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
+  kbText, setKbText, kbSource, setKbSource, kbFile, setKbFile, kbLoading, handleKbSubmit, setToast
+}) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const MAX_FILE_SIZE_MB = 10;
+  const ALLOWED_TYPES = [".pdf", ".json", ".md", ".txt", "application/pdf", "application/json", "text/markdown", "text/plain"];
+
+  const validateFile = (file: File): boolean => {
+    const ext = file.name.split('.').pop()?.toLowerCase();
+    const isValidType = ALLOWED_TYPES.includes(`.${ext}`) || ALLOWED_TYPES.includes(file.type);
+    if (!isValidType) {
+      setToast({ message: `Unsupported file type.`, type: "error" });
+      return false;
+    }
+    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+      setToast({ message: `File exceeds ${MAX_FILE_SIZE_MB} MB limit.`, type: "error" });
+      return false;
+    }
+    return true;
+  };
+
+  const handleFileChange = (file: File | null) => {
+    if (!file) {
+      setKbFile(null);
+      return;
+    }
+    if (validateFile(file)) {
+      setKbFile(file);
+    } else {
+      setKbFile(null);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!kbFile && !kbText.trim()) {
+      setToast({ message: "Please provide a file or text to ingest.", type: "error" });
+      return;
+    }
+    if (!kbSource.trim()) {
+      setToast({ message: "Please provide a source label.", type: "error" });
+      return;
+    }
+    const success = await handleKbSubmit();
+    if (success) {
+      setToast({ message: "Strategic intelligence ingested successfully.", type: "success" });
+    } else {
+      setToast({ message: "Failed to ingest knowledge payload.", type: "error" });
+    }
+  };
+
+  return (
+    <div style={contentWrapStyle}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ ...contentCardStyle, borderColor: isDragOver ? "#1a73e8" : undefined, transition: "border 0.2s ease" }} onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }} onDragLeave={() => setIsDragOver(false)} onDrop={(e) => { e.preventDefault(); setIsDragOver(false); const file = e.dataTransfer.files?.[0]; if (file) handleFileChange(file); }}>
+          <div style={cardHeaderStyle}><span style={cardHeaderTitleStyle}><Upload size={20} color="#1a73e8" />Strategic File Ingestion</span></div>
+          <p style={{ ...kbIntroText, marginBottom: 24 }}>Upload PDF reports, JSON exports, or Markdown briefs directly to the intelligence core.</p>
+          <div onClick={() => fileInputRef.current?.click()} style={{ height: 200, border: `2px dashed ${isDragOver ? "#1a73e8" : (kbFile ? "#1a73e8" : "#dadce0")}`, borderRadius: 24, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.3s ease", background: kbFile ? "rgba(26,115,232,0.02)" : "transparent", position: "relative" }}>
+            <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={(e) => handleFileChange(e.target.files?.[0] || null)} accept=".pdf,.json,.md,.txt" />
+            {kbFile ? (
+              <>
+                <FileText size={40} color="#1a73e8" />
+                <div style={{ fontSize: 15, fontWeight: 700, color: "#202124", marginTop: 12 }}>{kbFile.name}</div>
+                <div style={{ fontSize: 12, color: "#5f6368" }}>{(kbFile.size / 1024).toFixed(1)} KB ready for indexing</div>
+                <button onClick={(e) => { e.stopPropagation(); handleFileChange(null); if (fileInputRef.current) fileInputRef.current.value = ''; }} style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,0.6)", border: "none", borderRadius: 20, padding: "4px 10px", color: "white", fontSize: 12, cursor: "pointer" }}>✕ Clear</button>
+              </>
+            ) : (
+              <>
+                <div style={{ width: 48, height: 48, borderRadius: "50%", background: "rgba(26,115,232,0.05)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}><Plus size={24} color="#1a73e8" /></div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: "#202124" }}>Select Strategic Document</div>
+                <div style={{ fontSize: 12, color: "#9aa0a6", marginTop: 4 }}>Supports PDF, JSON, MD, TXT (max {MAX_FILE_SIZE_MB} MB)</div>
+              </>
+            )}
+          </div>
+          <div style={{ marginTop: 24 }}>
+            <label style={fieldLabelStyle} htmlFor="kbSourceFile">Strategic Source Label</label>
+            <input id="kbSourceFile" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={textInputStyle} placeholder="e.g., Annual Strategic Audit 2024" disabled={kbLoading} />
+          </div>
+          <button style={{ ...primaryActionButton, width: "100%", marginTop: 24, height: 48, borderRadius: 14, opacity: kbLoading ? 0.7 : 1 }} onClick={() => void handleSubmit()} disabled={kbLoading || !kbFile}>{kbLoading ? <Loader2 size={18} className="spin" /> : <ChevronRight size={18} />}{kbLoading ? "Indexing Knowledge..." : "Ingest Document"}</button>
+        </div>
+        <div style={contentCardStyle}>
+          <div style={cardHeaderStyle}><span style={cardHeaderTitleStyle}><Database size={20} color="#1a73e8" />Direct Intelligence Paste</span></div>
+          <p style={{ ...kbIntroText, marginBottom: 24 }}>Paste raw strategic data, meeting snippets, or tactical updates for immediate semantic recall.</p>
+          <textarea value={kbText} onChange={(event) => setKbText(event.target.value)} rows={8} style={{ ...textareaStyle, borderRadius: 20 }} placeholder="Paste raw documentation or briefings here..." disabled={kbLoading} />
+          <div style={{ marginTop: 20 }}>
+            <label style={fieldLabelStyle} htmlFor="kbSourceText">Source Attribution</label>
+            <input id="kbSourceText" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={textInputStyle} placeholder="e.g., Q3 Stakeholder Update" disabled={kbLoading} />
+          </div>
+          <button style={{ ...primaryActionButton, width: "100%", marginTop: 20, height: 48, borderRadius: 14, opacity: kbLoading ? 0.7 : 1 }} onClick={() => void handleSubmit()} disabled={kbLoading || !kbText.trim()}>{kbLoading ? <Loader2 size={18} className="spin" /> : <Database size={18} />}{kbLoading ? "Indexing Knowledge..." : "Commit Intelligence"}</button>
+        </div>
+      </div>
+    </div>
+  );
+};
