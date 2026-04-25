@@ -59,12 +59,19 @@ export const chatApi = {
   }),
   getHistory: (threadId: string) => fetchJson<any[]>(`${API_URL}/chat/history/${encodeURIComponent(threadId)}`),
   deleteThread: (threadId: string) => fetchJson(`${API_URL}/chat/threads/${encodeURIComponent(threadId)}`, { method: "DELETE" }),
+  getSuggestions: (threadId: string) => fetchJson<string[]>(`${API_URL}/chat/suggestions/${encodeURIComponent(threadId)}`),
 };
 
 export const dashboardApi = {
   getProjects: () => fetchJson<any[]>(`${API_URL}/dashboard/projects`),
   getTimeline: (projectId: string) => fetchJson<any[]>(`${API_URL}/dashboard/projects/${projectId}/timeline`),
   simulateLifecycle: (projectId: string) => fetchJson(`${API_URL}/dashboard/projects/${projectId}/simulate-full-lifecycle`, { method: "POST" }),
+  getNotifications: () => fetchJson<any[]>(`${API_URL}/dashboard/notifications`),
+  handleNotificationAction: (id: number, action: string) => fetchJson(`${API_URL}/dashboard/notifications/${id}/action`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action }),
+  }),
 };
 
 export const knowledgeApi = {

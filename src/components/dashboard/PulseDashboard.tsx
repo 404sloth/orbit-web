@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Calendar, 
-  ChevronRight, 
-  Clock, 
-  Flag, 
-  MessageSquare, 
-  Target, 
+import {
+  Calendar,
+  ChevronRight,
+  Clock,
+  Flag,
+  MessageSquare,
+  Target,
   Activity,
-  CheckCircle2,
-  AlertCircle,
-  Play
+  Maximize2,
+  ArrowLeft,
+  ChevronLeft
 } from "lucide-react";
 import { PulseProject, PulseEvent } from "../../types";
 
@@ -19,328 +19,258 @@ interface PulseDashboardProps {
   selectedPid: string | null;
   timeline: PulseEvent[];
   loading: boolean;
-  onSelect: (id: string) => void;
+  onSelect: (id: string | null) => void;
   onSimulate: (id: string) => void;
 }
 
-const ProjectCard = ({ 
-  project, 
-  isSelected, 
-  onClick 
-}: { 
-  project: PulseProject; 
-  isSelected: boolean; 
+// ----------------------------------------------------------------------
+// ProjectCard – classic & premium
+// ----------------------------------------------------------------------
+const ProjectCard = ({
+  project,
+  isSelected,
+  onClick,
+}: {
+  project: PulseProject;
+  isSelected: boolean;
   onClick: () => void;
 }) => {
   return (
     <motion.div
       onClick={onClick}
-      whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.06)" }}
+      layout
+      whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.05)" }}
       style={{
-        background: isSelected ? "#ffffff" : "#f8fafc",
+        background: "#ffffff",
         padding: "24px",
         borderRadius: "20px",
-        border: `1px solid ${isSelected ? "#4f46e5" : "#e2e8f0"}`,
+        border: `1px solid #e2e8f0`,
         cursor: "pointer",
-        transition: "all 0.2s ease",
         position: "relative",
-        boxShadow: isSelected ? "0 8px 30px rgba(79, 70, 229, 0.1)" : "0 2px 4px rgba(0,0,0,0.02)",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
+        overflow: "hidden",
+        transition: "all 0.2s ease"
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "16px" }}>
-        <div style={{
-          fontSize: "10px",
-          fontWeight: 800,
-          color: isSelected ? "#4f46e5" : "#64748b",
-          textTransform: "uppercase",
-          letterSpacing: "0.05em"
-        }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
+        <span style={{ fontSize: 10, fontWeight: 800, color: "#c5a572", textTransform: "uppercase", letterSpacing: "0.05em" }}>
           #{project.id}
-        </div>
-        <div style={{
-          padding: "4px 10px",
-          borderRadius: "99px",
-          background: project.health_color === "green" ? "#f0fdf4" : project.health_color === "amber" ? "#fffbeb" : "#fef2f2",
-          color: project.health_color === "green" ? "#166534" : project.health_color === "amber" ? "#92400e" : "#991b1b",
-          fontSize: "10px",
-          fontWeight: 700,
-          textTransform: "capitalize"
-        }}>
+        </span>
+        <span style={{ padding: "3px 8px", borderRadius: 99, background: project.health_color === "green" ? "#f0fdf4" : project.health_color === "amber" ? "#fffbeb" : "#fef2f2", color: project.health_color === "green" ? "#166534" : project.health_color === "amber" ? "#92400e" : "#991b1b", fontSize: 9, fontWeight: 700, textTransform: "uppercase" }}>
           {project.status}
-        </div>
+        </span>
       </div>
-
-      <h3 style={{ 
-        fontSize: "18px", 
-        fontWeight: 800, 
-        color: "#1e293b", 
-        marginBottom: "12px",
-        lineHeight: 1.2
-      }}>
-        {project.name}
-      </h3>
-
-      <div style={{ display: "flex", gap: "16px", color: "#64748b", fontSize: "12px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <Calendar size={14} />
-          <span>{project.start_date || "---"}</span>
-        </div>
-        <ChevronRight size={14} style={{ opacity: 0.3 }} />
-        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <Clock size={14} />
-          <span>{project.end_date || "---"}</span>
-        </div>
+      <h3 style={{ fontSize: 18, fontWeight: 800, color: "#1e293b", marginBottom: 12, lineHeight: 1.3 }}>{project.name}</h3>
+      <div style={{ display: "flex", gap: 16, color: "#64748b", fontSize: 12, fontWeight: 500 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}><Calendar size={14} /><span>{project.start_date || "---"}</span></div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}><Clock size={14} /><span>{project.end_date || "---"}</span></div>
       </div>
-
-      {isSelected && (
-        <motion.div 
-          layoutId="active-indicator"
-          style={{
-            position: "absolute",
-            bottom: "0",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "40px",
-            height: "3px",
-            background: "#4f46e5",
-            borderRadius: "3px 3px 0 0"
-          }}
-        />
-      )}
     </motion.div>
   );
 };
 
-const TimelineMarker = ({ event }: { event: PulseEvent }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const isMeeting = event.type === "meeting";
-  const isMilestone = event.type === "milestone";
+// ----------------------------------------------------------------------
+// CurvedTimeline – focus on the path and hover tooltips
+// ----------------------------------------------------------------------
+const CurvedTimeline = ({
+  timeline,
+  loading,
+  selectedEventId,
+  onEventClick,
+}: {
+  timeline: PulseEvent[];
+  loading: boolean;
+  selectedEventId: string | null;
+  onEventClick: (id: string | null) => void;
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 500, height: 600 });
 
-  const getStatusColor = (status?: string) => {
-    switch (status?.toLowerCase()) {
-      case "completed": case "achieved": return "#10b981";
-      case "in-progress": return "#f59e0b";
-      case "pending": return "#94a3b8";
-      default: return "#4f46e5";
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => { if (el) setDimensions({ width: el.clientWidth, height: el.clientHeight }); };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const { timelinePath, nodes, totalHeight } = useMemo(() => {
+    if (!timeline.length) return { timelinePath: "", nodes: [], totalHeight: 0 };
+    const dates = timeline.map((e) => new Date(e.date).getTime());
+    const min = Math.min(...dates), max = Math.max(...dates);
+    const range = max - min || 86400000;
+    const padding = 50, minHeight = 400;
+    const height = Math.max(minHeight, timeline.length * 70 + padding * 2);
+    const usableHeight = height - padding * 2;
+    const centerX = dimensions.width / 2;
+    const amplitude = Math.min(80, dimensions.width * 0.2);
+    const waveCount = 1.5;
+
+    const initialNodes = timeline.map((event) => {
+      const ratio = range === 0 ? 0.5 : (new Date(event.date).getTime() - min) / range;
+      const y = padding + ratio * usableHeight;
+      const x = centerX + amplitude * Math.sin(ratio * Math.PI * 2 * waveCount);
+      return { id: event.id + event.date, event, x, y };
+    });
+
+    const step = 2;
+    const points: string[] = [];
+    for (let y = padding; y <= height - padding; y += step) {
+      const ratio = (y - padding) / usableHeight;
+      const x = centerX + amplitude * Math.sin(ratio * Math.PI * 2 * waveCount);
+      points.push(`${x.toFixed(2)},${y.toFixed(2)}`);
     }
-  };
+    return { timelinePath: points.join(" "), nodes: initialNodes, totalHeight: height };
+  }, [timeline, dimensions.width]);
+
+  if (loading) return <div style={{ padding: 60, textAlign: "center", color: "#94a3b8", fontSize: 13 }}>Synchronizing data...</div>;
+  if (!timeline.length) return <div style={{ padding: 60, textAlign: "center", color: "#94a3b8", fontSize: 13 }}>No events detected.</div>;
 
   return (
-    <div 
-      style={{ display: "flex", gap: "24px", position: "relative", paddingBottom: "40px" }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Connector line handled by parent container */}
-      
-      {/* Icon / Marker */}
-      <div style={{ 
-        width: "32px", 
-        height: "32px", 
-        borderRadius: isMilestone ? "8px" : "50%", 
-        background: isHovered ? getStatusColor(event.status) : "#ffffff",
-        border: `2px solid ${getStatusColor(event.status)}`,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 2,
-        transition: "all 0.2s ease",
-        transform: isMilestone ? "rotate(45deg)" : "none",
-        boxShadow: isHovered ? `0 0 15px ${getStatusColor(event.status)}40` : "none"
-      }}>
-        <div style={{ transform: isMilestone ? "rotate(-45deg)" : "none" }}>
-          {isMeeting ? <MessageSquare size={14} color={isHovered ? "#fff" : "#4f46e5"} /> : 
-           isMilestone ? <Flag size={14} color={isHovered ? "#fff" : "#4f46e5"} /> :
-           <Activity size={14} color={isHovered ? "#fff" : "#4f46e5"} />}
-        </div>
-      </div>
+    <div ref={containerRef} style={{ position: "relative", width: "100%", height: totalHeight, minHeight: 400, overflow: "hidden", borderRadius: 24, background: "rgba(248, 250, 252, 0.5)" }}>
+      <svg style={{ position: "absolute", inset: 0, overflow: "visible", pointerEvents: "none" }}>
+        <defs>
+          <linearGradient id="curveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#c5a572" stopOpacity="0.4" />
+            <stop offset="50%" stopColor="#c5a572" stopOpacity="0.1" />
+            <stop offset="100%" stopColor="#c5a572" stopOpacity="0.4" />
+          </linearGradient>
+        </defs>
+        <polyline points={timelinePath} fill="none" stroke="url(#curveGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        <polyline points={timelinePath} fill="none" stroke="#c5a572" strokeWidth="1" strokeDasharray="6 8" strokeLinecap="round" style={{ opacity: 0.3 }} />
+      </svg>
 
-      {/* Content */}
-      <div style={{ flex: 1, position: "relative" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
-          <span style={{ fontSize: "11px", fontWeight: 700, color: "#94a3b8" }}>
-            {new Date(event.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
-          </span>
-          {isMilestone && (
-            <span style={{
-              fontSize: "9px",
-              fontWeight: 800,
-              padding: "2px 8px",
-              borderRadius: "4px",
-              background: `${getStatusColor(event.status)}15`,
-              color: getStatusColor(event.status),
-              textTransform: "uppercase"
-            }}>
-              {event.status}
-            </span>
-          )}
-        </div>
+      {nodes.map(({ id, event, x, y }) => {
+        const isSelected = selectedEventId === id;
+        const color = event.status?.toLowerCase() === "completed" ? "#059669" : event.status?.toLowerCase() === "in-progress" ? "#d97706" : "#c5a572";
 
-        <h4 style={{ fontSize: "15px", fontWeight: 700, color: "#1e293b", margin: 0 }}>
-          {event.title}
-        </h4>
-
-        {/* Hover Summary */}
-        <AnimatePresence>
-          {isHovered && event.summary && (
+        return (
+          <motion.div
+            key={id}
+            style={{ position: "absolute", left: x, top: y, x: "-50%", y: "-50%", zIndex: isSelected ? 10 : 2 }}
+            whileHover="hover"
+            onClick={() => onEventClick(isSelected ? null : id)}
+          >
             <motion.div
-              initial={{ opacity: 0, y: 10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 5, scale: 0.95 }}
+              variants={{ hover: { scale: 1.1 } }}
               style={{
-                position: "absolute",
-                top: "100%",
-                left: 0,
-                right: 0,
-                background: "#ffffff",
-                padding: "16px",
-                borderRadius: "12px",
-                boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-                zIndex: 10,
-                marginTop: "8px",
-                border: "1px solid #e2e8f0"
+                width: 32, height: 32, borderRadius: event.type === "milestone" ? 8 : "50%",
+                background: isSelected ? color : "#ffffff", border: `2px solid ${color}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                transform: event.type === "milestone" ? "rotate(45deg)" : "none",
+                cursor: "pointer", boxShadow: isSelected ? `0 0 12px ${color}40` : "0 2px 6px rgba(0,0,0,0.05)"
               }}
             >
-              <div style={{ fontSize: "12px", color: "#64748b", fontWeight: 600, marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                {isMeeting ? "Meeting Highlights" : "Deliverables"}
+              <div style={{ transform: event.type === "milestone" ? "rotate(-45deg)" : "none", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {event.type === "meeting" ? <MessageSquare size={14} color={isSelected ? "#fff" : color} /> : <Flag size={14} color={isSelected ? "#fff" : color} />}
               </div>
-              <ul style={{ margin: 0, paddingLeft: "18px", color: "#475569", fontSize: "13px", lineHeight: 1.5 }}>
-                {event.summary.split("\n").map((line, i) => (
-                  <li key={i} style={{ marginBottom: "4px" }}>{line.replace(/^[•-]\s*/, "")}</li>
-                ))}
-              </ul>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+
+            {/* Hover Tooltip - Trimmed to 2 lines */}
+            <motion.div
+              variants={{ hover: { opacity: 1, y: -8 } }}
+              initial={{ opacity: 0, y: 0 }}
+              style={{
+                position: "absolute", bottom: "100%", left: "50%", x: "-50%", width: 200,
+                background: "#1e293b", color: "#f8fafc", padding: "10px", borderRadius: 10,
+                fontSize: 11, fontWeight: 500, pointerEvents: "none", marginBottom: 10,
+                boxShadow: "0 8px 20px rgba(0,0,0,0.12)", zIndex: 100
+              }}
+            >
+              <div style={{ fontWeight: 700, color: "#c5a572", marginBottom: 4, textTransform: "uppercase", fontSize: 9 }}>{event.title}</div>
+              <div style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis", opacity: 0.8, lineHeight: 1.4 }}>
+                {event.summary || "No details."}
+              </div>
+            </motion.div>
+          </motion.div>
+        );
+      })}
     </div>
   );
 };
 
-export const PulseDashboard: React.FC<PulseDashboardProps> = ({
-  projects,
-  selectedPid,
-  timeline,
-  loading,
-  onSelect,
-  onSimulate
-}) => {
-  const selectedProject = projects.find(p => p.id === selectedPid);
+// ----------------------------------------------------------------------
+// Main Dashboard Component
+// ----------------------------------------------------------------------
+export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, selectedPid, timeline, loading, onSelect }) => {
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const selectedProject = projects.find((p) => p.id === selectedPid);
+  const selectedEvent = timeline.find((e) => e.id + e.date === selectedEventId);
 
   return (
-    <div style={{ padding: "40px", maxWidth: "1400px", margin: "0 auto" }}>
-      {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "48px" }}>
-        <div>
-          <h1 style={{ fontSize: "32px", fontWeight: 900, color: "#1e293b", marginBottom: "8px", letterSpacing: "-0.02em" }}>
-            Project Pulse
-          </h1>
-          <p style={{ color: "#64748b", fontSize: "15px" }}>
-            Tracking strategic alignment and lifecycle milestones across the organization.
-          </p>
-        </div>
-        
-        {selectedProject && (
-          <button 
-            onClick={() => onSimulate(selectedProject.id)}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "10px 20px",
-              borderRadius: "12px",
-              background: "#4f46e5",
-              color: "#fff",
-              border: "none",
-              fontWeight: 700,
-              cursor: "pointer",
-              boxShadow: "0 4px 12px rgba(79, 70, 229, 0.2)"
-            }}
-          >
-            <Play size={16} fill="currentColor" />
-            Simulate Progression
-          </button>
-        )}
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "380px 1fr", gap: "48px", alignItems: "flex-start" }}>
-        {/* Project List */}
-        <div style={{ display: "grid", gap: "20px" }}>
-          <div style={{ fontSize: "11px", fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-            Active Portfolios
+    <div style={{ padding: "40px", width: "100%", maxWidth: "1400px", margin: "0 auto", minHeight: "100vh" }}>
+      
+      {!selectedPid ? (
+        <>
+          <div style={{ marginBottom: 40 }}>
+            <h1 style={{ fontSize: 32, fontWeight: 800, color: "#1e293b", marginBottom: 8, letterSpacing: "-0.02em" }}>Project Pulse</h1>
+            <p style={{ color: "#64748b", fontSize: 15 }}>Monitor strategic vectors and organizational milestones.</p>
           </div>
-          {projects.map(project => (
-            <ProjectCard 
-              key={project.id} 
-              project={project} 
-              isSelected={selectedPid === project.id}
-              onClick={() => onSelect(project.id)}
-            />
-          ))}
-        </div>
-
-        {/* Timeline Path */}
-        <div style={{ 
-          background: "#ffffff", 
-          borderRadius: "24px", 
-          padding: "40px", 
-          border: "1px solid #e2e8f0",
-          minHeight: "600px",
-          position: "relative"
-        }}>
-          {!selectedPid ? (
-            <div style={{ 
-              height: "500px", 
-              display: "flex", 
-              flexDirection: "column", 
-              alignItems: "center", 
-              justifyContent: "center",
-              color: "#94a3b8",
-              textAlign: "center"
-            }}>
-              <Target size={48} style={{ opacity: 0.2, marginBottom: "20px" }} />
-              <h3 style={{ fontSize: "18px", fontWeight: 700 }}>Select a Portfolio</h3>
-              <p style={{ fontSize: "14px" }}>Click on a project card to visualize its strategic path.</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 24 }}>
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} isSelected={false} onClick={() => onSelect(project.id)} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+          {/* Header Section */}
+          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+            <button onClick={() => { onSelect(null); setSelectedEventId(null); }} style={{ background: "#ffffff", color: "#64748b", border: "1px solid #e2e8f0", width: 40, height: 40, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 2px 4px rgba(0,0,0,0.02)" }}>
+              <ArrowLeft size={20} />
+            </button>
+            <div>
+              <div style={{ fontSize: 10, fontWeight: 700, color: "#c5a572", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>Project Portfolio</div>
+              <h2 style={{ fontSize: 24, fontWeight: 800, color: "#1e293b", margin: 0 }}>{selectedProject?.name}</h2>
             </div>
-          ) : (
-            <div style={{ position: "relative" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "40px" }}>
-                <Activity size={20} color="#4f46e5" />
-                <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#1e293b" }}>
-                  Strategic Path: {selectedProject?.name}
-                </h2>
-              </div>
+          </div>
 
-              {loading ? (
-                <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
-                  Synchronizing timeline data...
-                </div>
-              ) : timeline.length === 0 ? (
-                <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
-                  No lifecycle events recorded for this vector.
-                </div>
-              ) : (
-                <div style={{ position: "relative", paddingLeft: "16px" }}>
-                  {/* Vertical Path Line */}
-                  <div style={{ 
-                    position: "absolute", 
-                    left: "31px", 
-                    top: "16px", 
-                    bottom: "40px", 
-                    width: "2px", 
-                    background: "linear-gradient(to bottom, #4f46e5 0%, #e2e8f0 100%)",
-                    zIndex: 1
-                  }} />
-
-                  {timeline.map((event, i) => (
-                    <TimelineMarker key={event.id + i} event={event} />
-                  ))}
-                </div>
-              )}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 32, alignItems: "flex-start" }}>
+            {/* Timeline View */}
+            <div style={{ background: "#ffffff", borderRadius: 24, padding: "32px", border: "1px solid #e2e8f0", minHeight: 500, boxShadow: "0 4px 12px rgba(0,0,0,0.02)" }}>
+              <CurvedTimeline timeline={timeline} loading={loading} selectedEventId={selectedEventId} onEventClick={setSelectedEventId} />
             </div>
-          )}
+
+            {/* Detail Panel on the Right */}
+            <div style={{ position: "sticky", top: 40 }}>
+              <AnimatePresence mode="wait">
+                {selectedEvent ? (
+                  <motion.div
+                    key={selectedEventId}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    style={{ background: "#ffffff", borderRadius: 24, border: "1px solid #e2e8f0", padding: "32px", boxShadow: "0 12px 32px rgba(0,0,0,0.04)", minHeight: 300, maxHeight: "80vh", overflowY: "auto" }}
+                    className="hide-scrollbar"
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: "#c5a572" }}>{new Date(selectedEvent.date).toLocaleDateString("en-US", { month: "long", day: "numeric" })}</span>
+                      <span style={{ padding: "3px 10px", borderRadius: 99, background: "#f8fafc", border: "1px solid #e2e8f0", color: "#64748b", fontSize: 9, fontWeight: 800, textTransform: "uppercase" }}>{selectedEvent.status}</span>
+                    </div>
+                    <h3 style={{ fontSize: 20, fontWeight: 800, color: "#1e293b", marginBottom: 24, lineHeight: 1.2 }}>{selectedEvent.title}</h3>
+                    
+                    <div style={{ borderTop: "1px solid #f1f5f9", paddingTop: 20 }}>
+                      <div style={{ fontSize: 10, fontWeight: 800, color: "#c5a572", textTransform: "uppercase", marginBottom: 12, letterSpacing: "0.05em" }}>Briefing Summary</div>
+                      <ul style={{ margin: 0, paddingLeft: 16, color: "#475569", fontSize: 14, lineHeight: 1.7 }}>
+                        {selectedEvent.summary?.split("\n").map((line, i) => (
+                          <li key={i} style={{ marginBottom: 12 }}>{line.replace(/^[•-]\s*/, "")}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <div style={{ height: 300, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#94a3b8", textAlign: "center", background: "#f8fafc", borderRadius: 24, border: "1px dashed #e2e8f0", padding: 32 }}>
+                    <Target size={40} style={{ opacity: 0.2, marginBottom: 16, color: "#c5a572" }} />
+                    <div style={{ fontSize: 14, fontWeight: 700, color: "#64748b" }}>Event Details</div>
+                    <p style={{ fontSize: 12, color: "#94a3b8", marginTop: 4 }}>Select a node to view insights.</p>
+                  </div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

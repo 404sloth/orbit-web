@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Sparkles,
   PlusCircle,
@@ -7,10 +7,10 @@ import {
   ChevronDown,
   MessageCircle,
   Trash2,
+  LogOut
 } from "lucide-react";
-import { ChatSession, Health } from "../../types";
+import { ChatSession } from "../../types";
 import { NAV } from "../../utils/constants";
-import { StatusLine } from "../common/StatusLine";
 import {
   sidebarStyle,
   sidebarHeaderStyle,
@@ -30,10 +30,6 @@ import {
   sessionTimestampStyle,
   trashButtonStyle,
   sidebarFooterStyle,
-  statusToggleStyle,
-  statusIndicatorWrapStyle,
-  statusDotStyle,
-  statusCardStyle,
 } from "../../styles/theme";
 
 interface SidebarProps {
@@ -43,13 +39,10 @@ interface SidebarProps {
   setActiveTab: (tab: any) => void;
   sessions: ChatSession[];
   activeSession: string;
-  setActiveSession: (id: string) => void;
-  handleNewChat: () => void;
-  handleDeleteChat: (id: string) => void;
-  statusOpen: boolean;
-  setStatusOpen: (open: boolean | ((prev: boolean) => boolean)) => void;
-  connected: boolean;
-  health: Health | null;
+  onSessionSelect: (id: string) => void;
+  onNewChat: () => void;
+  onDeleteChat: (id: string) => void;
+  onLogout: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -59,13 +52,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setActiveTab,
   sessions,
   activeSession,
-  setActiveSession,
-  handleNewChat,
-  handleDeleteChat,
-  statusOpen,
-  setStatusOpen,
-  connected,
-  health,
+  onSessionSelect,
+  onNewChat,
+  onDeleteChat,
+  onLogout,
 }) => {
   return (
     <aside
@@ -82,16 +72,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
           justifyContent: isCollapsed ? "center" : "flex-start",
         }}
       >
-        <div style={{ ...logoBadgeStyle, width: isCollapsed ? 40 : 44, height: isCollapsed ? 40 : 44 }}>
-          <Sparkles size={isCollapsed ? 18 : 20} color="#1a73e8" />
+        <div style={{ ...logoBadgeStyle, width: isCollapsed ? 40 : 44, height: isCollapsed ? 40 : 44, background: '#6366f1' }}>
+          <Sparkles size={isCollapsed ? 18 : 20} color="#fff" />
         </div>
         {!isCollapsed && (
           <div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: "#202124", letterSpacing: "-0.02em" }}>
-              Human CoPilot
+            <div style={{ fontSize: 18, fontWeight: 800, color: "#1e293b", letterSpacing: "-0.02em" }}>
+              Orbit
             </div>
-            <div style={{ fontSize: 11, fontWeight: 500, color: "#5f6368", letterSpacing: "0.04em", textTransform: "uppercase" }}>
-              AI Executive Assistant
+            <div style={{ fontSize: 10, fontWeight: 700, color: "#6366f1", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+              Intelligence
             </div>
           </div>
         )}
@@ -102,8 +92,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
           ...primaryPillButton,
           padding: isCollapsed ? "12px" : "14px 20px",
           justifyContent: isCollapsed ? "center" : "flex-start",
+          background: '#6366f1',
+          color: '#fff',
+          border: 'none'
         }}
-        onClick={handleNewChat}
+        onClick={onNewChat}
       >
         <PlusCircle size={18} />
         {!isCollapsed && "New Chat"}
@@ -140,6 +133,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               ...(activeTab === item.id ? activeNavButtonStyle : {}),
               justifyContent: isCollapsed ? "center" : "flex-start",
               padding: isCollapsed ? "10px 0" : "10px 16px",
+              color: activeTab === item.id ? '#6366f1' : '#64748b'
             }}
             onClick={() => setActiveTab(item.id)}
             title={isCollapsed ? item.label : undefined}
@@ -147,14 +141,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <item.icon size={20} />
             {!isCollapsed && <span>{item.label}</span>}
             {activeTab === item.id && !isCollapsed ? (
-              <motion.div layoutId="nav-active" style={activeNavIndicatorStyle} />
+              <motion.div layoutId="nav-active" style={{ ...activeNavIndicatorStyle, background: '#6366f1' }} />
             ) : null}
           </button>
         ))}
       </nav>
 
       <div style={sessionsContainerStyle} className="hide-scrollbar">
-        {!isCollapsed && <div style={sectionLabelStyle}>Chat History</div>}
+        {!isCollapsed && <div style={sectionLabelStyle}>Recent Threads</div>}
         {sessions.map((session) => (
           <div
             key={session.id}
@@ -163,23 +157,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
               ...(session.id === activeSession ? activeSessionCardStyle : {}),
               padding: isCollapsed ? "2px 0" : "2px 8px",
               justifyContent: isCollapsed ? "center" : "flex-start",
+              border: session.id === activeSession ? '1px solid #e2e8f0' : '1px solid transparent',
+              background: session.id === activeSession ? '#fff' : 'transparent'
             }}
           >
             <button
               style={sessionButtonStyle}
               onClick={() => {
-                setActiveSession(session.id);
+                onSessionSelect(session.id);
                 setActiveTab("conversations");
               }}
               disabled={isCollapsed && session.id === activeSession}
               title={session.title}
             >
-              <div style={sessionIconStyle(session.id === activeSession)}>
+              <div style={{ ...sessionIconStyle(session.id === activeSession), background: session.id === activeSession ? '#6366f1' : '#f1f5f9', color: session.id === activeSession ? '#fff' : '#64748b' }}>
                 <MessageCircle size={14} />
               </div>
               {!isCollapsed && (
                 <div style={{ minWidth: 0, flex: 1, textAlign: "left" }}>
-                  <div style={sessionTitleStyle}>{session.title}</div>
+                  <div style={{ ...sessionTitleStyle, color: session.id === activeSession ? '#1e293b' : '#64748b' }}>{session.title}</div>
                   <div style={sessionTimestampStyle}>
                     {new Date(session.updatedAt).toLocaleDateString([], { month: "short", day: "numeric" })}
                   </div>
@@ -187,7 +183,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               )}
             </button>
             {!isCollapsed && (
-              <button style={trashButtonStyle} onClick={() => handleDeleteChat(session.id)}>
+              <button style={trashButtonStyle} onClick={() => onDeleteChat(session.id)}>
                 <Trash2 size={13} />
               </button>
             )}
@@ -198,39 +194,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div style={sidebarFooterStyle}>
         <button
           style={{
-            ...statusToggleStyle,
-            justifyContent: isCollapsed ? "center" : "flex-start",
-            padding: isCollapsed ? "14px 0" : "14px 16px",
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            width: '100%',
+            padding: isCollapsed ? '12px 0' : '12px 16px',
+            justifyContent: isCollapsed ? 'center' : 'flex-start',
+            background: 'none',
+            border: 'none',
+            color: '#64748b',
+            cursor: 'pointer',
+            fontSize: '13px',
+            fontWeight: 600
           }}
-          onClick={() => setStatusOpen((open) => !open)}
+          onClick={onLogout}
         >
-          <div style={statusIndicatorWrapStyle(connected)}>
-            <div style={statusDotStyle(connected)} />
-          </div>
-          {!isCollapsed && "System Info"}
-          {!isCollapsed &&
-            (statusOpen ? (
-              <ChevronDown size={14} style={{ marginLeft: "auto" }} />
-            ) : (
-              <ChevronRight size={14} style={{ marginLeft: "auto" }} />
-            ))}
+          <LogOut size={18} />
+          {!isCollapsed && "Sign Out"}
         </button>
-        <AnimatePresence>
-          {statusOpen && !isCollapsed ? (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              style={{ overflow: "hidden" }}
-            >
-              <div style={statusCardStyle}>
-                <StatusLine label="Endpoint" value={connected ? "Secure Tunnel" : "Disconnected"} />
-                <StatusLine label="Engine DB" value={health?.database ?? "Operational"} />
-                <StatusLine label="Pilot v" value={health?.version ?? "1.3.3"} />
-              </div>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
       </div>
     </aside>
   );

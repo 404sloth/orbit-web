@@ -40,11 +40,11 @@ export const RESEARCH_CATEGORIES = [
 ] as const;
 
 export const INITIAL_SUGGESTIONS = [
-  "Check SLA compliance for V-001.",
-  "Compare top cloud vendors by performance.",
-  "AWS contract renewal status?",
-  "Find Kubernetes vendors in Europe.",
-  "Summarize yesterday's review.",
+  "What is the health of Phoenix ERP?",
+  "Summarize the latest meeting highlights.",
+  "Check budget status for cloud vendors.",
+  "What are the upcoming project milestones?",
+  "List all vendors with rating above 4.5.",
 ];
 
 export const AGENT_COLORS: Record<string, string> = {

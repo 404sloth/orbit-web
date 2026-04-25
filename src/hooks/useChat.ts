@@ -62,6 +62,21 @@ export function useChat(token: string | null) {
     }
   }, []);
 
+  const loadSuggestions = useCallback(async (threadId: string) => {
+    try {
+      const queries = await chatApi.getSuggestions(threadId);
+      setDynamicSuggestions(queries);
+    } catch (error) {
+      console.error("Failed to load suggestions", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeSession) {
+      void loadSuggestions(activeSession);
+    }
+  }, [activeSession, messages.length, loadSuggestions]);
+
   const appendMessage = useCallback((message: Omit<Message, "id">) => {
     setMessages((previous) => [...previous, { ...message, id: nextMessageId() }]);
   }, []);
@@ -97,8 +112,8 @@ export function useChat(token: string | null) {
     if (!prompt || !activeSession) return;
 
     setQuickActions([]);
-    setDynamicSuggestions([]);
-
+    // We keep suggestions until new ones arrive or intentionally cleared
+    
     appendMessage({
       sender: "user",
       text: prompt,
@@ -182,6 +197,8 @@ export function useChat(token: string | null) {
               });
               setLastRouting({ thought: event.reasoning });
               refreshSessionFromMessage(event.thread_id, event.response);
+              // Trigger suggestion reload
+              void loadSuggestions(activeSession);
             } else if (event.type === "approval_required") {
               setPendingApproval({ prompt: event.prompt });
               setIsThinking(false);
@@ -216,7 +233,7 @@ export function useChat(token: string | null) {
         ts: new Date().toISOString(),
       });
     }
-  }, [activeSession, appendMessage, refreshSessionFromMessage, replacePendingUserStatus, token]);
+  }, [activeSession, appendMessage, refreshSessionFromMessage, replacePendingUserStatus, token, loadSuggestions]);
 
   const handleNewChat = useCallback(async () => {
     try {
@@ -263,6 +280,7 @@ export function useChat(token: string | null) {
     setQuickActions,
     loadSessions,
     loadHistory,
+    loadSuggestions,
     handleSend,
     handleNewChat,
     handleDeleteChat,

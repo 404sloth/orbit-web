@@ -8,11 +8,11 @@ import {
 
 interface ApprovalGatewayProps {
   prompt: string;
-  onDeny: () => void;
+  onReject: () => void;
   onApprove: () => void;
 }
 
-export const ApprovalGateway: React.FC<ApprovalGatewayProps> = ({ prompt, onDeny, onApprove }) => {
+export const ApprovalGateway: React.FC<ApprovalGatewayProps> = ({ prompt, onReject, onApprove }) => {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={modalBackdropStyle}>
       <motion.div initial={{ scale: 0.94, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.94, y: 20 }} style={modalCardStyle}>
@@ -25,7 +25,7 @@ export const ApprovalGateway: React.FC<ApprovalGatewayProps> = ({ prompt, onDeny
         </div>
         <div style={modalPromptWrapStyle}><pre style={modalPromptStyle}>{prompt}</pre></div>
         <div style={modalActionsStyle}>
-          <button style={secondaryActionButton} onClick={onDeny}><XCircle size={18} />Deny</button>
+          <button style={secondaryActionButton} onClick={onReject}><XCircle size={18} />Deny</button>
           <button style={primaryActionButton} onClick={onApprove}><CheckCircle2 size={18} />Approve</button>
         </div>
       </motion.div>

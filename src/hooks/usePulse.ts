@@ -5,6 +5,7 @@ import { dashboardApi } from "../services/api";
 export function usePulse() {
   const [pulseProjects, setPulseProjects] = useState<PulseProject[]>([]);
   const [pulseTimeline, setPulseTimeline] = useState<PulseEvent[]>([]);
+  const [notifications, setNotifications] = useState<any[]>([]);
   const [selectedPid, setSelectedPid] = useState<string | null>(null);
   const [pulseLoading, setPulseLoading] = useState(false);
 
@@ -33,6 +34,24 @@ export function usePulse() {
     }
   }, []);
 
+  const loadNotifications = useCallback(async () => {
+    try {
+      const data = await dashboardApi.getNotifications();
+      setNotifications(data);
+    } catch (error) {
+      console.error("Failed to load notifications", error);
+    }
+  }, []);
+
+  const handleNotificationAction = useCallback(async (id: number, action: string) => {
+    try {
+      await dashboardApi.handleNotificationAction(id, action);
+      await loadNotifications();
+    } catch (error) {
+      console.error("Notification action failed", error);
+    }
+  }, [loadNotifications]);
+
   const handleSimulateLifecycle = useCallback(async (projectId: string) => {
     try {
       await dashboardApi.simulateLifecycle(projectId);
@@ -46,10 +65,13 @@ export function usePulse() {
   return {
     pulseProjects,
     pulseTimeline,
+    notifications,
     selectedPid,
     pulseLoading,
     loadPulseProjects,
     loadPulseTimeline,
+    loadNotifications,
+    handleNotificationAction,
     handleSimulateLifecycle,
   };
 }

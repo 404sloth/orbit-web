@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Mic, MicOff, PlusCircle, XCircle, Sparkles } from "lucide-react";
+import { Send, Mic, MicOff, PlusCircle, XCircle, Sparkles, Lightbulb } from "lucide-react";
 import { AGENT_OPTIONS, AGENT_COLORS } from "../../utils/constants";
 import {
   composerOuterWrapStyle,
@@ -28,49 +28,88 @@ interface ComposerProps {
   onSend: (text: string, agentHint?: string | null) => void;
   onVoice: () => void;
   isListening: boolean;
-  dynamicSuggestions: string[];
+  isThinking: boolean;
+  suggestions: string[];
   quickActions: string[];
   selectedAgentHint: string | null;
-  setSelectedAgentHint: (agent: string | null) => void;
+  onAgentChange: (agent: string | null) => void;
 }
 
 export const Composer: React.FC<ComposerProps> = ({
   onSend,
   onVoice,
   isListening,
-  dynamicSuggestions,
+  isThinking,
+  suggestions,
   quickActions,
   selectedAgentHint,
-  setSelectedAgentHint,
+  onAgentChange,
 }) => {
   const [draft, setDraft] = useState("");
   const [agentPickerOpen, setAgentPickerOpen] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!draft.trim()) return;
+    if (!draft.trim() || isThinking) return;
     onSend(draft, selectedAgentHint);
     setDraft("");
   };
 
   return (
     <div style={composerOuterWrapStyle}>
+      {/* Dynamic Suggestions (Frequently Asked / History Based) */}
+      <div style={{ ...contextualSuggestionsWrap, marginBottom: "12px" }} className="hide-scrollbar">
+        {suggestions.length > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginRight: 12, color: '#6366f1' }}>
+            <Lightbulb size={14} />
+            <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Suggested</span>
+          </div>
+        )}
+        {suggestions.slice(0, 5).map((suggestion, i) => (
+          <motion.button
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.05 }}
+            key={suggestion}
+            disabled={isThinking}
+            style={{
+              ...inlineSuggestionButtonStyle,
+              background: '#fff',
+              border: '1px solid #e2e8f0',
+              color: '#475569',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.02)',
+              fontSize: '12px',
+              padding: '6px 14px',
+              opacity: isThinking ? 0.6 : 1,
+              cursor: isThinking ? 'not-allowed' : 'pointer'
+            }}
+            onClick={() => onSend(suggestion, selectedAgentHint)}
+          >
+            {suggestion}
+          </motion.button>
+        ))}
+      </div>
+
       {/* Quick Actions (Proceed / Reject) */}
       <AnimatePresence>
         {quickActions.length > 0 && (
-          <div style={{ ...contextualSuggestionsWrap, marginBottom: "8px" }} className="hide-scrollbar">
+          <div style={{ ...contextualSuggestionsWrap, marginBottom: "12px" }} className="hide-scrollbar">
             {quickActions.map((action, i) => (
               <motion.button
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 key={action}
+                disabled={isThinking}
                 style={{
                   ...inlineSuggestionButtonStyle,
-                  background: action.toLowerCase() === "proceed" ? "rgba(34, 197, 94, 0.15)" : "rgba(239, 68, 68, 0.15)",
-                  color: action.toLowerCase() === "proceed" ? "#4ade80" : "#f87171",
-                  border: `1px solid ${action.toLowerCase() === "proceed" ? "rgba(34, 197, 94, 0.3)" : "rgba(239, 68, 68, 0.3)"}`,
-                  fontWeight: 600,
+                  background: action.toLowerCase() === "proceed" ? "#22c55e" : "#ef4444",
+                  color: "#fff",
+                  border: "none",
+                  fontWeight: 700,
                   padding: "6px 16px",
+                  boxShadow: action.toLowerCase() === "proceed" ? "0 4px 12px rgba(34, 197, 94, 0.2)" : "0 4px 12px rgba(239, 68, 68, 0.2)",
+                  opacity: isThinking ? 0.6 : 1,
+                  cursor: isThinking ? 'not-allowed' : 'pointer'
                 }}
                 onClick={() => onSend(action.toLowerCase(), selectedAgentHint)}
               >
@@ -81,21 +120,6 @@ export const Composer: React.FC<ComposerProps> = ({
         )}
       </AnimatePresence>
 
-      <div style={contextualSuggestionsWrap} className="hide-scrollbar">
-        {dynamicSuggestions.map((suggestion, i) => (
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-            key={suggestion}
-            style={inlineSuggestionButtonStyle}
-            onClick={() => onSend(suggestion, selectedAgentHint)}
-          >
-            {suggestion}
-          </motion.button>
-        ))}
-      </div>
-
       {selectedAgentHint ? (
         <div style={selectedAgentBarStyle}>
           <Sparkles size={12} color={AGENT_COLORS[selectedAgentHint]} />
@@ -105,22 +129,24 @@ export const Composer: React.FC<ComposerProps> = ({
           </span>
           <button
             type="button"
+            disabled={isThinking}
             style={clearAgentHintButtonStyle}
-            onClick={() => setSelectedAgentHint(null)}
+            onClick={() => onAgentChange(null)}
           >
             <XCircle size={14} />
           </button>
         </div>
       ) : null}
 
-      <form className="input-area" onSubmit={handleSubmit}>
+      <form className="input-area" style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }} onSubmit={handleSubmit}>
         <div style={agentPickerWrapStyle}>
           <button
             type="button"
+            disabled={isThinking}
             style={agentPickerButtonStyle}
             onClick={() => setAgentPickerOpen((open) => !open)}
           >
-            <PlusCircle size={20} />
+            <PlusCircle size={20} color="#64748b" />
           </button>
           <AnimatePresence>
             {agentPickerOpen ? (
@@ -137,7 +163,7 @@ export const Composer: React.FC<ComposerProps> = ({
                     type="button"
                     style={agentPickerItemStyle(selectedAgentHint === option.id)}
                     onClick={() => {
-                      setSelectedAgentHint(option.id);
+                      onAgentChange(option.id);
                       setAgentPickerOpen(false);
                     }}
                   >
@@ -157,14 +183,16 @@ export const Composer: React.FC<ComposerProps> = ({
             className="input-field"
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
-            placeholder="Ask anything..."
+            placeholder={isThinking ? "Thinking..." : "Ask anything..."}
+            disabled={isThinking}
+            style={{ fontSize: '15px', fontWeight: 500 }}
           />
         </div>
         <div style={composerActionWrap}>
-          <button type="button" style={iconCircleButton(isListening)} onClick={onVoice}>
-            {isListening ? <Mic size={20} color="#fff" /> : <MicOff size={20} color="#5f6368" />}
+          <button type="button" disabled={isThinking} style={iconCircleButton(isListening)} onClick={onVoice}>
+            {isListening ? <Mic size={20} color="#fff" /> : <MicOff size={20} color="#64748b" />}
           </button>
-          <button type="submit" style={sendButtonStyle} disabled={!draft.trim()}>
+          <button type="submit" style={{ ...sendButtonStyle, background: draft.trim() && !isThinking ? '#6366f1' : '#f1f5f9', color: draft.trim() && !isThinking ? '#fff' : '#94a3b8' }} disabled={!draft.trim() || isThinking}>
             <Send size={18} />
           </button>
         </div>

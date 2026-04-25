@@ -4,9 +4,9 @@ export const appContainerStyle: CSSProperties = {
   display: "flex",
   height: "100vh",
   width: "100vw",
-  background: "#f0f2f5",
+  background: "#fbf9f6",
   overflow: "hidden",
-  color: "#1a1c1e"
+  color: "#1e293b"
 };
 
 export const sidebarStyle: CSSProperties = {
@@ -48,7 +48,7 @@ export const primaryPillButton: CSSProperties = {
   padding: "14px 20px",
   borderRadius: 16,
   border: "none",
-  background: "#1a73e8",
+  background: "#1E2A38",
   color: "#ffffff",
   fontWeight: 600,
   fontSize: 14,
@@ -82,8 +82,8 @@ export const navButtonStyle: CSSProperties = {
 };
 
 export const activeNavButtonStyle: CSSProperties = {
-  color: "#1a73e8",
-  background: "#f0f4f8",
+  color: "#c5a572",
+  background: "rgba(197, 165, 114, 0.08)",
 };
 
 export const activeNavIndicatorStyle: CSSProperties = {
@@ -91,7 +91,7 @@ export const activeNavIndicatorStyle: CSSProperties = {
   left: 0,
   width: 4,
   height: 16,
-  background: "#1a73e8",
+  background: "#c5a572",
   borderRadius: "0 4px 4px 0",
 };
 
@@ -150,7 +150,7 @@ export const sessionIconStyle = (active: boolean): CSSProperties => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: active ? "#1a73e8" : "#dadce0",
+  color: active ? "#c5a572" : "#dadce0",
 });
 
 export const sessionTitleStyle: CSSProperties = {
@@ -261,7 +261,7 @@ export const contentLayout: CSSProperties = {
   minHeight: 0,
   display: "flex",
   flexDirection: "column",
-  overflow: "hidden",
+  overflow: "auto",
 };
 
 export const chatLayoutStyle: CSSProperties = {
@@ -277,8 +277,8 @@ export const chatColumnStyle: CSSProperties = {
   minWidth: 0,
   display: "flex",
   flexDirection: "column",
-  background: "#ffffff",
-  borderRight: "1px solid #e0e4e9",
+  background: "transparent",
+  borderRight: "1px solid #e2e8f0",
   height: "100%",
   overflow: "hidden",
 };
@@ -343,13 +343,14 @@ export const sendButtonStyle: CSSProperties = {
 };
 
 export const detailsPanelStyle: CSSProperties = {
-  background: "#f8f9fa",
+  background: "rgba(241, 245, 249, 0.4)",
   display: "flex",
   flexDirection: "column",
   padding: "24px",
   gap: 16,
   overflowY: "auto",
   height: "100%",
+  backdropFilter: "blur(10px)",
 };
 
 export const detailsCardStyle: CSSProperties = {

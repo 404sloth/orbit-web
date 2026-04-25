@@ -26,7 +26,7 @@ import { useKnowledge } from "./hooks/useKnowledge";
 
 // Utils & Types
 import { NAV } from "./utils/constants";
-import { speechRecognitionCtor } from "./utils/helpers";
+import { speechRecognitionCtor, prettifyAgent } from "./utils/helpers";
 import {
   appContainerStyle,
   contentLayout,
@@ -34,11 +34,6 @@ import {
   chatColumnStyle,
   messagesPaneStyle,
   detailsPanelStyle,
-  helpCardStyle,
-  helpIconWrap,
-  helpTitle,
-  helpText,
-  fullPanePanel,
 } from "./styles/theme";
 
 export default function App() {
@@ -49,7 +44,11 @@ export default function App() {
     pendingApproval, setPendingApproval, generatedReports, endRef
   } = useChat(token);
   
-  const { pulseProjects, pulseTimeline, selectedPid, pulseLoading, loadPulseProjects, loadPulseTimeline, handleSimulateLifecycle } = usePulse();
+  const { 
+    pulseProjects, pulseTimeline, notifications, selectedPid, pulseLoading, 
+    loadPulseProjects, loadPulseTimeline, loadNotifications, handleNotificationAction, handleSimulateLifecycle 
+  } = usePulse();
+  
   const { kbText, setKbText, kbSource, setKbSource, kbFile, setKbFile, kbLoading, handleKbSubmit } = useKnowledge(token);
 
   // UI State
@@ -63,8 +62,9 @@ export default function App() {
   useEffect(() => {
     if (token) {
       void loadSessions();
+      void loadNotifications();
     }
-  }, [token, loadSessions]);
+  }, [token, loadSessions, loadNotifications]);
 
   useEffect(() => {
     if (activeSession) {
@@ -100,9 +100,11 @@ export default function App() {
   const [selectedAgentHint, setSelectedAgentHint] = useState<string | null>(null);
 
   const handleSendWithHint = (text: string, hint?: string | null) => {
-    void handleSend(text, hint ?? selectedAgentHint);
+    void handleSend(text, hint ?? selectedAgentHint ?? undefined);
     setSelectedAgentHint(null);
   };
+
+  const activeTabLabel = NAV.find((t) => t.id === activeTab)?.label || "Orbit";
 
   const mainPanel = useMemo(() => {
     switch (activeTab) {
@@ -127,98 +129,124 @@ export default function App() {
             setToast={setToast}
           />
         );
-      case "research":
-        return <ResearchPanel onSend={handleSendWithHint} setActiveTab={setActiveTab} />;
       default:
-        return null;
-    }
-  }, [activeTab, pulseProjects, selectedPid, pulseTimeline, pulseLoading, loadPulseTimeline, handleSimulateLifecycle, connected, kbText, setKbText, kbSource, setKbSource, kbFile, setKbFile, kbLoading, handleKbSubmit, handleSendWithHint]);
+        return (
+          <div style={chatLayoutStyle}>
+            <div style={chatColumnStyle}>
+              <div style={messagesPaneStyle}>
+                {messages.length === 0 ? (
+                  <EmptyState suggestions={dynamicSuggestions} onSelect={handleSendWithHint} />
+                ) : (
+                  messages.map((msg, i) => (
+                    <MessageItem key={msg.id} msg={msg} isLast={i === messages.length - 1} />
+                  ))
+                )}
+                {isThinking && (
+                  <div style={{ padding: "20px", display: "flex", gap: "10px", alignItems: "center", color: "#64748b" }}>
+                    <div className="dot-typing"></div>
+                    <span style={{ fontSize: "13px", fontWeight: 500 }}>
+                      Consulting with {prettifyAgent(messages[messages.length - 1]?.metadata?.agent_hint as string | undefined) || "Supervisor"}...
+                    </span>
+                  </div>
+                )}
+                <div ref={endRef} />
+              </div>
 
-  if (!token) {
-    return <Login onLogin={handleLogin} />;
-  }
+              <Composer
+                onSend={handleSendWithHint}
+                isThinking={isThinking}
+                isListening={isListening}
+                onVoice={handleVoice}
+                suggestions={dynamicSuggestions}
+                quickActions={quickActions}
+                selectedAgentHint={selectedAgentHint}
+                onAgentChange={setSelectedAgentHint}
+              />
+            </div>
+
+            <div style={detailsPanelStyle}>
+              <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
+                <button 
+                  onClick={() => setStatusOpen(false)}
+                  style={{ flex: 1, padding: '8px', borderRadius: 8, border: !statusOpen ? '1px solid #e2e8f0' : 'none', background: !statusOpen ? '#fff' : 'transparent', fontSize: 13, fontWeight: 600, color: !statusOpen ? '#1e293b' : '#64748b', cursor: 'pointer' }}
+                >
+                  Insights
+                </button>
+                <button 
+                  onClick={() => setStatusOpen(true)}
+                  style={{ flex: 1, padding: '8px', borderRadius: 8, border: statusOpen ? '1px solid #e2e8f0' : 'none', background: statusOpen ? '#fff' : 'transparent', fontSize: 13, fontWeight: 600, color: statusOpen ? '#1e293b' : '#64748b', cursor: 'pointer' }}
+                >
+                  Trace
+                </button>
+              </div>
+              {statusOpen ? (
+                <TracePanel lastRouting={lastRouting} liveTrace={liveTrace} isThinking={isThinking} />
+              ) : (
+                <ReportPanel reports={generatedReports} />
+              )}
+            </div>
+          </div>
+        );
+    }
+  }, [
+    activeTab, pulseProjects, selectedPid, pulseTimeline, pulseLoading, loadPulseTimeline, handleSimulateLifecycle,
+    kbText, kbSource, kbFile, kbLoading, handleKbSubmit, messages, dynamicSuggestions, isThinking, isListening, quickActions,
+    selectedAgentHint, lastRouting, liveTrace, generatedReports, statusOpen, endRef, handleSendWithHint, handleVoice
+  ]);
+
+  if (!token) return <Login onLogin={handleLogin} />;
 
   return (
     <div style={appContainerStyle}>
-      <AnimatePresence>
-        {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
-      </AnimatePresence>
-
-      <Sidebar
-        isCollapsed={isCollapsed}
+      <OfflineOverlay connected={connected} />
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        isCollapsed={isCollapsed} 
         setIsCollapsed={setIsCollapsed}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
         sessions={sessions}
         activeSession={activeSession}
-        setActiveSession={setActiveSession}
-        handleNewChat={handleNewChat}
-        handleDeleteChat={handleDeleteChat}
-        statusOpen={statusOpen}
-        setStatusOpen={setStatusOpen}
-        connected={connected}
-        health={null}
+        onSessionSelect={setActiveSession}
+        onNewChat={handleNewChat}
+        onDeleteChat={handleDeleteChat}
+        onLogout={handleLogout}
       />
-
-      <main style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflow: "hidden" }}>
-        <Header
-          activeTabLabel={NAV.find(n => n.id === activeTab)?.label ?? activeTab}
-          isThinking={isThinking}
-          connected={connected}
+      
+      <main style={contentLayout}>
+        <Header 
+          activeTabLabel={activeTabLabel} 
+          isThinking={isThinking} 
+          connected={connected} 
+          notifications={notifications}
+          onNotificationAction={handleNotificationAction}
+          currentUser={currentUser}
         />
-
-        <div style={contentLayout}>
-          {activeTab === "conversations" ? (
-            <div style={chatLayoutStyle}>
-              <section style={chatColumnStyle}>
-                <div style={messagesPaneStyle} className="hide-scrollbar">
-                  {messages.length ? (
-                    messages.map((msg) => <MessageItem key={msg.id} msg={msg} />)
-                  ) : (
-                    <EmptyState suggestions={dynamicSuggestions} onPickSuggestion={handleSendWithHint} />
-                  )}
-                  <div ref={endRef} />
-                </div>
-
-                <Composer
-                  onSend={handleSendWithHint}
-                  onVoice={handleVoice}
-                  isListening={isListening}
-                  dynamicSuggestions={dynamicSuggestions}
-                  quickActions={quickActions}
-                  selectedAgentHint={selectedAgentHint}
-                  setSelectedAgentHint={setSelectedAgentHint}
-                />
-              </section>
-
-              <aside style={detailsPanelStyle} className="hide-scrollbar">
-                <TracePanel lastRouting={lastRouting} isThinking={isThinking} liveTrace={liveTrace} />
-                <ReportPanel reports={generatedReports} />
-                
-                <div style={helpCardStyle}>
-                  <div style={helpIconWrap}><Sparkles size={16} color="#1a73e8" /></div>
-                  <div>
-                    <div style={helpTitle}>Pro Tip</div>
-                    <div style={helpText}>Force routing using the specialized agents menu for precise cross-domain logic.</div>
-                  </div>
-                </div>
-              </aside>
-            </div>
-          ) : (
-            <div style={fullPanePanel}>{mainPanel}</div>
-          )}
-        </div>
-
-        <AnimatePresence>
-          {pendingApproval && (
-            <ApprovalGateway
-              prompt={pendingApproval.prompt}
-              onDeny={() => { handleSend("reject"); setPendingApproval(null); }}
-              onApprove={() => { handleSend("approve"); setPendingApproval(null); }}
-            />
-          )}
-        </AnimatePresence>
+        {mainPanel}
       </main>
+
+      <AnimatePresence>
+        {pendingApproval && (
+          <ApprovalGateway
+            prompt={pendingApproval.prompt}
+            onApprove={() => {
+              void handleSend("Approve");
+              setPendingApproval(null);
+            }}
+            onReject={() => {
+              void handleSend("Reject");
+              setPendingApproval(null);
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {toast && (
+        <Toast 
+          message={toast.message} 
+          type={toast.type} 
+          onClose={() => setToast(null)} 
+        />
+      )}
     </div>
   );
 }
