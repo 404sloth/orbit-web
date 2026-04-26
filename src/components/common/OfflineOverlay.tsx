@@ -45,12 +45,12 @@ export const OfflineOverlay: React.FC<OfflineOverlayProps> = ({ connected, onRet
               onClick={onRetry}
               style={{
                 padding: "12px 32px",
-                background: "#6366f1",
+                background: "var(--brand-gradient)",
                 color: "#fff",
                 borderRadius: 99,
                 fontSize: 14,
                 fontWeight: 700,
-                boxShadow: "0 8px 16px rgba(99,102,241,0.3)",
+                boxShadow: "0 8px 16px rgba(124,58,237,0.3)",
                 border: "none",
                 cursor: "pointer"
               }}

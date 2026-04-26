@@ -168,13 +168,27 @@ export default function App() {
               <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
                 <button 
                   onClick={() => setStatusOpen(false)}
-                  style={{ flex: 1, padding: '8px', borderRadius: 8, border: !statusOpen ? '1px solid #e2e8f0' : 'none', background: !statusOpen ? '#fff' : 'transparent', fontSize: 13, fontWeight: 600, color: !statusOpen ? '#1e293b' : '#64748b', cursor: 'pointer' }}
+                  style={{ 
+                    flex: 1, padding: '10px', borderRadius: 12, 
+                    border: !statusOpen ? '1px solid var(--brand-primary)' : '1px solid var(--border-light)', 
+                    background: !statusOpen ? 'var(--brand-light)' : 'transparent', 
+                    fontSize: 13, fontWeight: 700, 
+                    color: !statusOpen ? 'var(--brand-primary)' : 'var(--text-secondary)', 
+                    cursor: 'pointer', transition: 'all 0.2s ease'
+                  }}
                 >
                   Insights
                 </button>
                 <button 
                   onClick={() => setStatusOpen(true)}
-                  style={{ flex: 1, padding: '8px', borderRadius: 8, border: statusOpen ? '1px solid #e2e8f0' : 'none', background: statusOpen ? '#fff' : 'transparent', fontSize: 13, fontWeight: 600, color: statusOpen ? '#1e293b' : '#64748b', cursor: 'pointer' }}
+                  style={{ 
+                    flex: 1, padding: '10px', borderRadius: 12, 
+                    border: statusOpen ? '1px solid var(--brand-primary)' : '1px solid var(--border-light)', 
+                    background: statusOpen ? 'var(--brand-light)' : 'transparent', 
+                    fontSize: 13, fontWeight: 700, 
+                    color: statusOpen ? 'var(--brand-primary)' : 'var(--text-secondary)', 
+                    cursor: 'pointer', transition: 'all 0.2s ease'
+                  }}
                 >
                   Trace
                 </button>

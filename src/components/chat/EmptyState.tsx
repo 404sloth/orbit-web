@@ -21,20 +21,28 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ suggestions, onSelect })
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        style={emptyLogoWrap}
+        style={{ ...emptyLogoWrap, background: 'var(--brand-light)', color: 'var(--brand-primary)' }}
       >
-        <Sparkles size={42} color="#6366f1" />
+        <Sparkles size={42} color="var(--brand-primary)" />
       </motion.div>
-      <div style={emptyStateTitleStyle}>Orbit Intelligence</div>
-      <div style={emptyStateSubtitleStyle}>Strategic orchestration across vendors, projects, and compliance.</div>
+      <div style={{ ...emptyStateTitleStyle, color: 'var(--text-primary)', fontSize: 24, fontWeight: 900 }}>Orbit Intelligence</div>
+      <div style={{ ...emptyStateSubtitleStyle, color: 'var(--text-secondary)' }}>Strategic orchestration across vendors, projects, and compliance.</div>
       <div style={suggestionsContainerStyle}>
         {suggestions.map((suggestion, i) => (
           <motion.button
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.05, borderColor: 'var(--brand-primary)', color: 'var(--brand-primary)' }}
             transition={{ delay: i * 0.05 }}
             key={suggestion}
-            style={{ ...suggestionButtonStyle, border: '1px solid #e2e8f0', background: '#fff', color: '#475569' }}
+            style={{ 
+              ...suggestionButtonStyle, 
+              border: '1px solid var(--border-light)', 
+              background: '#fff', 
+              color: 'var(--text-secondary)',
+              borderRadius: '16px',
+              padding: '12px 24px'
+            }}
             onClick={() => onSelect(suggestion)}
           >
             {suggestion}

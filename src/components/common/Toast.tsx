@@ -37,7 +37,7 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
       }}
     >
       {type === "success" ? <CheckCircle2 size={16} /> : <XCircle size={16} />}
-      <span style={{ fontSize: 13, fontWeight: 600 }}>{message}</span>
+      <span style={{ fontSize: 13, fontWeight: 700 }}>{message}</span>
     </motion.div>
   );
 };

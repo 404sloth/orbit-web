@@ -47,9 +47,9 @@ export const INITIAL_SUGGESTIONS = [
 ];
 
 export const AGENT_COLORS: Record<string, string> = {
-  vendor_management: "#1a73e8",
-  meetings_communication: "#e37400",
-  knowledge_base: "#1e8e3e",
+  vendor_management: "#7c3aed", // Premium Purple
+  meetings_communication: "#db2777", // Pink/Rose for contrast
+  knowledge_base: "#059669", // Emerald for balance
 };
 
 export const AGENT_OPTIONS = [

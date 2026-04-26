@@ -34,11 +34,11 @@ export const logoBadgeStyle: CSSProperties = {
   width: 44,
   height: 44,
   borderRadius: 16,
-  background: "#e8f0fe",
+  background: "var(--brand-light)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  boxShadow: "0 4px 12px rgba(26,115,232,0.1)",
+  boxShadow: "0 4px 12px rgba(109, 40, 217, 0.1)",
 };
 
 export const primaryPillButton: CSSProperties = {
@@ -48,11 +48,11 @@ export const primaryPillButton: CSSProperties = {
   padding: "14px 20px",
   borderRadius: 16,
   border: "none",
-  background: "#1E2A38",
+  background: "var(--brand-primary)",
   color: "#ffffff",
-  fontWeight: 600,
-  fontSize: 14,
-  boxShadow: "0 4px 12px rgba(26,115,232,0.25)",
+  fontWeight: 800,
+  fontSize: 13,
+  boxShadow: "0 4px 12px rgba(109, 40, 217, 0.25)",
   transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
   cursor: "pointer",
   marginBottom: 12,
@@ -73,8 +73,8 @@ export const navButtonStyle: CSSProperties = {
   padding: "10px 16px",
   borderRadius: 12,
   color: "#5f6368",
-  fontWeight: 500,
-  fontSize: 14,
+  fontWeight: 600,
+  fontSize: 13,
   background: "transparent",
   border: "none",
   cursor: "pointer",
@@ -82,8 +82,8 @@ export const navButtonStyle: CSSProperties = {
 };
 
 export const activeNavButtonStyle: CSSProperties = {
-  color: "#c5a572",
-  background: "rgba(197, 165, 114, 0.08)",
+  color: "var(--brand-primary)",
+  background: "rgba(109, 40, 217, 0.08)",
 };
 
 export const activeNavIndicatorStyle: CSSProperties = {
@@ -91,7 +91,7 @@ export const activeNavIndicatorStyle: CSSProperties = {
   left: 0,
   width: 4,
   height: 16,
-  background: "#c5a572",
+  background: "var(--brand-primary)",
   borderRadius: "0 4px 4px 0",
 };
 
@@ -145,17 +145,17 @@ export const sessionIconStyle = (active: boolean): CSSProperties => ({
   width: 28,
   height: 28,
   borderRadius: 8,
-  background: active ? "#e8f0fe" : "#ffffff",
-  border: `1px solid ${active ? "#ceead6" : "#f1f3f4"}`,
+  background: active ? "var(--brand-light)" : "#ffffff",
+  border: `1px solid ${active ? "var(--brand-light)" : "#f1f3f4"}`,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: active ? "#c5a572" : "#dadce0",
+  color: active ? "var(--brand-primary)" : "#dadce0",
 });
 
 export const sessionTitleStyle: CSSProperties = {
-  fontSize: 13,
-  fontWeight: 600,
+  fontSize: 12,
+  fontWeight: 700,
   color: "#3c4043",
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -193,8 +193,8 @@ export const statusToggleStyle: CSSProperties = {
   borderRadius: 14,
   background: "transparent",
   color: "#3c4043",
-  fontWeight: 600,
-  fontSize: 13,
+  fontWeight: 700,
+  fontSize: 12,
   border: "none",
   cursor: "pointer",
 };
@@ -244,16 +244,16 @@ export const mainStyle: CSSProperties = {
   display: "flex",
   flexDirection: "column",
   minWidth: 0,
-  background: "#ffffff",
+  background: "var(--bg-main)",
   height: "100vh",
   overflow: "hidden",
 };
 
 export const pageTitleStyle: CSSProperties = {
-  fontSize: 20,
-  fontWeight: 700,
-  color: "#202124",
-  letterSpacing: "-0.01em",
+  fontSize: 18,
+  fontWeight: 900,
+  color: "var(--text-primary)",
+  letterSpacing: "-0.02em",
 };
 
 export const contentLayout: CSSProperties = {
@@ -334,11 +334,11 @@ export const sendButtonStyle: CSSProperties = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: "linear-gradient(135deg, #1a73e8, #4285f4)",
+  background: "var(--brand-gradient)",
   color: "#ffffff",
   border: "none",
   cursor: "pointer",
-  boxShadow: "0 8px 24px rgba(26,115,232,0.3)",
+  boxShadow: "0 8px 24px rgba(109, 40, 217, 0.3)",
   transition: "all 0.2s ease",
 };
 
@@ -369,9 +369,9 @@ export const detailsHeaderWithToggle: CSSProperties = {
 };
 
 export const detailsTitleStyle: CSSProperties = {
-  fontSize: 15,
-  fontWeight: 700,
-  color: "#202124",
+  fontSize: 14,
+  fontWeight: 900,
+  color: "var(--text-primary)",
 };
 
 export const traceIndicatorWrap: CSSProperties = {
@@ -455,12 +455,12 @@ export const reasoningBoxStyle: CSSProperties = {
 };
 
 export const reasoningLabelStyle: CSSProperties = {
-  fontSize: 10,
+  fontSize: 9,
   textTransform: "uppercase",
-  letterSpacing: "0.08em",
-  fontWeight: 800,
-  color: "#1a73e8",
-  marginBottom: 10,
+  letterSpacing: "0.15em",
+  fontWeight: 900,
+  color: "var(--brand-primary)",
+  marginBottom: 8,
   display: "block",
 };
 
@@ -471,12 +471,12 @@ export const toolsListStyle: CSSProperties = {
 };
 
 export const toolChipStyle: CSSProperties = {
-  fontSize: 10,
-  fontWeight: 700,
-  padding: "6px 12px",
-  borderRadius: 10,
-  background: "#f0f4f8",
-  color: "#1a73e8",
+  fontSize: 9,
+  fontWeight: 800,
+  padding: "4px 10px",
+  borderRadius: 8,
+  background: "var(--bg-main)",
+  color: "var(--brand-primary)",
   textTransform: "uppercase",
   letterSpacing: "0.04em",
   display: "flex",
@@ -497,8 +497,8 @@ export const helpCardStyle: CSSProperties = {
   gap: 12,
   padding: "16px",
   borderRadius: 16,
-  background: "#e8f0fe80",
-  border: "1px solid #e8f0fe",
+  background: "var(--brand-light)",
+  border: "1px solid rgba(124, 58, 237, 0.1)",
 };
 
 export const helpIconWrap: CSSProperties = {
@@ -513,9 +513,9 @@ export const helpIconWrap: CSSProperties = {
 };
 
 export const helpTitle: CSSProperties = {
-  fontSize: 12,
-  fontWeight: 700,
-  color: "#1a73e8",
+  fontSize: 11,
+  fontWeight: 800,
+  color: "var(--brand-primary)",
   marginBottom: 2,
 };
 
@@ -544,12 +544,12 @@ export const selectedAgentLabelStyle: CSSProperties = {
 };
 
 export const agentHintChipStyle = (agent: string): CSSProperties => ({
-  fontSize: 10,
-  fontWeight: 700,
-  padding: "2px 8px",
+  fontSize: 9,
+  fontWeight: 800,
+  padding: "2px 6px",
   borderRadius: 6,
-  background: "#e8f0fe",
-  color: "#1a73e8",
+  background: "var(--brand-primary)",
+  color: "#ffffff",
 });
 
 export const clearAgentHintButtonStyle: CSSProperties = {
@@ -628,8 +628,8 @@ export const pickerDot = (color: string): CSSProperties => ({
 });
 
 export const agentPickerItemTitleStyle: CSSProperties = {
-  fontSize: 13,
-  fontWeight: 600,
+  fontSize: 12,
+  fontWeight: 700,
   color: "#202124",
 };
 
@@ -689,8 +689,8 @@ export const suggestionButtonStyle: CSSProperties = {
   borderRadius: 99,
   background: "#ffffff",
   border: "1px solid #f1f3f4",
-  fontSize: 13,
-  fontWeight: 600,
+  fontSize: 12,
+  fontWeight: 700,
   color: "#3c4043",
   cursor: "pointer",
   transition: "all 0.2s ease",
@@ -762,17 +762,17 @@ export const messageIconWrap = (isUser: boolean, agentColor: string): CSSPropert
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: isUser ? "#1a73e8" : agentColor,
+  background: isUser ? "var(--brand-primary)" : agentColor,
   flexShrink: 0,
-  boxShadow: `0 4px 12px ${isUser ? "rgba(26,115,232,0.2)" : "rgba(0,0,0,0.08)"}`,
+  boxShadow: `0 4px 12px ${isUser ? "rgba(124, 58, 237, 0.2)" : "rgba(0,0,0,0.08)"}`,
 });
 
 export const messageSenderStyle = (isUser: boolean, agentColor: string): CSSProperties => ({
-  fontSize: 11,
-  fontWeight: 800,
-  color: isUser ? "#1a73e8" : agentColor,
+  fontSize: 10,
+  fontWeight: 900,
+  color: isUser ? "var(--brand-primary)" : agentColor,
   textTransform: "uppercase",
-  letterSpacing: "0.04em",
+  letterSpacing: "0.08em",
 });
 
 export const messageMetaStyle = (isUser: boolean): CSSProperties => ({

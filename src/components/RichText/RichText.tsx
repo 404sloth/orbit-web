@@ -346,8 +346,14 @@ export const RichText: React.FC<RichTextProps> = ({ text, isUser }) => {
         continue;
       }
 
-      // table row
-      if (trimmed.startsWith("|") && trimmed.includes("|")) {
+      // table row detection
+      const isTableRow = trimmed.includes("|") && (
+        (trimmed.startsWith("|") && trimmed.endsWith("|")) ||
+        (i + 1 < lines.length && lines[i+1].trim().match(/^\|?(:?-{3,}:?\|?)+$/)) || // check if next line is separator
+        (i > 0 && lines[i-1].trim().match(/^\|?(:?-{3,}:?\|?)+$/)) // check if prev line is separator
+      );
+
+      if (isTableRow) {
         flushList();
         tableLines.push(line);
         continue;

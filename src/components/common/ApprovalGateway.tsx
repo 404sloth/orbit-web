@@ -25,8 +25,8 @@ export const ApprovalGateway: React.FC<ApprovalGatewayProps> = ({ prompt, onReje
         </div>
         <div style={modalPromptWrapStyle}><pre style={modalPromptStyle}>{prompt}</pre></div>
         <div style={modalActionsStyle}>
-          <button style={secondaryActionButton} onClick={onReject}><XCircle size={18} />Deny</button>
-          <button style={primaryActionButton} onClick={onApprove}><CheckCircle2 size={18} />Approve</button>
+          <button style={{ ...secondaryActionButton, borderRadius: 14 }} onClick={onReject}><XCircle size={18} />Deny</button>
+          <button style={{ ...primaryActionButton, borderRadius: 14, background: 'var(--brand-gradient)', border: 'none', color: '#fff', fontWeight: 800 }} onClick={onApprove}><CheckCircle2 size={18} />Approve</button>
         </div>
       </motion.div>
     </motion.div>

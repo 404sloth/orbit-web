@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Bell, User, X, FileText, Wifi, WifiOff } from "lucide-react";
+import { Loader2, Bell, User, X, FileText, Wifi, WifiOff, LogOut, Settings, ChevronDown } from "lucide-react";
 import { pageTitleStyle } from "../../styles/theme";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
 interface HeaderProps {
   activeTabLabel: string;
@@ -23,80 +24,124 @@ export const Header: React.FC<HeaderProps> = ({
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
+  const notifRef = useClickOutside(() => setNotifOpen(false));
+  const profileRef = useClickOutside(() => setProfileOpen(false));
+
   return (
-    <header className="main-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 24px", height: "64px", background: "#fff", borderBottom: "1px solid #f1f5f9" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <h1 style={pageTitleStyle}>{activeTabLabel}</h1>
-        {isThinking ? (
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="thinking-badge"
-            style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "12px", color: "#6366f1", fontWeight: 600 }}
-          >
-            <Loader2 size={14} className="spin" />
-            Thinking...
-          </motion.div>
-        ) : null}
+    <header className="main-header" style={{ 
+      display: "flex", justifyContent: "space-between", alignItems: "center", 
+      padding: "0 32px", height: "72px", background: "rgba(255, 253, 245, 0.8)", 
+      backdropFilter: "blur(12px)", borderBottom: "1px solid var(--border-light)",
+      position: "sticky", top: 0, zIndex: 50
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+        <h1 style={{ ...pageTitleStyle, color: "var(--text-primary)" }}>{activeTabLabel}</h1>
+        <AnimatePresence>
+          {isThinking && (
+            <motion.div
+              initial={{ opacity: 0, x: -10, scale: 0.9 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: -10, scale: 0.9 }}
+              className="thinking-badge"
+              style={{ 
+                display: "flex", alignItems: "center", gap: 8, fontSize: "12px", 
+                color: "var(--brand-primary)", fontWeight: 700,
+                background: "var(--brand-light)", padding: "6px 14px", borderRadius: "99px",
+                border: "1px solid rgba(109, 40, 217, 0.1)"
+              }}
+            >
+              <Loader2 size={14} className="spin" />
+              Agent Cognition...
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
         {/* Connection Badge */}
-        <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "11px", fontWeight: 700, color: connected ? "#10b981" : "#ef4444", background: connected ? "#f0fdf4" : "#fef2f2", padding: "4px 10px", borderRadius: "99px" }}>
+        <div style={{ 
+          display: "flex", alignItems: "center", gap: 8, fontSize: "11px", fontWeight: 800, 
+          color: connected ? "var(--accent-green)" : "var(--accent-red)", 
+          background: connected ? "rgba(5, 150, 105, 0.08)" : "rgba(220, 38, 38, 0.08)", 
+          padding: "6px 14px", borderRadius: "99px", textTransform: "uppercase", letterSpacing: "0.02em"
+        }}>
           {connected ? <Wifi size={12} /> : <WifiOff size={12} />}
-          {connected ? "Active" : "Offline"}
+          {connected ? "Live" : "Disconnected"}
         </div>
 
         {/* Notifications */}
-        <div style={{ position: "relative" }}>
+        <div style={{ position: "relative" }} ref={notifRef}>
           <button 
             onClick={() => setNotifOpen(!notifOpen)}
-            style={{ background: "none", border: "none", color: "#64748b", cursor: "pointer", position: "relative", padding: 4 }}
+            style={{ 
+              background: notifOpen ? "var(--brand-light)" : "none", 
+              border: "none", color: notifOpen ? "var(--brand-primary)" : "var(--text-secondary)", 
+              cursor: "pointer", position: "relative", padding: 8, borderRadius: "12px",
+              transition: "all 0.2s ease"
+            }}
           >
-            <Bell size={20} />
+            <Bell size={22} />
             {notifications.length > 0 && (
-              <span style={{ position: "absolute", top: 0, right: 0, width: 8, height: 8, background: "#ef4444", borderRadius: "50%", border: "2px solid #fff" }} />
+              <span style={{ 
+                position: "absolute", top: 8, right: 8, width: 10, height: 10, 
+                background: "var(--accent-red)", borderRadius: "50%", 
+                border: "2px solid #fff", boxShadow: "0 0 10px rgba(220, 38, 38, 0.4)" 
+              }} />
             )}
           </button>
 
           <AnimatePresence>
             {notifOpen && (
               <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                initial={{ opacity: 0, y: 15, scale: 0.95, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: 15, scale: 0.95, filter: "blur(4px)" }}
+                transition={{ type: "spring", damping: 20, stiffness: 300 }}
                 style={{ 
-                  position: "absolute", top: "100%", right: 0, width: 320, background: "#fff", 
-                  borderRadius: 16, boxShadow: "0 10px 40px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9", 
-                  zIndex: 100, marginTop: 12, overflow: "hidden" 
+                  position: "absolute", top: "100%", right: 0, width: 340, background: "#fff", 
+                  borderRadius: 24, boxShadow: "0 20px 50px rgba(109, 40, 217, 0.12)", 
+                  border: "1px solid var(--border-light)", zIndex: 100, marginTop: 16, overflow: "hidden" 
                 }}
               >
-                <div style={{ padding: "16px", borderBottom: "1px solid #f1f5f9", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontWeight: 700, fontSize: "14px", color: "#1e293b" }}>Notifications</span>
-                  <span style={{ fontSize: "11px", color: "#64748b", background: "#f1f5f9", padding: "2px 8px", borderRadius: 99 }}>{notifications.length} Pending</span>
+                <div style={{ padding: "20px", borderBottom: "1px solid var(--border-light)", display: "flex", justifyContent: "space-between", alignItems: "center", background: "#f8fafc" }}>
+                  <span style={{ fontWeight: 800, fontSize: "15px", color: "var(--text-primary)", letterSpacing: "-0.01em" }}>Intelligence Feed</span>
+                  <span style={{ 
+                    fontSize: "11px", fontWeight: 700, color: "var(--brand-primary)", 
+                    background: "var(--brand-light)", padding: "4px 10px", borderRadius: 99 
+                  }}>{notifications.length} Unread</span>
                 </div>
-                <div style={{ maxHeight: 400, overflowY: "auto" }}>
+                <div style={{ maxHeight: 420, overflowY: "auto" }} className="hide-scrollbar">
                   {notifications.length === 0 ? (
-                    <div style={{ padding: 40, textAlign: "center", color: "#94a3b8", fontSize: "13px" }}>
-                      All caught up!
+                    <div style={{ padding: 60, textAlign: "center", color: "var(--text-tertiary)", fontSize: "14px" }}>
+                      <div style={{ marginBottom: 12, opacity: 0.5 }}><Bell size={32} style={{ margin: "0 auto" }} /></div>
+                      No new intelligence.
                     </div>
                   ) : (
                     notifications.map((n) => (
-                      <div key={n.id} style={{ padding: 16, borderBottom: "1px solid #f8fafc", transition: "background 0.2s" }} className="notif-item">
-                        <div style={{ fontSize: "13px", fontWeight: 600, color: "#1e293b", marginBottom: 4 }}>{n.title}</div>
-                        <div style={{ fontSize: "12px", color: "#64748b", lineHeight: 1.4, marginBottom: 12 }}>{n.summary?.slice(0, 80)}...</div>
-                        <div style={{ display: "flex", gap: 8 }}>
+                      <div key={n.id} style={{ padding: 20, borderBottom: "1px solid var(--bg-main)", transition: "background 0.2s" }} className="notif-item">
+                        <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--text-primary)", marginBottom: 6 }}>{n.title}</div>
+                        <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: 1.5, marginBottom: 16 }}>{n.summary?.slice(0, 90)}...</div>
+                        <div style={{ display: "flex", gap: 10 }}>
                           <button 
                             onClick={() => onNotificationAction(n.id, "make_rfp")}
-                            style={{ flex: 1, padding: "6px", borderRadius: 8, background: "#6366f1", color: "#fff", border: "none", fontSize: "11px", fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}
+                            style={{ 
+                              flex: 1, padding: "8px", borderRadius: 10, background: "var(--brand-gradient)", 
+                              color: "#fff", border: "none", fontSize: "12px", fontWeight: 700, 
+                              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", 
+                              gap: 6, boxShadow: "0 4px 12px rgba(109, 40, 217, 0.2)"
+                            }}
                           >
-                            <FileText size={12} /> Make RFP
+                            <FileText size={14} /> Draft RFP
                           </button>
                           <button 
                             onClick={() => onNotificationAction(n.id, "reject")}
-                            style={{ padding: "6px 10px", borderRadius: 8, background: "#f1f5f9", color: "#64748b", border: "none", fontSize: "11px", fontWeight: 600, cursor: "pointer" }}
+                            style={{ 
+                              padding: "8px 12px", borderRadius: 10, background: "var(--bg-main)", 
+                              color: "var(--text-secondary)", border: "1px solid var(--border-light)", 
+                              fontSize: "12px", fontWeight: 600, cursor: "pointer" 
+                            }}
                           >
-                            Reject
+                            Dismiss
                           </button>
                         </div>
                       </div>
@@ -109,18 +154,72 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Profile */}
-        <div style={{ position: "relative" }}>
+        <div style={{ position: "relative" }} ref={profileRef}>
           <button 
             onClick={() => setProfileOpen(!profileOpen)}
-            style={{ display: "flex", alignItems: "center", gap: 10, background: "#f8fafc", border: "1px solid #e2e8f0", padding: "4px 12px 4px 4px", borderRadius: 99, cursor: "pointer" }}
+            style={{ 
+              display: "flex", alignItems: "center", gap: 12, background: "var(--bg-main)", 
+              border: `1px solid ${profileOpen ? "var(--brand-primary)" : "var(--border-light)"}`, 
+              padding: "6px 16px 6px 6px", borderRadius: 99, cursor: "pointer",
+              transition: "all 0.2s ease",
+              boxShadow: profileOpen ? "0 4px 12px rgba(109, 40, 217, 0.1)" : "none"
+            }}
           >
-            <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#6366f1", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: 700 }}>
-              {currentUser?.name?.charAt(0) || "U"}
+            <div style={{ 
+              width: 32, height: 32, borderRadius: "50%", background: "var(--brand-gradient)", 
+              color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", 
+              fontSize: "14px", fontWeight: 800, boxShadow: "0 2px 8px rgba(109, 40, 217, 0.3)"
+            }}>
+              {currentUser?.username?.charAt(0).toUpperCase() || "U"}
             </div>
-            <span style={{ fontSize: "13px", fontWeight: 600, color: "#1e293b" }}>{currentUser?.name || "User"}</span>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+              <span style={{ fontSize: "13px", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1 }}>{currentUser?.username || "Guest"}</span>
+              <span style={{ fontSize: "10px", fontWeight: 600, color: "var(--text-tertiary)", textTransform: "uppercase" }}>{currentUser?.role || "User"}</span>
+            </div>
+            <ChevronDown size={14} color="var(--text-tertiary)" style={{ marginLeft: 4, transform: profileOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
           </button>
+
+          <AnimatePresence>
+            {profileOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 15, scale: 0.95 }}
+                style={{ 
+                  position: "absolute", top: "100%", right: 0, width: 220, background: "#fff", 
+                  borderRadius: 20, boxShadow: "0 20px 50px rgba(109, 40, 217, 0.12)", 
+                  border: "1px solid var(--border-light)", zIndex: 100, marginTop: 12, overflow: "hidden",
+                  padding: 8
+                }}
+              >
+                <div style={{ padding: "12px", borderBottom: "1px solid var(--bg-main)", marginBottom: 4 }}>
+                  <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--text-tertiary)" }}>Signed in as</div>
+                  <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--text-primary)", overflow: "hidden", textOverflow: "ellipsis" }}>{currentUser?.email || currentUser?.username}</div>
+                </div>
+                <button style={dropdownItemStyle}><Settings size={16} /> Account Settings</button>
+                <button style={{ ...dropdownItemStyle, color: "var(--accent-red)" }}><LogOut size={16} /> Sign Out</button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </header>
   );
+};
+
+const dropdownItemStyle: React.CSSProperties = {
+  width: "100%",
+  padding: "10px 12px",
+  borderRadius: 12,
+  background: "transparent",
+  border: "none",
+  textAlign: "left",
+  cursor: "pointer",
+  display: "flex",
+  alignItems: "center",
+  gap: 12,
+  fontSize: "13px",
+  fontWeight: 600,
+  color: "var(--text-secondary)",
+  transition: "all 0.2s ease"
 };
