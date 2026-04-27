@@ -56,17 +56,17 @@ const ProjectCard = ({
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-        <div style={{ 
-          width: 40, height: 40, borderRadius: 12, 
-          background: 'var(--brand-light)', 
+        <div style={{
+          width: 40, height: 40, borderRadius: 12,
+          background: 'var(--brand-light)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           color: 'var(--brand-primary)'
         }}>
           <Target size={20} />
         </div>
-        <span style={{ 
-          padding: "5px 12px", borderRadius: 12, 
-          background: healthBg, color: healthColor, 
+        <span style={{
+          padding: "5px 12px", borderRadius: 12,
+          background: healthBg, color: healthColor,
           fontSize: 10, fontWeight: 800, textTransform: "uppercase",
           letterSpacing: '0.05em', border: `1px solid ${healthColor}20`
         }}>
@@ -76,7 +76,7 @@ const ProjectCard = ({
 
       <h3 style={{ fontSize: 16, fontWeight: 900, color: "var(--text-primary)", marginBottom: 8, lineHeight: 1.4 }}>{project.name}</h3>
       <p style={{ fontSize: 12, color: 'var(--text-tertiary)', marginBottom: 20, fontWeight: 500 }}>#{project.id} • Strategic Initiative</p>
-      
+
       {/* Progress Visualization */}
       <div style={{ marginBottom: 20 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
@@ -84,10 +84,10 @@ const ProjectCard = ({
           <span style={{ fontSize: 10, fontWeight: 800, color: healthColor }}>{project.health_color === 'green' ? 'High' : 'At Risk'}</span>
         </div>
         <div style={{ height: 6, background: 'var(--bg-main)', borderRadius: 10, overflow: 'hidden', border: '1px solid var(--border-light)' }}>
-          <motion.div 
+          <motion.div
             initial={{ width: 0 }}
             animate={{ width: project.health_color === 'green' ? '85%' : project.health_color === 'amber' ? '60%' : '35%' }}
-            style={{ height: '100%', background: healthColor, borderRadius: 10 }} 
+            style={{ height: '100%', background: healthColor, borderRadius: 10 }}
           />
         </div>
       </div>
@@ -142,7 +142,7 @@ const CurvedTimeline = ({
     const dates = sortedTimeline.map((e) => new Date(e.date).getTime());
     const min = Math.min(...dates), max = Math.max(...dates);
     const range = max - min || 86400000;
-    
+
     const padding = 60, minNodeSpacing = 100;
     const height = Math.max(600, sortedTimeline.length * minNodeSpacing + padding * 2);
     const usableHeight = height - padding * 2;
@@ -154,10 +154,10 @@ const CurvedTimeline = ({
       // Linear distribution by index to prevent overlaps, but biased by time
       const timeRatio = range === 0 ? 0.5 : (new Date(event.date).getTime() - min) / range;
       const indexRatio = index / (sortedTimeline.length - 1 || 1);
-      
+
       // Blend ratios: mostly index-based to guarantee spacing, slightly time-based
       const ratio = indexRatio * 0.8 + timeRatio * 0.2;
-      
+
       const y = padding + ratio * usableHeight;
       const x = centerX + amplitude * Math.sin(ratio * Math.PI * 2 * waveCount);
       return { id: event.id + event.date, event, x, y, ratio };
@@ -186,11 +186,11 @@ const CurvedTimeline = ({
             <stop offset="100%" stopColor="var(--brand-primary)" stopOpacity="0.2" />
           </linearGradient>
         </defs>
-        <motion.polyline 
+        <motion.polyline
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ pathLength: 1, opacity: 1 }}
           transition={{ duration: 1.5, ease: "easeInOut" }}
-          points={timelinePath} fill="none" stroke="url(#curveGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" 
+          points={timelinePath} fill="none" stroke="url(#curveGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"
         />
         <polyline points={timelinePath} fill="none" stroke="var(--brand-primary)" strokeWidth="1" strokeDasharray="4 6" strokeLinecap="round" style={{ opacity: 0.2 }} />
       </svg>
@@ -207,10 +207,10 @@ const CurvedTimeline = ({
             initial={{ opacity: 0, scale: 0.8, x: "-50%", y: "-50%", translateY: 20 }}
             animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%", translateY: 0 }}
             transition={{ delay: idx * 0.1, type: "spring", stiffness: 120, damping: 12 }}
-            style={{ 
-              position: "absolute", 
-              left: x, 
-              top: y, 
+            style={{
+              position: "absolute",
+              left: x,
+              top: y,
               zIndex: isSelected ? 10 : 2,
               display: 'flex',
               alignItems: 'center',
@@ -231,7 +231,7 @@ const CurvedTimeline = ({
             )}
 
             <motion.div
-              animate={{ 
+              animate={{
                 scale: isSelected ? 1.2 : 1,
                 boxShadow: isSelected ? `0 0 20px ${color}40` : "0 4px 12px rgba(0,0,0,0.05)"
               }}
@@ -285,7 +285,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
 
   return (
     <div style={{ padding: "40px", width: "100%", maxWidth: "1400px", margin: "0 auto", minHeight: "100vh" }}>
-      
+
       {!selectedPid ? (
         <>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 24 }}>
@@ -332,10 +332,10 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                           {new Date(selectedEvent.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                         </span>
                       </div>
-                      <span style={{ 
-                        padding: "4px 12px", borderRadius: 8, 
-                        background: selectedEvent.status?.toLowerCase() === "completed" ? "#ecfdf5" : "var(--brand-light)", 
-                        color: selectedEvent.status?.toLowerCase() === "completed" ? "var(--accent-green)" : "var(--brand-primary)", 
+                      <span style={{
+                        padding: "4px 12px", borderRadius: 8,
+                        background: selectedEvent.status?.toLowerCase() === "completed" ? "#ecfdf5" : "var(--brand-light)",
+                        color: selectedEvent.status?.toLowerCase() === "completed" ? "var(--accent-green)" : "var(--brand-primary)",
                         fontSize: 9, fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.05em",
                         border: "1px solid currentColor"
                       }}>
@@ -346,7 +346,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                     <h3 style={{ fontSize: 22, fontWeight: 900, color: "var(--text-primary)", marginBottom: 28, lineHeight: 1.2, letterSpacing: "-0.01em" }}>
                       {selectedEvent.title}
                     </h3>
-                    
+
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                       {/* Summary Section */}
                       <div style={{ background: 'var(--bg-main)', padding: 20, borderRadius: 20, border: '1px solid var(--border-light)' }}>
@@ -384,8 +384,8 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                             };
 
                             return (
-                              <div key={lineIdx} style={{ 
-                                marginBottom: isBullet ? 8 : 16, 
+                              <div key={lineIdx} style={{
+                                marginBottom: isBullet ? 8 : 16,
                                 display: isBullet ? 'flex' : 'block',
                                 gap: 10,
                                 paddingLeft: isBullet ? 12 : 0
@@ -409,20 +409,20 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                               const isDone = line.includes("[x]");
                               const text = line.replace(/\[[x ]\]\s*/, "");
                               return (
-                                <motion.div 
+                                <motion.div
                                   initial={{ opacity: 0, x: -10 }}
                                   animate={{ opacity: 1, x: 0 }}
                                   transition={{ delay: i * 0.05 }}
-                                  key={i} 
-                                  style={{ 
-                                    display: 'flex', alignItems: 'center', gap: 12, 
-                                    padding: '12px 16px', borderRadius: 14, 
+                                  key={i}
+                                  style={{
+                                    display: 'flex', alignItems: 'center', gap: 12,
+                                    padding: '12px 16px', borderRadius: 14,
                                     background: isDone ? 'rgba(5, 150, 105, 0.03)' : '#fff',
                                     border: `1px solid ${isDone ? 'rgba(5, 150, 105, 0.1)' : 'var(--border-light)'}`
                                   }}
                                 >
-                                  <div style={{ 
-                                    width: 18, height: 18, borderRadius: 5, 
+                                  <div style={{
+                                    width: 18, height: 18, borderRadius: 5,
                                     background: isDone ? 'var(--accent-green)' : '#fff',
                                     border: `1.5px solid ${isDone ? 'var(--accent-green)' : 'var(--border-light)'}`,
                                     display: 'flex', alignItems: 'center', justifyContent: 'center'

@@ -176,7 +176,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div style={{ ...sessionsContainerStyle, marginTop: 40 }} className="hide-scrollbar">
         {!isCollapsed && <div style={{ ...sectionLabelStyle, color: 'var(--text-tertiary)', fontSize: 10, fontWeight: 800 }}>Recent Intelligence</div>}
         {sessions.map((session) => {
-          const isActive = session.id === activeSession;
+          const isActive = session.id === activeSession && activeTab === "conversations";
           return (
             <div
               key={session.id}

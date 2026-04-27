@@ -2,7 +2,7 @@ import {
   MessageSquare,
   LayoutDashboard,
   Database,
-  Globe,
+  ShieldCheck,
   Target,
   TrendingUp,
 } from "lucide-react";
@@ -13,6 +13,7 @@ export const NAV = [
   { id: "conversations", icon: MessageSquare, label: "Chat" },
   { id: "dashboard", icon: LayoutDashboard, label: "Pulse" },
   { id: "knowledge", icon: Database, label: "Assets" },
+  { id: "audit", icon: ShieldCheck, label: "Guard" },
 ] as const;
 
 export const RESEARCH_CATEGORIES = [

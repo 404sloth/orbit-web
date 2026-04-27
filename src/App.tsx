@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { AnimatePresence } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 // Components
 import { Login } from "./components/Login";
@@ -13,7 +12,7 @@ import { TracePanel } from "./components/chat/TracePanel";
 import { ReportPanel } from "./components/chat/ReportPanel";
 import { PulseDashboard } from "./components/dashboard/PulseDashboard";
 import { KnowledgeBase } from "./components/knowledge/KnowledgeBase";
-import { ResearchPanel } from "./components/research/ResearchPanel";
+import { AccessAudit } from "./components/audit/AccessAudit";
 import { Toast } from "./components/common/Toast";
 import { OfflineOverlay } from "./components/common/OfflineOverlay";
 import { ApprovalGateway } from "./components/common/ApprovalGateway";
@@ -107,101 +106,118 @@ export default function App() {
   const activeTabLabel = NAV.find((t) => t.id === activeTab)?.label || "Orbit";
 
   const mainPanel = useMemo(() => {
-    switch (activeTab) {
-      case "dashboard":
-        return (
-          <PulseDashboard
-            projects={pulseProjects}
-            selectedPid={selectedPid}
-            timeline={pulseTimeline}
-            loading={pulseLoading}
-            onSelect={loadPulseTimeline}
-            onSimulate={handleSimulateLifecycle}
-          />
-        );
-      case "knowledge":
-        return (
-          <KnowledgeBase
-            kbText={kbText} setKbText={setKbText}
-            kbSource={kbSource} setKbSource={setKbSource}
-            kbFile={kbFile} setKbFile={setKbFile}
-            kbLoading={kbLoading} handleKbSubmit={handleKbSubmit}
-            setToast={setToast}
-          />
-        );
-      default:
-        return (
-          <div style={chatLayoutStyle}>
-            <div style={chatColumnStyle}>
-              <div style={messagesPaneStyle}>
-                {messages.length === 0 ? (
-                  <EmptyState suggestions={dynamicSuggestions} onSelect={handleSendWithHint} />
-                ) : (
-                  messages.map((msg, i) => (
-                    <MessageItem key={msg.id} msg={msg} isLast={i === messages.length - 1} />
-                  ))
-                )}
-                {isThinking && (
-                  <div style={{ padding: "20px", display: "flex", gap: "10px", alignItems: "center", color: "#64748b" }}>
-                    <div className="dot-typing"></div>
-                    <span style={{ fontSize: "13px", fontWeight: 500 }}>
-                      Consulting with {prettifyAgent(messages[messages.length - 1]?.metadata?.agent_hint as string | undefined) || "Supervisor"}...
-                    </span>
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
+          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
+          transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+          style={{ width: "100%", height: "100%", overflow: "hidden", display: "flex", flexDirection: "column" }}
+        >
+          {(() => {
+            switch (activeTab) {
+              case "audit":
+                return <AccessAudit />;
+              case "dashboard":
+                return (
+                  <PulseDashboard
+                    projects={pulseProjects}
+                    selectedPid={selectedPid}
+                    timeline={pulseTimeline}
+                    loading={pulseLoading}
+                    onSelect={(id) => id ? void loadPulseTimeline(id) : void loadPulseTimeline("")}
+                    onSimulate={handleSimulateLifecycle}
+                  />
+                );
+              case "knowledge":
+                return (
+                  <KnowledgeBase
+                    kbText={kbText} setKbText={setKbText}
+                    kbSource={kbSource} setKbSource={setKbSource}
+                    kbFile={kbFile} setKbFile={setKbFile}
+                    kbLoading={kbLoading} handleKbSubmit={handleKbSubmit}
+                    setToast={setToast}
+                  />
+                );
+              default:
+                return (
+                  <div style={chatLayoutStyle}>
+                    <div style={chatColumnStyle}>
+                      <div style={messagesPaneStyle}>
+                        {messages.length === 0 ? (
+                          <EmptyState suggestions={dynamicSuggestions} onSelect={handleSendWithHint} />
+                        ) : (
+                          messages.map((msg, i) => (
+                            <MessageItem key={msg.id} msg={msg} isLast={i === messages.length - 1} />
+                          ))
+                        )}
+                        {isThinking && (
+                          <div style={{ padding: "20px", display: "flex", gap: "10px", alignItems: "center", color: "#64748b" }}>
+                            <div className="dot-typing"></div>
+                            <span style={{ fontSize: "13px", fontWeight: 500 }}>
+                              Consulting with {prettifyAgent(messages[messages.length - 1]?.metadata?.agent_hint as string | undefined) || "Supervisor"}...
+                            </span>
+                          </div>
+                        )}
+                        <div ref={endRef} />
+                      </div>
+
+                      <Composer
+                        onSend={handleSendWithHint}
+                        isThinking={isThinking}
+                        isListening={isListening}
+                        onVoice={handleVoice}
+                        suggestions={dynamicSuggestions}
+                        quickActions={quickActions}
+                        selectedAgentHint={selectedAgentHint}
+                        onAgentChange={setSelectedAgentHint}
+                      />
+                    </div>
+
+                    <div style={detailsPanelStyle}>
+                      <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
+                        <button 
+                          onClick={() => setStatusOpen(false)}
+                          style={{ 
+                            flex: 1, padding: '10px', borderRadius: 12, 
+                            border: !statusOpen ? '1px solid var(--brand-primary)' : '1px solid var(--border-light)', 
+                            background: !statusOpen ? 'var(--brand-light)' : 'transparent', 
+                            fontSize: 13, fontWeight: 700, 
+                            color: !statusOpen ? 'var(--brand-primary)' : 'var(--text-secondary)', 
+                            cursor: 'pointer', transition: 'all 0.2s ease'
+                          }}
+                        >
+                          Insights
+                        </button>
+                        <button 
+                          onClick={() => setStatusOpen(true)}
+                          style={{ 
+                            flex: 1, padding: '10px', borderRadius: 12, 
+                            border: statusOpen ? '1px solid var(--brand-primary)' : '1px solid var(--border-light)', 
+                            background: statusOpen ? 'var(--brand-light)' : 'transparent', 
+                            fontSize: 13, fontWeight: 700, 
+                            color: statusOpen ? 'var(--brand-primary)' : 'var(--text-secondary)', 
+                            cursor: 'pointer', transition: 'all 0.2s ease'
+                          }}
+                        >
+                          Trace
+                        </button>
+                      </div>
+                      {statusOpen ? (
+                        <TracePanel lastRouting={lastRouting} liveTrace={liveTrace} isThinking={isThinking} />
+                      ) : (
+                        <ReportPanel reports={generatedReports} />
+                      )}
+                    </div>
                   </div>
-                )}
-                <div ref={endRef} />
-              </div>
-
-              <Composer
-                onSend={handleSendWithHint}
-                isThinking={isThinking}
-                isListening={isListening}
-                onVoice={handleVoice}
-                suggestions={dynamicSuggestions}
-                quickActions={quickActions}
-                selectedAgentHint={selectedAgentHint}
-                onAgentChange={setSelectedAgentHint}
-              />
-            </div>
-
-            <div style={detailsPanelStyle}>
-              <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
-                <button 
-                  onClick={() => setStatusOpen(false)}
-                  style={{ 
-                    flex: 1, padding: '10px', borderRadius: 12, 
-                    border: !statusOpen ? '1px solid var(--brand-primary)' : '1px solid var(--border-light)', 
-                    background: !statusOpen ? 'var(--brand-light)' : 'transparent', 
-                    fontSize: 13, fontWeight: 700, 
-                    color: !statusOpen ? 'var(--brand-primary)' : 'var(--text-secondary)', 
-                    cursor: 'pointer', transition: 'all 0.2s ease'
-                  }}
-                >
-                  Insights
-                </button>
-                <button 
-                  onClick={() => setStatusOpen(true)}
-                  style={{ 
-                    flex: 1, padding: '10px', borderRadius: 12, 
-                    border: statusOpen ? '1px solid var(--brand-primary)' : '1px solid var(--border-light)', 
-                    background: statusOpen ? 'var(--brand-light)' : 'transparent', 
-                    fontSize: 13, fontWeight: 700, 
-                    color: statusOpen ? 'var(--brand-primary)' : 'var(--text-secondary)', 
-                    cursor: 'pointer', transition: 'all 0.2s ease'
-                  }}
-                >
-                  Trace
-                </button>
-              </div>
-              {statusOpen ? (
-                <TracePanel lastRouting={lastRouting} liveTrace={liveTrace} isThinking={isThinking} />
-              ) : (
-                <ReportPanel reports={generatedReports} />
-              )}
-            </div>
-          </div>
-        );
-    }
+                );
+            }
+          })()}
+        </motion.div>
+      </AnimatePresence>
+    );
   }, [
     activeTab, pulseProjects, selectedPid, pulseTimeline, pulseLoading, loadPulseTimeline, handleSimulateLifecycle,
     kbText, kbSource, kbFile, kbLoading, handleKbSubmit, messages, dynamicSuggestions, isThinking, isListening, quickActions,
@@ -226,7 +242,7 @@ export default function App() {
         onLogout={handleLogout}
       />
       
-      <main style={contentLayout}>
+      <main style={{ ...contentLayout, overflow: "hidden", position: "relative" }}>
         <Header 
           activeTabLabel={activeTabLabel} 
           isThinking={isThinking} 
@@ -235,7 +251,9 @@ export default function App() {
           onNotificationAction={handleNotificationAction}
           currentUser={currentUser}
         />
-        {mainPanel}
+        <div style={{ flex: 1, position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+          {mainPanel}
+        </div>
       </main>
 
       <AnimatePresence>
