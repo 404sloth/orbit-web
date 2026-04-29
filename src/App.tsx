@@ -48,7 +48,10 @@ export default function App() {
     loadPulseProjects, loadPulseTimeline, loadNotifications, handleNotificationAction, handleSimulateLifecycle 
   } = usePulse();
   
-  const { kbText, setKbText, kbSource, setKbSource, kbFile, setKbFile, kbLoading, handleKbSubmit } = useKnowledge(token);
+  const { 
+    kbText, setKbText, kbSource, setKbSource, kbScope, setKbScope, 
+    kbFile, setKbFile, kbLoading, handleKbSubmit 
+  } = useKnowledge(token);
 
   // UI State
   const [activeTab, setActiveTab] = useState<(typeof NAV)[number]["id"]>("conversations");
@@ -136,6 +139,7 @@ export default function App() {
                   <KnowledgeBase
                     kbText={kbText} setKbText={setKbText}
                     kbSource={kbSource} setKbSource={setKbSource}
+                    kbScope={kbScope} setKbScope={setKbScope}
                     kbFile={kbFile} setKbFile={setKbFile}
                     kbLoading={kbLoading} handleKbSubmit={handleKbSubmit}
                     setToast={setToast}
@@ -220,7 +224,7 @@ export default function App() {
     );
   }, [
     activeTab, pulseProjects, selectedPid, pulseTimeline, pulseLoading, loadPulseTimeline, handleSimulateLifecycle,
-    kbText, kbSource, kbFile, kbLoading, handleKbSubmit, messages, dynamicSuggestions, isThinking, isListening, quickActions,
+    kbText, kbSource, kbScope, kbFile, kbLoading, handleKbSubmit, messages, dynamicSuggestions, isThinking, isListening, quickActions,
     selectedAgentHint, lastRouting, liveTrace, generatedReports, statusOpen, endRef, handleSendWithHint, handleVoice
   ]);
 

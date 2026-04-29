@@ -64,7 +64,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         ...sidebarStyle,
         background: "#ffffff",
         borderRight: "1px solid var(--border-light)",
-        boxShadow: "10px 0 30px rgba(217, 119, 6, 0.02)",
+        boxShadow: "10px 0 30px rgba(15, 23, 42, 0.02)",
         ...(isCollapsed ? { width: 88, padding: "24px 14px 16px" } : {}),
       }}
     >
@@ -106,7 +106,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           color: '#fff',
           border: 'none',
           borderRadius: 20,
-          boxShadow: '0 10px 25px rgba(109, 40, 217, 0.3)',
+          boxShadow: '0 10px 25px rgba(79, 70, 229, 0.3)',
           marginBottom: 32
         }}
         onClick={onNewChat}

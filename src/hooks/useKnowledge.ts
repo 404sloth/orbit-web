@@ -4,6 +4,7 @@ import { knowledgeApi } from "../services/api";
 export function useKnowledge(token: string | null) {
   const [kbText, setKbText] = useState("");
   const [kbSource, setKbSource] = useState("");
+  const [kbScope, setKbScope] = useState("global");
   const [kbFile, setKbFile] = useState<File | null>(null);
   const [kbLoading, setKbLoading] = useState(false);
 
@@ -19,12 +20,14 @@ export function useKnowledge(token: string | null) {
         formData.append("content", kbText.trim());
         formData.append("source", kbSource || "Manual ingestion");
       }
+      formData.append("scope", kbScope);
 
       const response = await knowledgeApi.ingest(formData, token);
       if (!response.ok) throw new Error("Upload failed");
 
       setKbText("");
       setKbSource("");
+      setKbScope("global");
       setKbFile(null);
       return true;
     } catch (error) {
@@ -33,13 +36,15 @@ export function useKnowledge(token: string | null) {
     } finally {
       setKbLoading(false);
     }
-  }, [kbText, kbFile, kbSource, token]);
+  }, [kbText, kbFile, kbSource, kbScope, token]);
 
   return {
     kbText,
     setKbText,
     kbSource,
     setKbSource,
+    kbScope,
+    setKbScope,
     kbFile,
     setKbFile,
     kbLoading,

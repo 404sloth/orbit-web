@@ -28,13 +28,8 @@ export const Header: React.FC<HeaderProps> = ({
   const profileRef = useClickOutside(() => setProfileOpen(false));
 
   return (
-    <header className="main-header" style={{ 
-      display: "flex", justifyContent: "space-between", alignItems: "center", 
-      padding: "0 32px", height: "72px", background: "rgba(255, 253, 245, 0.8)", 
-      backdropFilter: "blur(12px)", borderBottom: "1px solid var(--border-light)",
-      position: "sticky", top: 0, zIndex: 50
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+    <header className="main-header">
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
         <h1 style={{ ...pageTitleStyle, color: "var(--text-primary)" }}>{activeTabLabel}</h1>
         <AnimatePresence>
           {isThinking && (
@@ -60,13 +55,14 @@ export const Header: React.FC<HeaderProps> = ({
       <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
         {/* Connection Badge */}
         <div style={{ 
-          display: "flex", alignItems: "center", gap: 8, fontSize: "11px", fontWeight: 800, 
+          display: "flex", alignItems: "center", gap: 6, fontSize: "10px", fontWeight: 900, 
           color: connected ? "var(--accent-green)" : "var(--accent-red)", 
-          background: connected ? "rgba(5, 150, 105, 0.08)" : "rgba(220, 38, 38, 0.08)", 
-          padding: "6px 14px", borderRadius: "99px", textTransform: "uppercase", letterSpacing: "0.02em"
+          background: connected ? "rgba(16, 185, 129, 0.1)" : "rgba(239, 68, 68, 0.1)", 
+          padding: "5px 12px", borderRadius: "8px", textTransform: "uppercase", 
+          letterSpacing: "0.05em", border: `1px solid ${connected ? "rgba(16, 185, 129, 0.2)" : "rgba(239, 68, 68, 0.2)"}`
         }}>
-          {connected ? <Wifi size={12} /> : <WifiOff size={12} />}
-          {connected ? "Live" : "Disconnected"}
+          <div style={{ width: 6, height: 6, borderRadius: "50%", background: connected ? "var(--accent-green)" : "var(--accent-red)", animation: connected ? "pulse 2s infinite" : "none" }} />
+          {connected ? "Live" : "Offline"}
         </div>
 
         {/* Notifications */}
@@ -158,25 +154,25 @@ export const Header: React.FC<HeaderProps> = ({
           <button 
             onClick={() => setProfileOpen(!profileOpen)}
             style={{ 
-              display: "flex", alignItems: "center", gap: 12, background: "var(--bg-main)", 
+              display: "flex", alignItems: "center", gap: 10, background: "rgba(248, 250, 252, 0.8)", 
               border: `1px solid ${profileOpen ? "var(--brand-primary)" : "var(--border-light)"}`, 
-              padding: "6px 16px 6px 6px", borderRadius: 99, cursor: "pointer",
+              padding: "4px 12px 4px 4px", borderRadius: "12px", cursor: "pointer",
               transition: "all 0.2s ease",
-              boxShadow: profileOpen ? "0 4px 12px rgba(109, 40, 217, 0.1)" : "none"
+              boxShadow: profileOpen ? "0 4px 12px rgba(79, 70, 229, 0.08)" : "none"
             }}
           >
             <div style={{ 
-              width: 32, height: 32, borderRadius: "50%", background: "var(--brand-gradient)", 
+              width: 32, height: 32, borderRadius: "10px", background: "var(--brand-gradient)", 
               color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", 
-              fontSize: "14px", fontWeight: 800, boxShadow: "0 2px 8px rgba(109, 40, 217, 0.3)"
+              fontSize: "13px", fontWeight: 900, boxShadow: "0 4px 10px rgba(79, 70, 229, 0.25)"
             }}>
               {currentUser?.username?.charAt(0).toUpperCase() || "U"}
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-              <span style={{ fontSize: "13px", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1 }}>{currentUser?.username || "Guest"}</span>
-              <span style={{ fontSize: "10px", fontWeight: 600, color: "var(--text-tertiary)", textTransform: "uppercase" }}>{currentUser?.role || "User"}</span>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 0 }}>
+              <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.2 }}>{currentUser?.username || "Guest"}</span>
+              <span style={{ fontSize: "9px", fontWeight: 800, color: "var(--text-tertiary)", textTransform: "uppercase", letterSpacing: "0.02em" }}>{currentUser?.role || "Observer"}</span>
             </div>
-            <ChevronDown size={14} color="var(--text-tertiary)" style={{ marginLeft: 4, transform: profileOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            <ChevronDown size={12} color="var(--text-tertiary)" style={{ marginLeft: 2, transform: profileOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
           </button>
 
           <AnimatePresence>

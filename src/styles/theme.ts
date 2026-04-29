@@ -4,7 +4,7 @@ export const appContainerStyle: CSSProperties = {
   display: "flex",
   height: "100vh",
   width: "100vw",
-  background: "#fbf9f6",
+  background: "#f8fafc",
   overflow: "hidden",
   color: "#1e293b"
 };
@@ -34,11 +34,11 @@ export const logoBadgeStyle: CSSProperties = {
   width: 44,
   height: 44,
   borderRadius: 16,
-  background: "var(--brand-light)",
+  background: "var(--brand-primary)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  boxShadow: "0 4px 12px rgba(109, 40, 217, 0.1)",
+  boxShadow: "0 8px 20px rgba(79, 70, 229, 0.2)",
 };
 
 export const primaryPillButton: CSSProperties = {
@@ -52,7 +52,7 @@ export const primaryPillButton: CSSProperties = {
   color: "#ffffff",
   fontWeight: 800,
   fontSize: 13,
-  boxShadow: "0 4px 12px rgba(109, 40, 217, 0.25)",
+  boxShadow: "0 8px 24px rgba(79, 70, 229, 0.3)",
   transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
   cursor: "pointer",
   marginBottom: 12,
@@ -83,7 +83,7 @@ export const navButtonStyle: CSSProperties = {
 
 export const activeNavButtonStyle: CSSProperties = {
   color: "var(--brand-primary)",
-  background: "rgba(109, 40, 217, 0.08)",
+  background: "rgba(79, 70, 229, 0.08)",
 };
 
 export const activeNavIndicatorStyle: CSSProperties = {
@@ -353,12 +353,18 @@ export const detailsPanelStyle: CSSProperties = {
   backdropFilter: "blur(10px)",
 };
 
-export const detailsCardStyle: CSSProperties = {
+export const premiumCardStyle: CSSProperties = {
   borderRadius: 20,
   background: "#ffffff",
+  padding: 24,
+  boxShadow: "0 4px 20px rgba(15, 23, 42, 0.04)",
+  border: "1px solid #e2e8f0",
+  transition: "all 0.3s ease",
+};
+
+export const detailsCardStyle: CSSProperties = {
+  ...premiumCardStyle,
   padding: 20,
-  boxShadow: "0 4px 12px rgba(0,0,0,0.02)",
-  border: "1px solid #f1f3f4",
 };
 
 export const detailsHeaderWithToggle: CSSProperties = {

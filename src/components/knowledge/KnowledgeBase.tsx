@@ -10,6 +10,8 @@ interface KnowledgeBaseProps {
   setKbText: (v: string) => void;
   kbSource: string;
   setKbSource: (v: string) => void;
+  kbScope: string;
+  setKbScope: (v: string) => void;
   kbFile: File | null;
   setKbFile: (f: File | null) => void;
   kbLoading: boolean;
@@ -18,7 +20,7 @@ interface KnowledgeBaseProps {
 }
 
 export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
-  kbText, setKbText, kbSource, setKbSource, kbFile, setKbFile, kbLoading, handleKbSubmit, setToast
+  kbText, setKbText, kbSource, setKbSource, kbScope, setKbScope, kbFile, setKbFile, kbLoading, handleKbSubmit, setToast
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [ingestionMode, setIngestionMode] = useState<"file" | "text">("file");
@@ -140,9 +142,25 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
                 </>
               )}
             </div>
-            <div style={{ marginTop: 28 }}>
-              <label style={fieldLabelStyle} htmlFor="kbSourceFile">Strategic Source Label</label>
-              <input id="kbSourceFile" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ ...textInputStyle, height: 48, borderRadius: 12 }} placeholder="e.g., Annual Strategic Audit 2024" disabled={kbLoading} />
+            <div style={{ marginTop: 28, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <div>
+                <label style={fieldLabelStyle} htmlFor="kbSourceFile">Strategic Source Label</label>
+                <input id="kbSourceFile" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ ...textInputStyle, height: 48, borderRadius: 12 }} placeholder="e.g., Annual Strategic Audit 2024" disabled={kbLoading} />
+              </div>
+              <div>
+                <label style={fieldLabelStyle} htmlFor="kbScopeFile">Access Scope</label>
+                <select 
+                  id="kbScopeFile" 
+                  value={kbScope} 
+                  onChange={(event) => setKbScope(event.target.value)} 
+                  style={{ ...textInputStyle, height: 48, borderRadius: 12, appearance: "none" }}
+                  disabled={kbLoading}
+                >
+                  <option value="global">Global (All Users)</option>
+                  <option value="workspace">Workspace (Team)</option>
+                  <option value="personal">Personal (Private)</option>
+                </select>
+              </div>
             </div>
             <button style={{ ...primaryActionButton, width: "100%", marginTop: 28, height: 52, borderRadius: 16, background: 'var(--brand-gradient)', opacity: kbLoading ? 0.7 : 1, fontSize: 15, border: 'none', color: '#fff', fontWeight: 800 }} onClick={() => void handleSubmit()} disabled={kbLoading || !kbFile}>{kbLoading ? <Loader2 size={20} className="spin" /> : <ChevronRight size={20} />}{kbLoading ? "Indexing Knowledge..." : "Ingest Document"}</button>
           </div>
@@ -151,9 +169,25 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
             <div style={cardHeaderStyle}><span style={{ ...cardHeaderTitleStyle, color: 'var(--text-primary)' }}><Database size={20} color="var(--brand-primary)" />Paste Text Here</span></div>
             <p style={{ ...kbIntroText, marginBottom: 24, color: 'var(--text-secondary)' }}>Paste raw strategic data, meeting snippets, or tactical updates for immediate semantic recall.</p>
             <textarea value={kbText} onChange={(event) => setKbText(event.target.value)} rows={10} style={{ ...textareaStyle, borderRadius: 24, padding: "20px", fontSize: 15, border: '1px solid var(--border-light)' }} placeholder="Paste raw documentation or briefings here..." disabled={kbLoading} />
-            <div style={{ marginTop: 24 }}>
-              <label style={fieldLabelStyle} htmlFor="kbSourceText">Source Attribution</label>
-              <input id="kbSourceText" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ ...textInputStyle, height: 48, borderRadius: 12 }} placeholder="e.g., Q3 Stakeholder Update" disabled={kbLoading} />
+            <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <div>
+                <label style={fieldLabelStyle} htmlFor="kbSourceText">Source Attribution</label>
+                <input id="kbSourceText" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ ...textInputStyle, height: 48, borderRadius: 12 }} placeholder="e.g., Q3 Stakeholder Update" disabled={kbLoading} />
+              </div>
+              <div>
+                <label style={fieldLabelStyle} htmlFor="kbScopeText">Access Scope</label>
+                <select 
+                  id="kbScopeText" 
+                  value={kbScope} 
+                  onChange={(event) => setKbScope(event.target.value)} 
+                  style={{ ...textInputStyle, height: 48, borderRadius: 12, appearance: "none" }}
+                  disabled={kbLoading}
+                >
+                  <option value="global">Global (All Users)</option>
+                  <option value="workspace">Workspace (Team)</option>
+                  <option value="personal">Personal (Private)</option>
+                </select>
+              </div>
             </div>
             <button style={{ ...primaryActionButton, width: "100%", marginTop: 24, height: 52, borderRadius: 16, background: 'var(--brand-gradient)', opacity: kbLoading ? 0.7 : 1, fontSize: 15, border: 'none', color: '#fff', fontWeight: 800 }} onClick={() => void handleSubmit()} disabled={kbLoading || !kbText.trim()}>{kbLoading ? <Loader2 size={20} className="spin" /> : <Database size={20} />}{kbLoading ? "Indexing Knowledge..." : "Commit Intelligence"}</button>
           </div>
