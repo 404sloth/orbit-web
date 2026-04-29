@@ -398,12 +398,12 @@ const containerStyle: React.CSSProperties = {
 
 const cardStyle: React.CSSProperties = {
   width: '100%',
-  maxWidth: 420,
-  padding: '48px 40px',
+  maxWidth: 400,
+  padding: '40px',
   background: '#ffffff',
-  borderRadius: 32,
-  boxShadow: '0 20px 40px rgba(0,0,0,0.04)',
-  border: '1px solid #f1f3f4',
+  borderRadius: 8,
+  boxShadow: '0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)',
+  border: '1px solid #dadce0',
 };
 
 const logoSectionStyle: React.CSSProperties = {
@@ -412,28 +412,28 @@ const logoSectionStyle: React.CSSProperties = {
 };
 
 const logoIconStyle: React.CSSProperties = {
-  width: 64,
-  height: 64,
+  width: 48,
+  height: 48,
   background: '#e8f0fe',
-  borderRadius: 20,
+  borderRadius: 8,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  margin: '0 auto 24px',
+  margin: '0 auto 16px',
 };
 
 const titleStyle: React.CSSProperties = {
-  fontSize: 28,
-  fontWeight: 800,
+  fontSize: 24,
+  fontWeight: 500,
   color: '#202124',
-  letterSpacing: '-0.03em',
   marginBottom: 8,
+  fontFamily: "'Google Sans', sans-serif"
 };
 
 const subtitleStyle: React.CSSProperties = {
   fontSize: 14,
   color: '#5f6368',
-  fontWeight: 500,
+  fontWeight: 400,
 };
 
 const formStyle: React.CSSProperties = {
@@ -447,11 +447,11 @@ const inputGroupStyle: React.CSSProperties = {
 };
 
 const labelStyle: React.CSSProperties = {
-  fontSize: 11,
-  fontWeight: 800,
-  color: '#3c4043',
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
+  fontSize: 12,
+  fontWeight: 500,
+  color: '#5f6368',
+  display: 'block',
+  marginBottom: 4,
 };
 
 const inputWrapperStyle: React.CSSProperties = {
@@ -468,30 +468,30 @@ const iconStyle: React.CSSProperties = {
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  padding: '14px 16px 14px 48px',
-  background: '#f8f9fa',
-  border: '1px solid #f1f3f4',
-  borderRadius: 16,
-  fontSize: 15,
+  padding: '12px 16px 12px 48px',
+  background: '#ffffff',
+  border: '1px solid #dadce0',
+  borderRadius: 4,
+  fontSize: 14,
   color: '#202124',
   outline: 'none',
   transition: 'border 0.2s',
 };
 
 const buttonStyle: React.CSSProperties = {
-  padding: '16px',
+  padding: '12px',
   background: '#1a73e8',
   color: '#ffffff',
   border: 'none',
-  borderRadius: 16,
-  fontSize: 15,
-  fontWeight: 700,
+  borderRadius: 4,
+  fontSize: 14,
+  fontWeight: 500,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   gap: 10,
   cursor: 'pointer',
-  boxShadow: '0 8px 16px rgba(26,115,232,0.2)',
+  boxShadow: '0 1px 2px 0 rgba(60,64,67,.30)',
 };
 
 const errorStyle: React.CSSProperties = {
@@ -597,16 +597,16 @@ const successStyle: React.CSSProperties = {
 
 const switchModeButtonStyle: React.CSSProperties = {
   width: '100%',
-  padding: '14px',
+  padding: '10px',
   background: 'transparent',
   color: '#1a73e8',
-  border: '1px solid #d3d3d3',
-  borderRadius: 16,
+  border: '1px solid #dadce0',
+  borderRadius: 4,
   fontSize: 14,
-  fontWeight: 600,
+  fontWeight: 500,
   cursor: 'pointer',
   transition: 'all 0.2s',
-  marginTop: 12,
+  marginTop: 8,
 };
 
 const demoCredentialsStyle: React.CSSProperties = {

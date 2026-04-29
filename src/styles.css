@@ -1,37 +1,42 @@
 :root {
-  /* Premium Strategic Slate & Indigo Palette */
-  --brand-primary: #4f46e5; /* Indigo 600 */
-  --brand-secondary: #6366f1; /* Indigo 500 */
-  --brand-light: #eef2ff; /* Indigo 50 */
-  --brand-gradient: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-  --brand-glow: 0 0 25px rgba(79, 70, 229, 0.12);
+  /* Google/Material Inspired Palette */
+  --brand-primary: #1a73e8; /* Google Blue */
+  --brand-secondary: #4285f4;
+  --brand-light: #e8f0fe;
+  --brand-gradient: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+  --brand-glow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
   
-  /* Slate Backgrounds */
-  --bg-main: #f8fafc; /* Slate 50 */
-  --bg-sidebar: #ffffff;
+  /* Neutral Palette */
+  --bg-main: #ffffff;
+  --bg-sidebar: #f8f9fa; /* Google Sidebar Grey */
   --bg-card: #ffffff;
-  --bg-bubble-user: #eef2ff; /* Light Indigo for User */
-  --bg-bubble-agent: #ffffff; /* White for Agent */
+  --bg-bubble-user: #f1f3f4;
+  --bg-bubble-agent: #e8f0fe;
   
   /* Text Palette */
-  --text-primary: #0f172a; /* Slate 900 */
-  --text-secondary: #475569; /* Slate 600 */
-  --text-tertiary: #94a3b8; /* Slate 400 */
+  --text-primary: #202124; /* Google Text Black */
+  --text-secondary: #5f6368; /* Google Text Grey */
+  --text-tertiary: #70757a;
   --text-on-primary: #ffffff;
   
   /* Semantic Colors */
-  --accent-green: #10b981;
-  --accent-red: #ef4444;
-  --accent-amber: #f59e0b;
-  --border-light: #e2e8f0; /* Slate 200 */
+  --accent-green: #188038;
+  --accent-red: #d93025;
+  --accent-amber: #f9ab00;
+  --border-light: #dadce0;
   
-  /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-shadow: 0 10px 40px rgba(15, 23, 42, 0.05);
+  /* Material Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15);
+  --shadow-md: 0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15);
   
-  font-family: "Inter", "Outfit", system-ui, -apple-system, sans-serif;
-  font-size: 15px;
+  /* Spacing & Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px; /* Google Standard */
+  --radius-lg: 12px;
+  
+  font-family: "Roboto", "Google Sans", "Inter", system-ui, -apple-system, sans-serif;
+  font-size: 14px; /* Standard Google Body */
+  line-height: 1.5;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -57,7 +62,26 @@ html, body, #root {
   overflow: hidden;
 }
 
-/* Scrollbar Styling */
+/* Premium Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #dadce0;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #bdc1c6;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
 .hide-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -454,21 +478,27 @@ html, body, #root {
 
 /* Header & Badges */
 .main-header {
-  height: 64px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  padding: 0 32px;
+  height: 56px;
+  background: #ffffff;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border: 1px solid var(--border-light);
+  border-radius: 12px;
   flex-shrink: 0;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
   position: sticky;
-  top: 16px;
-  margin: 16px 24px 8px;
-  border-radius: 20px;
+  top: 12px;
+  margin: 12px 16px;
   z-index: 50;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15);
+}
+
+.vertical-separator {
+  width: 1px;
+  height: 24px;
+  background: #dadce0;
+  margin: 0 12px;
 }
 
 @keyframes pulse {

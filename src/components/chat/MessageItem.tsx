@@ -48,12 +48,11 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
 
   if (isSystem) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", margin: "24px 0" }}>
+      <div style={{ display: "flex", justifyContent: "center", margin: "16px 0" }}>
         <div style={{ 
-          background: "var(--brand-light)", color: "var(--brand-primary)", 
-          padding: "8px 20px", borderRadius: "99px", fontSize: "12px", 
-          fontWeight: 800, border: "1px solid rgba(109, 40, 217, 0.1)",
-          boxShadow: "0 4px 12px rgba(109, 40, 217, 0.05)",
+          background: "#e8f0fe", color: "#1a73e8", 
+          padding: "6px 16px", borderRadius: "4px", fontSize: "12px", 
+          fontWeight: 500, border: "1px solid #dadce0",
           display: "flex", alignItems: "center", gap: 8
         }}>
           <Zap size={12} /> {msg.text}
@@ -78,15 +77,17 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
     >
       <div
         style={{
-          ...messageIconWrap(isUser, agentColor),
-          width: 44, height: 44, borderRadius: 16,
-          boxShadow: isUser ? "0 8px 20px rgba(109, 40, 217, 0.25)" : `0 8px 20px rgba(0,0,0,0.1)`
+          width: 32, height: 32, borderRadius: "50%",
+          background: isUser ? "#1a73e8" : "#f1f3f4",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          flexShrink: 0,
+          marginTop: 4
         }}
       >
         {isUser ? (
-          <User size={20} color="#ffffff" />
+          <User size={16} color="#ffffff" />
         ) : (
-          <Bot size={20} color="#ffffff" />
+          <Bot size={16} color="#1a73e8" />
         )}
       </div>
 
@@ -108,10 +109,9 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
           }}
         >
           <span style={{ 
-            ...messageSenderStyle(isUser, agentColor), 
-            fontWeight: 900, fontSize: "11px", letterSpacing: "0.05em" 
+            fontWeight: 500, fontSize: "12px", color: "#202124"
           }}>
-            {isUser ? "Authorized User" : (msg.agent || "Orbit AI")}
+            {isUser ? "You" : (msg.agent || "Orbit AI")}
           </span>
           <span style={{ ...messageMetaStyle(isUser), fontSize: "11px", fontWeight: 600 }}>
             {new Date(msg.ts).toLocaleTimeString("en-IN", {
@@ -125,26 +125,25 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
 
         <div
           style={{
-            background: isUser ? "var(--bg-bubble-user)" : "#ffffff",
-            color: "var(--text-primary)",
-            padding: "18px 24px",
-            borderRadius: isUser ? "24px 4px 24px 24px" : "4px 24px 24px 24px",
-            boxShadow: "0 4px 25px rgba(0,0,0,0.03)",
-            border: `1px solid ${isUser ? "rgba(124, 58, 237, 0.15)" : "var(--border-light)"}`,
-            lineHeight: "1.7",
-            fontSize: "15.5px",
+            background: isUser ? "#f1f3f4" : "#e8f0fe",
+            color: "#202124",
+            padding: "12px 16px",
+            borderRadius: 8,
+            lineHeight: "1.5",
+            fontSize: "14px",
             position: "relative",
-            fontWeight: 500
+            fontWeight: 400,
+            border: "none"
           }}
         >
           <RichText text={cleanedText} isUser={isUser} />
 
           {!isUser && !!msg.metadata?.reasoning && (
-            <details style={{ marginTop: "16px", borderTop: "1px solid var(--border-light)", paddingTop: "12px" }}>
-              <summary style={{ fontSize: "11px", fontWeight: 800, color: "var(--brand-primary)", cursor: "pointer", listStyle: "none", display: "flex", alignItems: "center", gap: "6px" }}>
-                <Clock size={12} /> Strategic Rationale
+            <details style={{ marginTop: "12px", borderTop: "1px solid #dadce0", paddingTop: "8px" }}>
+              <summary style={{ fontSize: "11px", fontWeight: 500, color: "#1a73e8", cursor: "pointer", listStyle: "none", display: "flex", alignItems: "center", gap: "6px" }}>
+                <Clock size={12} /> Thinking Process
               </summary>
-              <div style={{ marginTop: "10px", fontSize: "13px", color: "var(--text-secondary)", fontStyle: "italic", lineHeight: "1.6", background: "var(--bg-main)", padding: "12px", borderRadius: "12px", border: "1px solid var(--border-light)" }}>
+              <div style={{ marginTop: "8px", fontSize: "12px", color: "#5f6368", background: "#f8f9fa", padding: "8px", borderRadius: "4px", border: "1px solid #dadce0" }}>
                 {msg.metadata.reasoning as string}
               </div>
             </details>
@@ -158,12 +157,12 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
                 alignItems: "center",
                 gap: "8px",
                 padding: "6px 12px",
-                background: "var(--bg-main)",
-                borderRadius: "8px",
+                background: "#f8f9fa",
+                borderRadius: "4px",
                 fontSize: "10px",
-                fontWeight: 800,
-                color: "var(--brand-primary)",
-                border: "1px solid var(--border-light)"
+                fontWeight: 500,
+                color: "#1a73e8",
+                border: "1px solid #dadce0"
               }}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
@@ -192,10 +191,10 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
               marginTop: "16px",
               width: "100%",
               background: "#ffffff",
-              borderRadius: "20px",
-              border: "1px solid var(--border-light)",
-              padding: "6px",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.06)"
+              borderRadius: "8px",
+              border: "1px solid #dadce0",
+              padding: "4px",
+              boxShadow: "0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)"
             }}
           >
              <div style={{ padding: "16px", display: "flex", alignItems: "center", gap: "14px" }}>

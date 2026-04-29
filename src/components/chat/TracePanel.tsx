@@ -46,24 +46,20 @@ const TracePathStep = ({ label, status, icon: Icon }: { label: string, status: "
 
 export const TracePanel: React.FC<TracePanelProps> = ({ lastRouting, isThinking, liveTrace }) => {
   return (
-    <div style={{ ...detailsCardStyle, borderRadius: 28 }}>
-      <div style={detailsHeaderWithToggle}>
-        <div style={{ ...detailsTitleStyle, color: 'var(--text-primary)', fontSize: 13, fontWeight: 900 }}>Trace</div>
+    <div style={{ ...detailsCardStyle, borderRadius: 8, background: "#fff", border: "1px solid #dadce0", boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)", padding: "16px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+        <div style={{ color: '#202124', fontSize: 14, fontWeight: 500, fontFamily: "'Google Sans', sans-serif" }}>Live Trace</div>
         <div style={{ 
-          ...traceIndicatorWrap, 
-          background: 'var(--brand-light)', 
-          color: 'var(--brand-primary)', 
-          fontWeight: 900,
-          fontSize: '9px',
+          display: "flex", alignItems: "center", gap: 6,
+          background: '#e8f0fe', 
+          color: '#1a73e8', 
+          fontWeight: 500,
+          fontSize: '11px',
           padding: '4px 10px',
-          borderRadius: '8px'
+          borderRadius: '4px'
         }}>
-          <motion.div 
-            animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            style={{ ...traceDot, background: 'var(--brand-primary)' }} 
-          />
-          REASONING
+          <div style={{ width: 6, height: 6, borderRadius: "50%", background: '#1a73e8' }} />
+          EXECUTION
         </div>
       </div>
 
@@ -98,21 +94,21 @@ export const TracePanel: React.FC<TracePanelProps> = ({ lastRouting, isThinking,
                   />
                 )}
                 <div style={{ 
-                  width: 32, height: 32, borderRadius: 10, 
-                  background: step.status === 'running' ? 'var(--brand-light)' : '#ffffff', 
-                  border: `1.5px solid ${step.status === 'running' ? 'var(--brand-primary)' : 'var(--border-light)'}`,
+                  width: 28, height: 28, borderRadius: 4, 
+                  background: step.status === 'running' ? '#e8f0fe' : '#ffffff', 
+                  border: `1px solid ${step.status === 'running' ? '#1a73e8' : '#dadce0'}`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  zIndex: 2, boxShadow: step.status === 'running' ? '0 0 15px rgba(124, 58, 237, 0.2)' : 'none'
+                  zIndex: 2
                 }}>
                   {step.status === "running" ? (
-                    <Loader2 size={12} color="var(--brand-primary)" className="spin" />
+                    <Loader2 size={12} color="#1a73e8" className="spin" />
                   ) : (
-                    <CheckCircle2 size={14} color="var(--accent-green)" />
+                    <CheckCircle2 size={12} color="#188038" />
                   )}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 12, fontWeight: 900, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>{step.name}</div>
-                  <div style={{ fontSize: 10, color: "var(--text-secondary)", lineHeight: 1.5, marginTop: 4, fontWeight: 500 }}>{step.details}</div>
+                  <div style={{ fontSize: 13, fontWeight: 500, color: "#202124" }}>{step.name}</div>
+                  <div style={{ fontSize: 11, color: "#5f6368", lineHeight: 1.4, marginTop: 2 }}>{step.details}</div>
                 </div>
               </motion.div>
             ))

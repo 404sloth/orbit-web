@@ -73,87 +73,87 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
   };
 
   return (
-    <div style={contentWrapStyle}>
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: 40, gap: 12 }}>
+    <div style={{ ...contentWrapStyle, padding: "40px 24px" }}>
+      <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: 32, borderBottom: "1px solid #dadce0" }}>
         <button 
           onClick={() => setIngestionMode("file")}
           style={{ 
             padding: "12px 24px", 
-            borderRadius: "14px", 
-            background: ingestionMode === "file" ? "var(--brand-primary)" : "var(--bg-main)",
-            color: ingestionMode === "file" ? "white" : "var(--text-secondary)",
-            border: `1px solid ${ingestionMode === "file" ? "var(--brand-primary)" : "var(--border-light)"}`,
-            fontWeight: 700,
+            background: "none",
+            color: ingestionMode === "file" ? "#1a73e8" : "#5f6368",
+            border: "none",
+            borderBottom: ingestionMode === "file" ? "3px solid #1a73e8" : "none",
+            fontWeight: 500,
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
-            gap: 10,
+            gap: 8,
             transition: "all 0.2s ease",
-            boxShadow: ingestionMode === "file" ? "0 4px 12px rgba(124, 58, 237, 0.2)" : "none"
+            fontSize: "14px"
           }}
         >
-          <Upload size={18} /> Upload File
+          <Upload size={16} /> Documents
         </button>
         <button 
           onClick={() => setIngestionMode("text")}
           style={{ 
             padding: "12px 24px", 
-            borderRadius: "14px", 
-            background: ingestionMode === "text" ? "var(--brand-primary)" : "var(--bg-main)",
-            color: ingestionMode === "text" ? "white" : "var(--text-secondary)",
-            border: `1px solid ${ingestionMode === "text" ? "var(--brand-primary)" : "var(--border-light)"}`,
-            fontWeight: 700,
+            background: "none",
+            color: ingestionMode === "text" ? "#1a73e8" : "#5f6368",
+            border: "none",
+            borderBottom: ingestionMode === "text" ? "3px solid #1a73e8" : "none",
+            fontWeight: 500,
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
-            gap: 10,
+            gap: 8,
             transition: "all 0.2s ease",
-            boxShadow: ingestionMode === "text" ? "0 4px 12px rgba(124, 58, 237, 0.2)" : "none"
+            fontSize: "14px"
           }}
         >
-          <Database size={18} /> Paste Text
+          <Database size={16} /> Text Data
         </button>
       </div>
 
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
         {ingestionMode === "file" ? (
           <div 
-            style={{ ...contentCardStyle, borderColor: isDragOver ? "var(--brand-primary)" : undefined, transition: "border 0.2s ease", padding: "32px", borderRadius: 28 }} 
+            style={{ ...contentCardStyle, borderColor: isDragOver ? "#1a73e8" : "#dadce0", background: "#fff", padding: "24px", borderRadius: 8, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)" }} 
             onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }} 
             onDragLeave={() => setIsDragOver(false)} 
             onDrop={(e) => { e.preventDefault(); setIsDragOver(false); const file = e.dataTransfer.files?.[0]; if (file) handleFileChange(file); }}
           >
-            <div style={cardHeaderStyle}><span style={{ ...cardHeaderTitleStyle, color: 'var(--text-primary)' }}><Upload size={20} color="var(--brand-primary)" />Upload File</span></div>
-            <p style={{ ...kbIntroText, marginBottom: 24, color: 'var(--text-secondary)' }}>Upload PDF reports, JSON exports, or Markdown briefs directly to the intelligence core.</p>
-            <div onClick={() => fileInputRef.current?.click()} style={{ height: 220, border: `2px dashed ${isDragOver ? "var(--brand-primary)" : (kbFile ? "var(--brand-primary)" : "var(--border-light)")}`, borderRadius: 24, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.3s ease", background: kbFile ? "var(--brand-light)" : "var(--bg-main)", position: "relative" }}>
+            <div style={{ marginBottom: 16 }}><span style={{ fontSize: 18, fontWeight: 500, color: '#202124', fontFamily: "'Google Sans', sans-serif" }}>Upload Strategic Intelligence</span></div>
+            <p style={{ fontSize: 14, color: "#5f6368", marginBottom: 24 }}>Upload internal documents for RAG-based strategic reasoning and recall.</p>
+            <div onClick={() => fileInputRef.current?.click()} style={{ height: 180, border: `2px dashed ${isDragOver ? "#1a73e8" : (kbFile ? "#1a73e8" : "#dadce0")}`, borderRadius: 8, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s ease", background: kbFile ? "#e8f0fe" : "#f8f9fa", position: "relative" }}>
               <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={(e) => handleFileChange(e.target.files?.[0] || null)} accept=".pdf,.json,.md,.txt" />
               {kbFile ? (
                 <>
-                  <FileText size={48} color="var(--brand-primary)" />
-                  <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text-primary)", marginTop: 16 }}>{kbFile.name}</div>
-                  <div style={{ fontSize: 13, color: "var(--text-secondary)", marginTop: 4 }}>{(kbFile.size / 1024).toFixed(1)} KB ready for indexing</div>
-                  <button onClick={(e) => { e.stopPropagation(); handleFileChange(null); if (fileInputRef.current) fileInputRef.current.value = ''; }} style={{ position: "absolute", top: 16, right: 16, background: "#fff", border: "1px solid var(--border-light)", borderRadius: 20, padding: "6px 14px", color: "var(--text-primary)", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>✕ Clear</button>
+                  <FileText size={40} color="#1a73e8" />
+                  <div style={{ fontSize: 14, fontWeight: 500, color: "#202124", marginTop: 12 }}>{kbFile.name}</div>
+                  <div style={{ fontSize: 12, color: "#5f6368", marginTop: 4 }}>{(kbFile.size / 1024).toFixed(1)} KB ready</div>
+                  <button onClick={(e) => { e.stopPropagation(); handleFileChange(null); if (fileInputRef.current) fileInputRef.current.value = ''; }} style={{ position: "absolute", top: 12, right: 12, background: "#fff", border: "1px solid #dadce0", borderRadius: 4, padding: "4px 10px", color: "#202124", fontSize: 12, fontWeight: 500, cursor: "pointer" }}>Clear</button>
                 </>
               ) : (
                 <>
-                  <div style={{ width: 56, height: 56, borderRadius: "50%", background: "var(--brand-light)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}><Plus size={28} color="var(--brand-primary)" /></div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: "var(--text-primary)" }}>Select Strategic Document</div>
-                  <div style={{ fontSize: 13, color: "var(--text-tertiary)", marginTop: 6 }}>Supports PDF, JSON, MD, TXT (max {MAX_FILE_SIZE_MB} MB)</div>
+                  <Upload size={32} color="#5f6368" style={{ marginBottom: 12 }} />
+                  <div style={{ fontSize: 14, fontWeight: 500, color: "#202124" }}>Drop document here</div>
+                  <div style={{ fontSize: 12, color: "#70757a", marginTop: 4 }}>PDF, JSON, MD, TXT (Max {MAX_FILE_SIZE_MB} MB)</div>
                 </>
               )}
             </div>
-            <div style={{ marginTop: 28, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
               <div>
-                <label style={fieldLabelStyle} htmlFor="kbSourceFile">Strategic Source Label</label>
-                <input id="kbSourceFile" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ ...textInputStyle, height: 48, borderRadius: 12 }} placeholder="e.g., Annual Strategic Audit 2024" disabled={kbLoading} />
+                <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Strategic Source Label</label>
+                <input id="kbSourceFile" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14 }} placeholder="e.g., Q4 Performance Audit" disabled={kbLoading} />
               </div>
               <div>
-                <label style={fieldLabelStyle} htmlFor="kbScopeFile">Access Scope</label>
+                <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Access Scope</label>
                 <select 
                   id="kbScopeFile" 
                   value={kbScope} 
                   onChange={(event) => setKbScope(event.target.value)} 
-                  style={{ ...textInputStyle, height: 48, borderRadius: 12, appearance: "none" }}
+                  style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14, background: "#fff" }}
                   disabled={kbLoading}
                 >
                   <option value="global">Global (All Users)</option>
@@ -162,25 +162,28 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
                 </select>
               </div>
             </div>
-            <button style={{ ...primaryActionButton, width: "100%", marginTop: 28, height: 52, borderRadius: 16, background: 'var(--brand-gradient)', opacity: kbLoading ? 0.7 : 1, fontSize: 15, border: 'none', color: '#fff', fontWeight: 800 }} onClick={() => void handleSubmit()} disabled={kbLoading || !kbFile}>{kbLoading ? <Loader2 size={20} className="spin" /> : <ChevronRight size={20} />}{kbLoading ? "Indexing Knowledge..." : "Ingest Document"}</button>
+            <button style={{ width: "100%", marginTop: 24, height: 40, borderRadius: 4, background: '#1a73e8', color: '#fff', border: 'none', fontWeight: 500, fontSize: 14, cursor: kbLoading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)" }} onClick={() => void handleSubmit()} disabled={kbLoading || !kbFile}>
+              {kbLoading ? <Loader2 size={16} className="spin" /> : <ChevronRight size={16} />}
+              {kbLoading ? "Indexing Knowledge..." : "Ingest Document"}
+            </button>
           </div>
         ) : (
-          <div style={{ ...contentCardStyle, padding: "32px", borderRadius: 28 }}>
-            <div style={cardHeaderStyle}><span style={{ ...cardHeaderTitleStyle, color: 'var(--text-primary)' }}><Database size={20} color="var(--brand-primary)" />Paste Text Here</span></div>
-            <p style={{ ...kbIntroText, marginBottom: 24, color: 'var(--text-secondary)' }}>Paste raw strategic data, meeting snippets, or tactical updates for immediate semantic recall.</p>
-            <textarea value={kbText} onChange={(event) => setKbText(event.target.value)} rows={10} style={{ ...textareaStyle, borderRadius: 24, padding: "20px", fontSize: 15, border: '1px solid var(--border-light)' }} placeholder="Paste raw documentation or briefings here..." disabled={kbLoading} />
+          <div style={{ ...contentCardStyle, background: "#fff", padding: "24px", borderRadius: 8, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)" }}>
+            <div style={{ marginBottom: 16 }}><span style={{ fontSize: 18, fontWeight: 500, color: '#202124', fontFamily: "'Google Sans', sans-serif" }}>Paste Strategic Intelligence</span></div>
+            <p style={{ fontSize: 14, color: "#5f6368", marginBottom: 24 }}>Commit raw tactical data directly into the knowledge base.</p>
+            <textarea value={kbText} onChange={(event) => setKbText(event.target.value)} rows={10} style={{ width: "100%", border: "1px solid #dadce0", borderRadius: 4, padding: "12px", fontSize: 14, background: "#f8f9fa" }} placeholder="Paste raw documentation here..." disabled={kbLoading} />
             <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
               <div>
-                <label style={fieldLabelStyle} htmlFor="kbSourceText">Source Attribution</label>
-                <input id="kbSourceText" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ ...textInputStyle, height: 48, borderRadius: 12 }} placeholder="e.g., Q3 Stakeholder Update" disabled={kbLoading} />
+                <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Source Attribution</label>
+                <input id="kbSourceText" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14 }} placeholder="e.g., Tactical Update" disabled={kbLoading} />
               </div>
               <div>
-                <label style={fieldLabelStyle} htmlFor="kbScopeText">Access Scope</label>
+                <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Access Scope</label>
                 <select 
                   id="kbScopeText" 
                   value={kbScope} 
                   onChange={(event) => setKbScope(event.target.value)} 
-                  style={{ ...textInputStyle, height: 48, borderRadius: 12, appearance: "none" }}
+                  style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14, background: "#fff" }}
                   disabled={kbLoading}
                 >
                   <option value="global">Global (All Users)</option>
@@ -189,7 +192,10 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
                 </select>
               </div>
             </div>
-            <button style={{ ...primaryActionButton, width: "100%", marginTop: 24, height: 52, borderRadius: 16, background: 'var(--brand-gradient)', opacity: kbLoading ? 0.7 : 1, fontSize: 15, border: 'none', color: '#fff', fontWeight: 800 }} onClick={() => void handleSubmit()} disabled={kbLoading || !kbText.trim()}>{kbLoading ? <Loader2 size={20} className="spin" /> : <Database size={20} />}{kbLoading ? "Indexing Knowledge..." : "Commit Intelligence"}</button>
+            <button style={{ width: "100%", marginTop: 24, height: 40, borderRadius: 4, background: '#1a73e8', color: '#fff', border: 'none', fontWeight: 500, fontSize: 14, cursor: kbLoading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)" }} onClick={() => void handleSubmit()} disabled={kbLoading || !kbText.trim()}>
+              {kbLoading ? <Loader2 size={16} className="spin" /> : <Database size={16} />}
+              {kbLoading ? "Indexing Knowledge..." : "Commit Intelligence"}
+            </button>
           </div>
         )}
       </div>

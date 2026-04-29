@@ -61,32 +61,23 @@ export const Composer: React.FC<ComposerProps> = ({
   return (
     <div style={composerOuterWrapStyle}>
       {/* Dynamic Suggestions */}
-      <div style={{ ...contextualSuggestionsWrap, marginBottom: "12px" }} className="hide-scrollbar">
-        {suggestions.length > 0 && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginRight: 12, color: 'var(--brand-primary)' }}>
-            <Lightbulb size={14} />
-          </div>
-        )}
+      <div style={{ ...contextualSuggestionsWrap, marginBottom: "8px" }} className="hide-scrollbar">
         {suggestions.slice(0, 5).map((suggestion, i) => (
           <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-            whileHover={{ scale: 1.02, background: 'var(--brand-light)' }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ background: '#e8f0fe' }}
             key={suggestion}
             disabled={isThinking}
             style={{
               ...inlineSuggestionButtonStyle,
-              background: 'rgba(255,255,255,0.8)',
-              backdropFilter: 'blur(8px)',
-              border: '1px solid var(--border-light)',
-              color: 'var(--text-secondary)',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
-              fontSize: '12px',
-              padding: '8px 16px',
+              background: '#ffffff',
+              border: '1px solid #dadce0',
+              color: '#5f6368',
+              fontSize: '13px',
+              padding: '6px 16px',
+              borderRadius: '16px',
               opacity: isThinking ? 0.6 : 1,
-              cursor: isThinking ? 'not-allowed' : 'pointer'
+              cursor: isThinking ? 'not-allowed' : 'pointer',
+              fontWeight: 400
             }}
             onClick={() => onSend(suggestion, selectedAgentHint)}
           >
@@ -153,10 +144,10 @@ export const Composer: React.FC<ComposerProps> = ({
       ) : null}
 
       <form className="input-area" style={{ 
-        background: '#fff', borderRadius: '24px', 
-        border: `2px solid ${agentPickerOpen ? 'var(--brand-primary)' : 'var(--border-light)'}`, 
-        boxShadow: agentPickerOpen ? '0 8px 32px rgba(124, 58, 237, 0.1)' : '0 4px 20px rgba(0,0,0,0.02)', 
-        padding: '6px 12px', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        background: '#fff', borderRadius: '8px', 
+        border: `1px solid ${agentPickerOpen ? '#1a73e8' : '#dadce0'}`, 
+        boxShadow: agentPickerOpen ? '0 1px 6px rgba(32,33,36,.28)' : 'none', 
+        padding: '8px 16px', transition: 'all 0.2s ease',
         display: 'flex', alignItems: 'center', gap: 12
       }} onSubmit={handleSubmit}>
         <div style={agentPickerWrapStyle} ref={pickerRef}>
@@ -178,11 +169,10 @@ export const Composer: React.FC<ComposerProps> = ({
                 initial={{ opacity: 0, y: 15, scale: 0.95, filter: "blur(4px)" }}
                 animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: 15, scale: 0.95, filter: "blur(4px)" }}
-                style={{ ...agentPickerMenuStyle, width: 280, borderRadius: 24, padding: 12, boxShadow: '0 20px 50px rgba(0,0,0,0.15)' }}
+                style={{ ...agentPickerMenuStyle, width: 280, borderRadius: 8, padding: 8, boxShadow: '0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)' }}
               >
-                <div style={{ ...pickerHeaderStyle, color: 'var(--brand-primary)', display: 'flex', justifyContent: 'space-between' }}>
-                  <span>Select Expert Agent</span>
-                  <ChevronUp size={14} />
+                <div style={{ ...pickerHeaderStyle, color: '#1a73e8', display: 'flex', justifyContent: 'space-between', padding: '8px 12px' }}>
+                  <span style={{ fontWeight: 500, fontSize: '13px' }}>Expert Routing</span>
                 </div>
                 {AGENT_OPTIONS.map((option) => (
                   <button
@@ -221,21 +211,21 @@ export const Composer: React.FC<ComposerProps> = ({
           />
         </div>
         <div style={composerActionWrap}>
-          <button type="button" disabled={isThinking} style={{ ...iconCircleButton(isListening), borderRadius: 14 }} onClick={onVoice}>
-            {isListening ? <Mic size={20} color="#fff" /> : <MicOff size={20} color="var(--text-tertiary)" />}
+          <button type="button" disabled={isThinking} style={{ ...iconCircleButton(isListening), borderRadius: 8, background: isListening ? '#d93025' : 'transparent' }} onClick={onVoice}>
+            {isListening ? <Mic size={20} color="#fff" /> : <MicOff size={20} color="#5f6368" />}
           </button>
           <button 
             type="submit" 
             style={{ 
               ...sendButtonStyle, 
-              background: draft.trim() && !isThinking ? 'var(--brand-gradient)' : 'var(--bg-main)', 
-              color: draft.trim() && !isThinking ? '#fff' : 'var(--text-tertiary)',
-              borderRadius: 14,
-              width: 42, height: 42
+              background: 'transparent', 
+              color: draft.trim() && !isThinking ? '#1a73e8' : '#dadce0',
+              borderRadius: 8,
+              width: 36, height: 36
             }} 
             disabled={!draft.trim() || isThinking}
           >
-            <Send size={18} />
+            <Send size={20} />
           </button>
         </div>
       </form>

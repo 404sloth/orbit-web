@@ -75,10 +75,10 @@ export default function App() {
   }, [activeSession, loadHistory]);
 
   useEffect(() => {
-    if (activeTab === "dashboard") {
+    if (activeTab === "dashboard" && token) {
       void loadPulseProjects();
     }
-  }, [activeTab, loadPulseProjects]);
+  }, [activeTab, token, loadPulseProjects]);
 
   const handleVoice = async () => {
     const Ctor = speechRecognitionCtor();
@@ -117,7 +117,7 @@ export default function App() {
           animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
           exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
           transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-          style={{ width: "100%", height: "100%", overflow: "hidden", display: "flex", flexDirection: "column" }}
+          style={{ width: "100%", height: "100%", overflow: "auto", display: "flex", flexDirection: "column" }}
         >
           {(() => {
             switch (activeTab) {
@@ -181,39 +181,47 @@ export default function App() {
                     </div>
 
                     <div style={detailsPanelStyle}>
-                      <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
-                        <button 
-                          onClick={() => setStatusOpen(false)}
-                          style={{ 
-                            flex: 1, padding: '10px', borderRadius: 12, 
-                            border: !statusOpen ? '1px solid var(--brand-primary)' : '1px solid var(--border-light)', 
-                            background: !statusOpen ? 'var(--brand-light)' : 'transparent', 
-                            fontSize: 13, fontWeight: 700, 
-                            color: !statusOpen ? 'var(--brand-primary)' : 'var(--text-secondary)', 
-                            cursor: 'pointer', transition: 'all 0.2s ease'
-                          }}
-                        >
-                          Insights
-                        </button>
-                        <button 
-                          onClick={() => setStatusOpen(true)}
-                          style={{ 
-                            flex: 1, padding: '10px', borderRadius: 12, 
-                            border: statusOpen ? '1px solid var(--brand-primary)' : '1px solid var(--border-light)', 
-                            background: statusOpen ? 'var(--brand-light)' : 'transparent', 
-                            fontSize: 13, fontWeight: 700, 
-                            color: statusOpen ? 'var(--brand-primary)' : 'var(--text-secondary)', 
-                            cursor: 'pointer', transition: 'all 0.2s ease'
-                          }}
-                        >
-                          Trace
-                        </button>
-                      </div>
+                    <div style={{ 
+                      display: "flex", gap: 0, padding: "16px 20px", 
+                      background: "#f8f9fa", borderBottom: "1px solid #dadce0",
+                      position: "sticky", top: 0, zIndex: 10
+                    }}>
+                      <button 
+                        onClick={() => setStatusOpen(false)}
+                        style={{ 
+                          flex: 1, padding: '8px', borderRadius: "4px 0 0 4px", 
+                          border: '1px solid #dadce0',
+                          borderRight: "none",
+                          background: !statusOpen ? '#ffffff' : 'transparent', 
+                          fontSize: 12, fontWeight: 500, 
+                          color: !statusOpen ? '#1a73e8' : '#5f6368', 
+                          cursor: 'pointer', transition: 'all 0.2s ease'
+                        }}
+                      >
+                        Insights
+                      </button>
+                      <button 
+                        onClick={() => setStatusOpen(true)}
+                        style={{ 
+                          flex: 1, padding: '8px', borderRadius: "0 4px 4px 0", 
+                          border: '1px solid #dadce0',
+                          background: statusOpen ? '#ffffff' : 'transparent', 
+                          fontSize: 12, fontWeight: 500, 
+                          color: statusOpen ? '#1a73e8' : '#5f6368', 
+                          cursor: 'pointer', transition: 'all 0.2s ease'
+                        }}
+                      >
+                        Trace
+                      </button>
+                    </div>
+                    
+                    <div style={{ flex: 1, overflowY: "auto", padding: "20px" }} className="custom-scrollbar">
                       {statusOpen ? (
                         <TracePanel lastRouting={lastRouting} liveTrace={liveTrace} isThinking={isThinking} />
                       ) : (
                         <ReportPanel reports={generatedReports} />
                       )}
+                    </div>
                     </div>
                   </div>
                 );
@@ -246,7 +254,7 @@ export default function App() {
         onLogout={handleLogout}
       />
       
-      <main style={{ ...contentLayout, overflow: "hidden", position: "relative" }}>
+      <main style={{ ...contentLayout, overflow: "auto", position: "relative" }}>
         <Header 
           activeTabLabel={activeTabLabel} 
           isThinking={isThinking} 
@@ -255,7 +263,7 @@ export default function App() {
           onNotificationAction={handleNotificationAction}
           currentUser={currentUser}
         />
-        <div style={{ flex: 1, position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+        <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column" }}>
           {mainPanel}
         </div>
       </main>

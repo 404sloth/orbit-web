@@ -23,6 +23,17 @@ export function useChat(token: string | null) {
   }, []);
 
   useEffect(() => {
+    // Reset state on token change (account switch/logout)
+    setMessages([]);
+    setSessions([]);
+    setActiveSession("");
+    setLiveTrace([]);
+    setGeneratedReports([]);
+    setQuickActions([]);
+    setDynamicSuggestions(INITIAL_SUGGESTIONS);
+  }, [token]);
+
+  useEffect(() => {
     scrollToBottom();
   }, [messages, scrollToBottom]);
 
@@ -159,11 +170,24 @@ export function useChat(token: string | null) {
     window.setTimeout(() => replacePendingUserStatus("sent"), 250);
 
     try {
+      const currentToken = localStorage.getItem("copilot_token") || token;
       const response = await fetch(`${API_URL}/chat/stream`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        headers: { 
+          "Content-Type": "application/json", 
+          "Authorization": `Bearer ${currentToken}` 
+        },
         body: JSON.stringify({ prompt, thread_id: activeSession }),
       });
+
+      if (response.status === 401) {
+        throw new Error("Session expired. Please log in again.");
+      }
+
+      if (!response.ok) {
+        const errorDetail = await response.text();
+        throw new Error(errorDetail || "Failed to connect to core engine.");
+      }
 
       if (!response.body) throw new Error("ReadableStream not supported.");
       const reader = response.body.getReader();

@@ -11,16 +11,14 @@ export const appContainerStyle: CSSProperties = {
 
 export const sidebarStyle: CSSProperties = {
   width: 280,
-  background: "#ffffff",
-  padding: "24px 16px 16px",
+  background: "#f8f9fa",
+  padding: "24px 8px 16px",
   display: "flex",
   flexDirection: "column",
-  gap: 8,
-  borderRight: "1px solid #f1f3f4",
-  boxShadow: "4px 0 24px rgba(0,0,0,0.02)",
+  gap: 4,
+  borderRight: "1px solid #dadce0",
   zIndex: 10,
   position: "relative",
-  transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
 };
 
 export const sidebarHeaderStyle: CSSProperties = {
@@ -33,27 +31,26 @@ export const sidebarHeaderStyle: CSSProperties = {
 export const logoBadgeStyle: CSSProperties = {
   width: 44,
   height: 44,
-  borderRadius: 16,
-  background: "var(--brand-primary)",
+  borderRadius: 8,
+  background: "#1a73e8",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  boxShadow: "0 8px 20px rgba(79, 70, 229, 0.2)",
 };
 
 export const primaryPillButton: CSSProperties = {
   display: "flex",
   alignItems: "center",
-  gap: 10,
-  padding: "14px 20px",
-  borderRadius: 16,
+  gap: 12,
+  padding: "10px 24px",
+  borderRadius: 4,
   border: "none",
-  background: "var(--brand-primary)",
+  background: "#1a73e8",
   color: "#ffffff",
-  fontWeight: 800,
-  fontSize: 13,
-  boxShadow: "0 8px 24px rgba(79, 70, 229, 0.3)",
-  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+  fontWeight: 500,
+  fontSize: 14,
+  boxShadow: "0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)",
+  transition: "background 0.2s ease, box-shadow 0.2s ease",
   cursor: "pointer",
   marginBottom: 12,
   flexShrink: 0,
@@ -71,9 +68,9 @@ export const navButtonStyle: CSSProperties = {
   gap: 14,
   width: "100%",
   padding: "10px 16px",
-  borderRadius: 12,
+  borderRadius: 8,
   color: "#5f6368",
-  fontWeight: 600,
+  fontWeight: 500,
   fontSize: 13,
   background: "transparent",
   border: "none",
@@ -82,8 +79,8 @@ export const navButtonStyle: CSSProperties = {
 };
 
 export const activeNavButtonStyle: CSSProperties = {
-  color: "var(--brand-primary)",
-  background: "rgba(79, 70, 229, 0.08)",
+  color: "#1a73e8",
+  background: "#e8f0fe",
 };
 
 export const activeNavIndicatorStyle: CSSProperties = {
@@ -105,12 +102,12 @@ export const sessionsContainerStyle: CSSProperties = {
 
 export const sectionLabelStyle: CSSProperties = {
   padding: "0 16px 12px",
-  fontSize: 10,
+  fontSize: 11,
   textTransform: "uppercase",
-  letterSpacing: "0.1em",
-  color: "#9aa0a6",
-  fontWeight: 800,
-  borderBottom: "1px solid #f1f3f4",
+  letterSpacing: "0.05em",
+  color: "#5f6368",
+  fontWeight: 500,
+  borderBottom: "1px solid #dadce0",
   margin: "0 8px 12px",
 };
 
@@ -118,9 +115,9 @@ export const sessionCardStyle: CSSProperties = {
   display: "flex",
   alignItems: "center",
   gap: 4,
-  borderRadius: 12,
+  borderRadius: 4,
   padding: "2px 8px",
-  marginBottom: 4,
+  marginBottom: 2,
 };
 
 export const activeSessionCardStyle: CSSProperties = {
@@ -134,7 +131,7 @@ export const sessionButtonStyle: CSSProperties = {
   flex: 1,
   minWidth: 0,
   padding: "8px",
-  borderRadius: 10,
+  borderRadius: 4,
   background: "transparent",
   border: "none",
   cursor: "pointer",
@@ -144,19 +141,19 @@ export const sessionButtonStyle: CSSProperties = {
 export const sessionIconStyle = (active: boolean): CSSProperties => ({
   width: 28,
   height: 28,
-  borderRadius: 8,
-  background: active ? "var(--brand-light)" : "#ffffff",
-  border: `1px solid ${active ? "var(--brand-light)" : "#f1f3f4"}`,
+  borderRadius: 4,
+  background: active ? "#e8f0fe" : "#ffffff",
+  border: `1px solid ${active ? "#e8f0fe" : "#dadce0"}`,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: active ? "var(--brand-primary)" : "#dadce0",
+  color: active ? "#1a73e8" : "#dadce0",
 });
 
 export const sessionTitleStyle: CSSProperties = {
-  fontSize: 12,
-  fontWeight: 700,
-  color: "#3c4043",
+  fontSize: 13,
+  fontWeight: 400,
+  color: "#202124",
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -189,11 +186,11 @@ export const statusToggleStyle: CSSProperties = {
   alignItems: "center",
   gap: 12,
   width: "100%",
-  padding: "14px 16px",
-  borderRadius: 14,
+  padding: "12px 16px",
+  borderRadius: 8,
   background: "transparent",
   color: "#3c4043",
-  fontWeight: 700,
+  fontWeight: 500,
   fontSize: 12,
   border: "none",
   cursor: "pointer",
@@ -218,11 +215,12 @@ export const statusDotStyle = (connected: boolean): CSSProperties => ({
 
 export const statusCardStyle: CSSProperties = {
   margin: "4px 8px 12px",
-  padding: "16px",
-  borderRadius: 18,
+  padding: "12px",
+  borderRadius: 8,
   background: "#f8f9fa",
+  border: "1px solid #dadce0",
   display: "grid",
-  gap: 10,
+  gap: 8,
 };
 
 export const messagesPaneStyle: CSSProperties = {
@@ -250,10 +248,10 @@ export const mainStyle: CSSProperties = {
 };
 
 export const pageTitleStyle: CSSProperties = {
-  fontSize: 18,
-  fontWeight: 900,
-  color: "var(--text-primary)",
-  letterSpacing: "-0.02em",
+  fontSize: 22,
+  fontWeight: 400,
+  color: "#202124",
+  fontFamily: "'Google Sans', Roboto, Arial, sans-serif",
 };
 
 export const contentLayout: CSSProperties = {
@@ -267,10 +265,11 @@ export const contentLayout: CSSProperties = {
 export const chatLayoutStyle: CSSProperties = {
   flex: 1,
   display: "grid",
-  gridTemplateColumns: "minmax(0, 1fr) 340px",
+  gridTemplateColumns: "minmax(0, 1fr) 300px",
   gap: 0,
   minHeight: 0,
   overflow: "hidden",
+  background: "#ffffff",
 };
 
 export const chatColumnStyle: CSSProperties = {
@@ -300,12 +299,12 @@ export const contextualSuggestionsWrap: CSSProperties = {
 
 export const inlineSuggestionButtonStyle: CSSProperties = {
   padding: "6px 12px",
-  borderRadius: 40,
-  background: "#f1f3f4",
-  border: "none",
-  fontSize: 11,
-  fontWeight: 600,
-  color: "#3c4043",
+  borderRadius: 4,
+  background: "#ffffff",
+  border: "1px solid #dadce0",
+  fontSize: 12,
+  fontWeight: 400,
+  color: "#5f6368",
   cursor: "pointer",
   whiteSpace: "nowrap",
 };
@@ -328,38 +327,37 @@ export const iconCircleButton = (active: boolean): CSSProperties => ({
 });
 
 export const sendButtonStyle: CSSProperties = {
-  width: 44,
-  height: 44,
-  borderRadius: 16,
+  width: 36,
+  height: 36,
+  borderRadius: 4,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: "var(--brand-gradient)",
+  background: "#1a73e8",
   color: "#ffffff",
   border: "none",
   cursor: "pointer",
-  boxShadow: "0 8px 24px rgba(109, 40, 217, 0.3)",
+  boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
   transition: "all 0.2s ease",
 };
 
 export const detailsPanelStyle: CSSProperties = {
-  background: "rgba(241, 245, 249, 0.4)",
+  background: "#f8f9fa",
   display: "flex",
   flexDirection: "column",
-  padding: "24px",
-  gap: 16,
-  overflowY: "auto",
-  height: "100%",
-  backdropFilter: "blur(10px)",
+  padding: "0",
+  gap: 0,
+  overflow: "hidden",
+  borderLeft: "1px solid #dadce0",
 };
 
 export const premiumCardStyle: CSSProperties = {
-  borderRadius: 20,
+  borderRadius: 8,
   background: "#ffffff",
-  padding: 24,
-  boxShadow: "0 4px 20px rgba(15, 23, 42, 0.04)",
-  border: "1px solid #e2e8f0",
-  transition: "all 0.3s ease",
+  padding: 16,
+  boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
+  border: "1px solid #dadce0",
+  transition: "all 0.2s ease",
 };
 
 export const detailsCardStyle: CSSProperties = {
@@ -610,8 +608,8 @@ export const pickerHeaderStyle: CSSProperties = {
 export const agentPickerItemStyle = (selected: boolean): CSSProperties => ({
   width: "100%",
   padding: "10px 12px",
-  borderRadius: 12,
-  background: selected ? "#f0f4f8" : "transparent",
+  borderRadius: 4,
+  background: selected ? "#e8f0fe" : "transparent",
   border: "none",
   textAlign: "left",
   cursor: "pointer",
@@ -634,8 +632,8 @@ export const pickerDot = (color: string): CSSProperties => ({
 });
 
 export const agentPickerItemTitleStyle: CSSProperties = {
-  fontSize: 12,
-  fontWeight: 700,
+  fontSize: 13,
+  fontWeight: 500,
   color: "#202124",
 };
 
@@ -656,22 +654,22 @@ export const emptyStateWrapStyle: CSSProperties = {
 };
 
 export const emptyLogoWrap: CSSProperties = {
-  width: 80,
-  height: 80,
-  borderRadius: 28,
+  width: 64,
+  height: 64,
+  borderRadius: 8,
   background: "#e8f0fe",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  marginBottom: 24,
+  marginBottom: 20,
 };
 
 export const emptyStateTitleStyle: CSSProperties = {
-  fontSize: 32,
-  fontWeight: 900,
+  fontSize: 28,
+  fontWeight: 400,
   color: "#202124",
-  letterSpacing: "-0.04em",
-  marginBottom: 12,
+  marginBottom: 8,
+  fontFamily: "'Google Sans', sans-serif"
 };
 
 export const emptyStateSubtitleStyle: CSSProperties = {
@@ -691,16 +689,16 @@ export const suggestionsContainerStyle: CSSProperties = {
 };
 
 export const suggestionButtonStyle: CSSProperties = {
-  padding: "10px 20px",
-  borderRadius: 99,
+  padding: "8px 16px",
+  borderRadius: 4,
   background: "#ffffff",
-  border: "1px solid #f1f3f4",
-  fontSize: 12,
-  fontWeight: 700,
-  color: "#3c4043",
+  border: "1px solid #dadce0",
+  fontSize: 13,
+  fontWeight: 400,
+  color: "#202124",
   cursor: "pointer",
   transition: "all 0.2s ease",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
+  boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
 };
 
 export const contentWrapStyle: CSSProperties = {
@@ -718,10 +716,10 @@ export const researchGridStyle: CSSProperties = {
 
 export const contentCardStyle: CSSProperties = {
   background: "#ffffff",
-  borderRadius: 32,
-  padding: "32px",
-  border: "1px solid #f1f3f4",
-  boxShadow: "0 4px 20px rgba(0,0,0,0.02)",
+  borderRadius: 8,
+  padding: "24px",
+  border: "1px solid #dadce0",
+  boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
 };
 
 export const cardHeaderStyle: CSSProperties = {
@@ -735,9 +733,10 @@ export const cardHeaderTitleStyle: CSSProperties = {
   display: "flex",
   alignItems: "center",
   gap: 12,
-  fontSize: 18,
-  fontWeight: 800,
+  fontSize: 16,
+  fontWeight: 500,
   color: "#202124",
+  fontFamily: "'Google Sans', sans-serif"
 };
 
 export const researchQueriesContainerStyle: CSSProperties = {
@@ -749,36 +748,33 @@ export const researchButtonStyle: CSSProperties = {
   display: "flex",
   alignItems: "center",
   gap: 12,
-  padding: "16px 20px",
-  borderRadius: 20,
-  background: "#f8f9fa",
-  border: "1px solid #f1f3f4",
+  padding: "12px 16px",
+  borderRadius: 4,
+  background: "#ffffff",
+  border: "1px solid #dadce0",
   textAlign: "left",
-  fontSize: 14,
-  fontWeight: 600,
-  color: "#3c4043",
+  fontSize: 13,
+  fontWeight: 400,
+  color: "#202124",
   cursor: "pointer",
   transition: "all 0.2s ease",
 };
 
 export const messageIconWrap = (isUser: boolean, agentColor: string): CSSProperties => ({
-  width: 40,
-  height: 40,
-  borderRadius: 14,
+  width: 32,
+  height: 32,
+  borderRadius: 4,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: isUser ? "var(--brand-primary)" : agentColor,
+  background: isUser ? "#1a73e8" : agentColor,
   flexShrink: 0,
-  boxShadow: `0 4px 12px ${isUser ? "rgba(124, 58, 237, 0.2)" : "rgba(0,0,0,0.08)"}`,
 });
 
 export const messageSenderStyle = (isUser: boolean, agentColor: string): CSSProperties => ({
-  fontSize: 10,
-  fontWeight: 900,
-  color: isUser ? "var(--brand-primary)" : agentColor,
-  textTransform: "uppercase",
-  letterSpacing: "0.08em",
+  fontSize: 11,
+  fontWeight: 500,
+  color: isUser ? "#1a73e8" : agentColor,
 });
 
 export const messageMetaStyle = (isUser: boolean): CSSProperties => ({

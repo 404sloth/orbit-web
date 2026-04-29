@@ -29,59 +29,61 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="main-header">
-      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <h1 style={{ ...pageTitleStyle, color: "var(--text-primary)" }}>{activeTabLabel}</h1>
-        <AnimatePresence>
-          {isThinking && (
+      <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+        <h1 style={{ ...pageTitleStyle, color: "var(--text-primary)", fontSize: "16px", fontWeight: 500 }}>{activeTabLabel}</h1>
+        
+        <div className="vertical-separator" />
+        
+        <AnimatePresence mode="wait">
+          {isThinking ? (
             <motion.div
-              initial={{ opacity: 0, x: -10, scale: 0.9 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: -10, scale: 0.9 }}
-              className="thinking-badge"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
               style={{ 
-                display: "flex", alignItems: "center", gap: 8, fontSize: "12px", 
-                color: "var(--brand-primary)", fontWeight: 700,
-                background: "var(--brand-light)", padding: "6px 14px", borderRadius: "99px",
-                border: "1px solid rgba(109, 40, 217, 0.1)"
+                display: "flex", alignItems: "center", gap: 6, fontSize: "11px", 
+                color: "#1a73e8", fontWeight: 500,
+                background: "#e8f0fe", padding: "4px 10px", borderRadius: "4px"
               }}
             >
-              <Loader2 size={14} className="spin" />
-              Agent Cognition...
+              <Loader2 size={12} className="spin" />
+              Thinking...
             </motion.div>
+          ) : (
+            <div style={{ 
+              display: "flex", alignItems: "center", gap: 6, fontSize: "11px", fontWeight: 500, 
+              color: connected ? "#188038" : "#d93025", 
+              background: connected ? "#e6f4ea" : "#fce8e6", 
+              padding: "4px 10px", borderRadius: "4px", textTransform: "uppercase"
+            }}>
+              <div style={{ width: 6, height: 6, borderRadius: "50%", background: connected ? "#188038" : "#d93025" }} />
+              {connected ? "System Online" : "Disconnected"}
+            </div>
           )}
         </AnimatePresence>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-        {/* Connection Badge */}
-        <div style={{ 
-          display: "flex", alignItems: "center", gap: 6, fontSize: "10px", fontWeight: 900, 
-          color: connected ? "var(--accent-green)" : "var(--accent-red)", 
-          background: connected ? "rgba(16, 185, 129, 0.1)" : "rgba(239, 68, 68, 0.1)", 
-          padding: "5px 12px", borderRadius: "8px", textTransform: "uppercase", 
-          letterSpacing: "0.05em", border: `1px solid ${connected ? "rgba(16, 185, 129, 0.2)" : "rgba(239, 68, 68, 0.2)"}`
-        }}>
-          <div style={{ width: 6, height: 6, borderRadius: "50%", background: connected ? "var(--accent-green)" : "var(--accent-red)", animation: connected ? "pulse 2s infinite" : "none" }} />
-          {connected ? "Live" : "Offline"}
-        </div>
-
+      <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+        <div className="vertical-separator" />
+        
         {/* Notifications */}
         <div style={{ position: "relative" }} ref={notifRef}>
           <button 
             onClick={() => setNotifOpen(!notifOpen)}
             style={{ 
-              background: notifOpen ? "var(--brand-light)" : "none", 
-              border: "none", color: notifOpen ? "var(--brand-primary)" : "var(--text-secondary)", 
-              cursor: "pointer", position: "relative", padding: 8, borderRadius: "12px",
-              transition: "all 0.2s ease"
+              background: notifOpen ? "#f1f3f4" : "none", 
+              border: "none", color: notifOpen ? "#1a73e8" : "#5f6368", 
+              cursor: "pointer", position: "relative", padding: 6, borderRadius: "4px",
+              transition: "all 0.2s ease",
+              display: "flex", alignItems: "center", justifyContent: "center"
             }}
           >
-            <Bell size={22} />
+            <Bell size={20} />
             {notifications.length > 0 && (
               <span style={{ 
-                position: "absolute", top: 8, right: 8, width: 10, height: 10, 
-                background: "var(--accent-red)", borderRadius: "50%", 
-                border: "2px solid #fff", boxShadow: "0 0 10px rgba(220, 38, 38, 0.4)" 
+                position: "absolute", top: 6, right: 6, width: 8, height: 8, 
+                background: "#d93025", borderRadius: "50%", 
+                border: "2px solid #fff"
               }} />
             )}
           </button>
@@ -94,17 +96,17 @@ export const Header: React.FC<HeaderProps> = ({
                 exit={{ opacity: 0, y: 15, scale: 0.95, filter: "blur(4px)" }}
                 transition={{ type: "spring", damping: 20, stiffness: 300 }}
                 style={{ 
-                  position: "absolute", top: "100%", right: 0, width: 340, background: "#fff", 
-                  borderRadius: 24, boxShadow: "0 20px 50px rgba(109, 40, 217, 0.12)", 
-                  border: "1px solid var(--border-light)", zIndex: 100, marginTop: 16, overflow: "hidden" 
+                  position: "absolute", top: "100%", right: 0, width: 320, background: "#fff", 
+                  borderRadius: 8, boxShadow: "0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)", 
+                  border: "1px solid #dadce0", zIndex: 100, marginTop: 8, overflow: "hidden" 
                 }}
               >
-                <div style={{ padding: "20px", borderBottom: "1px solid var(--border-light)", display: "flex", justifyContent: "space-between", alignItems: "center", background: "#f8fafc" }}>
-                  <span style={{ fontWeight: 800, fontSize: "15px", color: "var(--text-primary)", letterSpacing: "-0.01em" }}>Intelligence Feed</span>
+                <div style={{ padding: "16px", borderBottom: "1px solid #dadce0", display: "flex", justifyContent: "space-between", alignItems: "center", background: "#f8f9fa" }}>
+                  <span style={{ fontWeight: 500, fontSize: "14px", color: "#202124" }}>Notifications</span>
                   <span style={{ 
-                    fontSize: "11px", fontWeight: 700, color: "var(--brand-primary)", 
-                    background: "var(--brand-light)", padding: "4px 10px", borderRadius: 99 
-                  }}>{notifications.length} Unread</span>
+                    fontSize: "11px", fontWeight: 500, color: "#1a73e8", 
+                    background: "#e8f0fe", padding: "2px 8px", borderRadius: 4 
+                  }}>{notifications.length} new</span>
                 </div>
                 <div style={{ maxHeight: 420, overflowY: "auto" }} className="hide-scrollbar">
                   {notifications.length === 0 ? (
@@ -149,30 +151,28 @@ export const Header: React.FC<HeaderProps> = ({
           </AnimatePresence>
         </div>
 
+        <div className="vertical-separator" />
+
         {/* Profile */}
         <div style={{ position: "relative" }} ref={profileRef}>
           <button 
             onClick={() => setProfileOpen(!profileOpen)}
             style={{ 
-              display: "flex", alignItems: "center", gap: 10, background: "rgba(248, 250, 252, 0.8)", 
-              border: `1px solid ${profileOpen ? "var(--brand-primary)" : "var(--border-light)"}`, 
-              padding: "4px 12px 4px 4px", borderRadius: "12px", cursor: "pointer",
-              transition: "all 0.2s ease",
-              boxShadow: profileOpen ? "0 4px 12px rgba(79, 70, 229, 0.08)" : "none"
+              display: "flex", alignItems: "center", gap: 6, background: "transparent", 
+              border: "none", padding: "2px 6px", borderRadius: 4, cursor: "pointer",
+              transition: "background 0.2s ease"
             }}
+            onMouseOver={(e) => e.currentTarget.style.background = "#f1f3f4"}
+            onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
           >
             <div style={{ 
-              width: 32, height: 32, borderRadius: "10px", background: "var(--brand-gradient)", 
+              width: 28, height: 28, borderRadius: "50%", background: "#1a73e8", 
               color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", 
-              fontSize: "13px", fontWeight: 900, boxShadow: "0 4px 10px rgba(79, 70, 229, 0.25)"
+              fontSize: "12px", fontWeight: 500
             }}>
               {currentUser?.username?.charAt(0).toUpperCase() || "U"}
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 0 }}>
-              <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.2 }}>{currentUser?.username || "Guest"}</span>
-              <span style={{ fontSize: "9px", fontWeight: 800, color: "var(--text-tertiary)", textTransform: "uppercase", letterSpacing: "0.02em" }}>{currentUser?.role || "Observer"}</span>
-            </div>
-            <ChevronDown size={12} color="var(--text-tertiary)" style={{ marginLeft: 2, transform: profileOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            <ChevronDown size={14} color="#5f6368" />
           </button>
 
           <AnimatePresence>
@@ -182,15 +182,15 @@ export const Header: React.FC<HeaderProps> = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 15, scale: 0.95 }}
                 style={{ 
-                  position: "absolute", top: "100%", right: 0, width: 220, background: "#fff", 
-                  borderRadius: 20, boxShadow: "0 20px 50px rgba(109, 40, 217, 0.12)", 
-                  border: "1px solid var(--border-light)", zIndex: 100, marginTop: 12, overflow: "hidden",
-                  padding: 8
+                  position: "absolute", top: "100%", right: 0, width: 240, background: "#fff", 
+                  borderRadius: 8, boxShadow: "0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)", 
+                  border: "1px solid #dadce0", zIndex: 100, marginTop: 8, overflow: "hidden",
+                  padding: "8px 0"
                 }}
               >
-                <div style={{ padding: "12px", borderBottom: "1px solid var(--bg-main)", marginBottom: 4 }}>
-                  <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--text-tertiary)" }}>Signed in as</div>
-                  <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--text-primary)", overflow: "hidden", textOverflow: "ellipsis" }}>{currentUser?.email || currentUser?.username}</div>
+                <div style={{ padding: "12px 16px", borderBottom: "1px solid #f1f3f4", marginBottom: 4 }}>
+                  <div style={{ fontSize: "12px", fontWeight: 400, color: "#70757a" }}>Signed in as</div>
+                  <div style={{ fontSize: "14px", fontWeight: 500, color: "#202124", overflow: "hidden", textOverflow: "ellipsis" }}>{currentUser?.email || currentUser?.username}</div>
                 </div>
                 <button style={dropdownItemStyle}><Settings size={16} /> Account Settings</button>
                 <button style={{ ...dropdownItemStyle, color: "var(--accent-red)" }}><LogOut size={16} /> Sign Out</button>

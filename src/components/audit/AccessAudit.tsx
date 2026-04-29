@@ -83,25 +83,25 @@ export const AccessAudit: React.FC = () => {
 
   const kpis = [
     {
-      label: "Redundant Access Points",
+      label: "Redundant Access",
       val: highSeverityCount.toString(),
       sub: `Across ${new Set(gaps.map((g) => g.project)).size} projects`,
       icon: AlertTriangle,
-      color: "#ef4444",
+      color: "#d93025",
     },
     {
       label: "Stale Permissions",
       val: gaps.length.toString(),
       sub: "Awaiting remediation",
       icon: History,
-      color: "#7c3aed",
+      color: "#1a73e8",
     },
     {
-      label: "Security Integrity",
+      label: "System Integrity",
       val: `${integrityPercentage.toFixed(1)}%`,
-      sub: "Post-audit target: 100%",
-      icon: ShieldAlert,
-      color: "#10b981",
+      sub: "Target: 100%",
+      icon: ShieldCheck,
+      color: "#188038",
     },
   ];
 
@@ -137,81 +137,90 @@ export const AccessAudit: React.FC = () => {
     >
       <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
         {/* ---------- Header ---------- */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 40,
-            padding: "0 20px",
-            flexWrap: "wrap",
-            gap: 20,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            <div>
-              <div style={{ fontSize: 10, fontWeight: 800, color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>System Integrity</div>
-              <h1 style={{ fontSize: 24, fontWeight: 900, color: "var(--text-primary)", margin: 0 }}>Access Guard</h1>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32, padding: "0 20px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 0,
+              background: "#ffffff",
+              padding: "8px 16px",
+              borderRadius: "12px",
+              border: "1px solid #dadce0",
+              boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
+              width: "fit-content",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", textTransform: "uppercase", letterSpacing: "0.05em", lineHeight: 1 }}>Security</div>
+              <h1 style={{ fontSize: 16, fontWeight: 500, color: "#202124", margin: 0, fontFamily: "'Google Sans', sans-serif" }}>Access Guard</h1>
+            </div>
+
+            <div style={{ width: 1, height: 24, background: "#dadce0", margin: "0 16px" }} />
+
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#188038" }} />
+              <span style={{ fontSize: 12, color: "#5f6368", fontWeight: 400 }}>Monitoring Active</span>
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
             <div
               style={{
                 background: "#fff",
-                border: "1px solid var(--border-light)",
-                borderRadius: 24,
-                padding: "0 20px",
+                border: "1px solid #dadce0",
+                borderRadius: 4,
+                padding: "0 12px",
                 display: "flex",
                 alignItems: "center",
-                gap: 10,
-                boxShadow: "0 4px 12px rgba(0,0,0,0.02)",
-                backdropFilter: "blur(12px)",
+                gap: 8,
+                boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
               }}
             >
-              <Search size={18} color="var(--text-tertiary)" />
+              <Search size={16} color="#5f6368" />
               <input
                 type="text"
-                placeholder="Search users, projects, or permissions..."
+                placeholder="Search anomalies..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 style={{
                   border: "none",
                   outline: "none",
-                  padding: "10px 0",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  width: 240,
+                  padding: "8px 0",
+                  fontSize: 13,
+                  fontWeight: 400,
+                  width: 200,
                   background: "transparent",
-                  color: "var(--text-primary)",
+                  color: "#202124",
                 }}
               />
             </div>
-            <motion.button
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={fetchGaps}
-              aria-label="Refresh access audit data"
               style={{
-                background: refreshing ? "var(--bg-card)" : "#fff",
-                border: "1px solid var(--border-light)",
-                borderRadius: 20,
-                padding: "10px",
+                background: "#fff",
+                border: "1px solid #dadce0",
+                borderRadius: 4,
+                width: 32,
+                height: 32,
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.02)",
-                backdropFilter: "blur(12px)"
+                boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
+                transition: "background 0.2s"
               }}
+              onMouseOver={(e) => e.currentTarget.style.background = "#f1f3f4"}
+              onMouseOut={(e) => e.currentTarget.style.background = "#fff"}
             >
               <motion.div
                 animate={refreshing ? { rotate: 360 } : {}}
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 style={{ display: "flex", alignItems: "center" }}
               >
-                <RefreshCw size={20} color="var(--text-secondary)" />
+                <RefreshCw size={16} color="#5f6368" />
               </motion.div>
-            </motion.button>
+            </button>
           </div>
         </div>
 
@@ -228,116 +237,30 @@ export const AccessAudit: React.FC = () => {
           {kpis.map((kpi, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, type: "spring", stiffness: 90 }}
+              transition={{ delay: i * 0.1 }}
               style={{
                 background: "#fff",
-                padding: "20px 24px",
-                borderRadius: 24,
-                border: "1px solid var(--border-light)",
-                boxShadow: "0 10px 25px rgba(0,0,0,0.03)",
-                position: "relative",
-                overflow: "hidden",
+                padding: "16px",
+                borderRadius: 8,
+                border: "1px solid #dadce0",
+                boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
+                display: "flex",
+                flexDirection: "column",
+                gap: 12
               }}
             >
-              {/* subtle accent circles */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: -30,
-                  right: -30,
-                  width: 140,
-                  height: 140,
-                  background: `${kpi.color}08`,
-                  borderRadius: "50%",
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: -20,
-                  left: -20,
-                  width: 80,
-                  height: 80,
-                  background: `${kpi.color}10`,
-                  borderRadius: "50%",
-                }}
-              />
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 16,
-                  position: "relative",
-                }}
-              >
-                <div
-                  style={{
-                    background: `${kpi.color}15`,
-                    padding: 12,
-                    borderRadius: 16,
-                  }}
-                >
-                  <kpi.icon color={kpi.color} size={22} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ background: `${kpi.color}10`, padding: 8, borderRadius: 4 }}>
+                  <kpi.icon color={kpi.color} size={20} />
                 </div>
-                <div
-                  style={{
-                    background: "var(--bg-main)",
-                    padding: "6px 14px",
-                    borderRadius: 12,
-                    fontSize: 11,
-                    fontWeight: 700,
-                    color: "var(--text-tertiary)",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                  }}
-                >
-                  Live
-                  <div
-                    style={{
-                      width: 7,
-                      height: 7,
-                      borderRadius: "50%",
-                      background: kpi.color,
-                    }}
-                  />
-                </div>
+                <div style={{ fontSize: 10, fontWeight: 500, color: "#188038", background: "#e6f4ea", padding: "2px 8px", borderRadius: 4 }}>Live</div>
               </div>
-
-              <div
-                style={{
-                  fontSize: 30,
-                  fontWeight: 900,
-                  color: "var(--text-primary)",
-                  marginBottom: 4,
-                  letterSpacing: "-0.02em",
-                  lineHeight: 1.1,
-                }}
-              >
-                {kpi.val}
-              </div>
-              <div
-                style={{
-                  fontSize: 13,
-                  fontWeight: 700,
-                  color: "var(--text-secondary)",
-                  marginBottom: 4,
-                }}
-              >
-                {kpi.label}
-              </div>
-              <div
-                style={{
-                  fontSize: 11,
-                  fontWeight: 500,
-                  color: "var(--text-tertiary)",
-                  opacity: 0.75,
-                }}
-              >
-                {kpi.sub}
+              <div>
+                <div style={{ fontSize: 24, fontWeight: 500, color: "#202124", letterSpacing: "-0.01em" }}>{kpi.val}</div>
+                <div style={{ fontSize: 13, fontWeight: 500, color: "#202124", marginTop: 4 }}>{kpi.label}</div>
+                <div style={{ fontSize: 11, color: "#5f6368", marginTop: 2 }}>{kpi.sub}</div>
               </div>
             </motion.div>
           ))}
@@ -355,24 +278,23 @@ export const AccessAudit: React.FC = () => {
             transition={{ delay: 0.2 }}
             style={{
               background: "#fff",
-              borderRadius: 32,
-              border: "1px solid var(--border-light)",
+              borderRadius: 8,
+              border: "1px solid #dadce0",
               overflow: "hidden",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.04)",
+              boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
             }}
           >
             {/* Filter bar */}
             <div
               style={{
-                padding: "16px 32px",
-                borderBottom: "1px solid var(--border-light)",
+                padding: "8px 24px",
+                borderBottom: "1px solid #dadce0",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 flexWrap: "wrap",
                 gap: 16,
-                background: "rgba(249,250,251,0.7)",
-                backdropFilter: "blur(16px)",
+                background: "#f8f9fa",
               }}
             >
               <div style={{ display: "flex", gap: 32 }}>
@@ -422,28 +344,20 @@ export const AccessAudit: React.FC = () => {
 
               <div
                 style={{
-                  fontSize: 12,
-                  fontWeight: 700,
-                  color: "var(--text-secondary)",
+                  fontSize: 11,
+                  fontWeight: 500,
+                  color: "#5f6368",
                   display: "flex",
                   alignItems: "center",
-                  gap: 10,
-                  background: "var(--bg-main)",
-                  padding: "10px 18px",
-                  borderRadius: 14,
+                  gap: 8,
+                  background: "#fff",
+                  padding: "4px 12px",
+                  borderRadius: 4,
+                  border: "1px solid #dadce0"
                 }}
               >
-                <Filter size={15} color="var(--brand-primary)" />
-                Monitoring{" "}
-                <span
-                  style={{
-                    color: "var(--text-primary)",
-                    fontWeight: 900,
-                  }}
-                >
-                  {filteredGaps.length}
-                </span>{" "}
-                Anomalies
+                <Filter size={14} color="#1a73e8" />
+                <span>Monitoring <strong style={{ color: "#202124" }}>{filteredGaps.length}</strong> Anomalies</span>
               </div>
             </div>
 
@@ -534,22 +448,16 @@ export const AccessAudit: React.FC = () => {
                       <motion.tr
                         key={gap.id}
                         onClick={() => setSelectedGapId(selectedGapId === gap.id ? null : gap.id)}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.98 }}
-                        transition={{ delay: i * 0.03, duration: 0.2 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
                         style={{
-                          background:
-                            selectedGapId === gap.id
-                              ? "rgba(124, 58, 237, 0.03)"
-                              : gap.severity === "high"
-                              ? "rgba(254,226,226,0.1)"
-                              : "transparent",
-                          borderRadius: 18,
-                          border: `1px solid ${selectedGapId === gap.id ? 'var(--brand-primary)' : 'var(--border-light)'}`,
-                          boxShadow: selectedGapId === gap.id ? "0 8px 24px rgba(124, 58, 237, 0.08)" : "0 2px 10px rgba(0,0,0,0.02)",
+                          background: selectedGapId === gap.id ? "#e8f0fe" : "transparent",
                           cursor: "pointer",
+                          borderBottom: "1px solid #f1f3f4",
+                          transition: "background 0.2s"
                         }}
+                        onMouseOver={(e) => { if (selectedGapId !== gap.id) e.currentTarget.style.background = "#f8f9fa"; }}
+                        onMouseOut={(e) => { if (selectedGapId !== gap.id) e.currentTarget.style.background = "transparent"; }}
                       >
                         <td style={{ padding: "16px 12px 16px 24px", borderRadius: "18px 0 0 18px" }}>
                           <div
@@ -557,40 +465,25 @@ export const AccessAudit: React.FC = () => {
                           >
                             <div
                               style={{
-                                width: 38,
-                                height: 38,
-                                borderRadius: 12,
-                                background:
-                                  "linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)",
+                                width: 32,
+                                height: 32,
+                                borderRadius: 4,
+                                background: "#f1f3f4",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                fontSize: 13,
-                                fontWeight: 900,
-                                color: "var(--brand-primary)",
-                                boxShadow: "inset 0 2px 4px rgba(0,0,0,0.05)",
+                                fontSize: 12,
+                                fontWeight: 500,
+                                color: "#1a73e8",
                               }}
                             >
                               {gap.user.avatar}
                             </div>
                             <div>
-                              <div
-                                style={{
-                                  fontSize: 13,
-                                  fontWeight: 800,
-                                  color: "var(--text-primary)",
-                                  marginBottom: 3,
-                                }}
-                              >
+                              <div style={{ fontSize: 13, fontWeight: 500, color: "#202124", marginBottom: 2 }}>
                                 {gap.user.name}
                               </div>
-                              <div
-                                style={{
-                                  fontSize: 11,
-                                  fontWeight: 500,
-                                  color: "var(--text-tertiary)",
-                                }}
-                              >
+                              <div style={{ fontSize: 11, color: "#5f6368" }}>
                                 {gap.user.role}
                               </div>
                             </div>
@@ -693,31 +586,27 @@ export const AccessAudit: React.FC = () => {
                               justifyContent: "flex-end",
                             }}
                           >
-                            <motion.button
-                              whileHover={{ scale: 1.05, background: "var(--brand-primary)", color: "#fff" }}
-                              whileTap={{ scale: 0.95 }}
-                              style={{
-                                padding: "6px 12px",
-                                borderRadius: 10,
-                                background: "transparent",
-                                border: "1px solid var(--brand-primary)",
-                                color: "var(--brand-primary)",
-                                fontSize: 11,
-                                fontWeight: 800,
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 4,
-                                cursor: "pointer",
-                                transition: "all 0.2s cubic-bezier(0.23, 1, 0.32, 1)"
-                              }}
-                              aria-label={`Revoke access for ${gap.user.name}`}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                // Revoke logic here
-                              }}
+                            <button
+                               onClick={(e) => { e.stopPropagation(); }}
+                               style={{
+                                 padding: "4px 12px",
+                                 borderRadius: 4,
+                                 background: "#fff",
+                                 border: "1px solid #dadce0",
+                                 color: "#5f6368",
+                                 fontSize: 11,
+                                 fontWeight: 500,
+                                 cursor: "pointer",
+                                 display: "flex",
+                                 alignItems: "center",
+                                 gap: 4,
+                                 transition: "all 0.2s"
+                               }}
+                               onMouseOver={(e) => { e.currentTarget.style.background = "#f1f3f4"; e.currentTarget.style.color = "#d93025"; }}
+                               onMouseOut={(e) => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#5f6368"; }}
                             >
-                              <UserMinus size={15} /> Revoke
-                            </motion.button>
+                              <UserMinus size={14} /> Revoke
+                            </button>
                           </div>
                         </td>
                       </motion.tr>
@@ -737,35 +626,34 @@ export const AccessAudit: React.FC = () => {
                 >
                   <div
                     style={{
-                      width: 72,
-                      height: 72,
+                      width: 64,
+                      height: 64,
                       borderRadius: "50%",
-                      background: "var(--brand-light)",
+                      background: "#e6f4ea",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       margin: "0 auto 24px",
-                      boxShadow: "inset 0 4px 12px rgba(0,0,0,0.05)",
                     }}
                   >
-                    <CheckCircle2 color="var(--brand-primary)" size={36} />
+                    <CheckCircle2 color="#188038" size={32} />
                   </div>
                   <h3
                     style={{
-                      fontSize: 20,
-                      fontWeight: 900,
-                      color: "var(--text-primary)",
-                      marginBottom: 12,
-                      letterSpacing: "-0.02em",
+                      fontSize: 18,
+                      fontWeight: 500,
+                      color: "#202124",
+                      marginBottom: 8,
+                      fontFamily: "'Google Sans', sans-serif"
                     }}
                   >
                     Security Perimeter Integrity Confirmed
                   </h3>
                   <p
                     style={{
-                      color: "var(--text-secondary)",
-                      fontSize: 15,
-                      fontWeight: 500,
+                      color: "#5f6368",
+                      fontSize: 14,
+                      fontWeight: 400,
                       maxWidth: 420,
                       margin: "0 auto",
                     }}
@@ -893,116 +781,120 @@ export const AccessAudit: React.FC = () => {
               onClick={() => setSelectedGapId(null)}
             >
               <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                initial={{ opacity: 0, scale: 0.95, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                exit={{ opacity: 0, scale: 0.95, y: 10 }}
                 onClick={(e) => e.stopPropagation()}
                 style={{
                   background: "#fff",
-                  borderRadius: 32,
-                  border: "1px solid var(--border-light)",
-                  padding: "40px",
-                  boxShadow: "0 40px 100px rgba(0,0,0,0.2)",
+                  borderRadius: 8,
+                  border: "1px solid #dadce0",
+                  padding: "32px",
+                  boxShadow: "0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)",
                   width: "100%",
-                  maxWidth: "500px",
+                  maxWidth: "480px",
                   maxHeight: "90vh",
                   overflowY: "auto",
                   position: "relative"
                 }}
-                className="hide-scrollbar"
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 32 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
                   <div style={{ 
-                    width: 64, height: 64, borderRadius: 20, 
-                    background: 'var(--brand-light)', 
+                    width: 48, height: 48, borderRadius: 8, 
+                    background: '#e8f0fe', 
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 24, fontWeight: 900, color: 'var(--brand-primary)',
-                    boxShadow: '0 8px 20px rgba(124, 58, 237, 0.15)'
+                    fontSize: 20, fontWeight: 500, color: '#1a73e8',
+                    border: "1px solid #1a73e8"
                   }}>
                     {selectedGap.user.avatar}
                   </div>
                   <button 
                     onClick={() => setSelectedGapId(null)}
                     style={{ 
-                      background: 'var(--bg-main)', 
+                      background: 'transparent', 
                       border: 'none', 
                       cursor: 'pointer', 
-                      color: 'var(--text-tertiary)',
-                      width: 32,
-                      height: 32,
+                      color: '#5f6368',
+                      width: 24,
+                      height: 24,
                       borderRadius: "50%",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center"
                     }}
+                    onMouseOver={(e) => e.currentTarget.style.background = "#f1f3f4"}
+                    onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
                   >
                     ✕
                   </button>
                 </div>
 
-                <h3 style={{ fontSize: 24, fontWeight: 900, color: "var(--text-primary)", marginBottom: 6 }}>{selectedGap.user.name}</h3>
-                <p style={{ fontSize: 14, fontWeight: 500, color: "var(--text-tertiary)", marginBottom: 32 }}>{selectedGap.user.role}</p>
+                <h3 style={{ fontSize: 20, fontWeight: 500, color: "#202124", marginBottom: 4, fontFamily: "'Google Sans', sans-serif" }}>{selectedGap.user.name}</h3>
+                <p style={{ fontSize: 13, color: "#5f6368", marginBottom: 24 }}>{selectedGap.user.role}</p>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-                  <div style={{ background: 'var(--bg-main)', padding: 24, borderRadius: 24, border: '1px solid var(--border-light)' }}>
-                    <div style={{ fontSize: 11, fontWeight: 900, color: "var(--brand-primary)", textTransform: "uppercase", marginBottom: 12, letterSpacing: "0.12em" }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                  <div style={{ background: '#f8f9fa', padding: 20, borderRadius: 8, border: '1px solid #dadce0' }}>
+                    <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", textTransform: "uppercase", marginBottom: 8, letterSpacing: "0.05em" }}>
                       Risk Rationale
                     </div>
-                    <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.6, margin: 0, fontWeight: 500 }}>
+                    <p style={{ fontSize: 13, color: "#3c4043", lineHeight: 1.6, margin: 0, fontWeight: 400 }}>
                       {selectedGap.reason}
                     </p>
                   </div>
 
-                  <div style={{ padding: '0 8px' }}>
-                    <div style={{ fontSize: 11, fontWeight: 900, color: "var(--text-tertiary)", textTransform: "uppercase", marginBottom: 16, letterSpacing: "0.12em" }}>
+                  <div style={{ padding: '0 4px' }}>
+                    <div style={{ fontSize: 10, fontWeight: 500, color: "#5f6368", textTransform: "uppercase", marginBottom: 12, letterSpacing: "0.05em" }}>
                       Technical Context
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)' }}>Permission</span>
-                        <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--text-primary)' }}>{selectedGap.permission}</span>
+                        <span style={{ fontSize: 13, color: '#5f6368' }}>Permission</span>
+                        <span style={{ fontSize: 13, fontWeight: 500, color: '#202124' }}>{selectedGap.permission}</span>
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)' }}>Project Scope</span>
-                        <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--brand-primary)' }}>{selectedGap.project}</span>
+                        <span style={{ fontSize: 13, color: '#5f6368' }}>Project Scope</span>
+                        <span style={{ fontSize: 13, fontWeight: 500, color: '#1a73e8' }}>{selectedGap.project}</span>
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)' }}>Last Activity</span>
-                        <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--text-primary)' }}>{selectedGap.lastActive}</span>
+                        <span style={{ fontSize: 13, color: '#5f6368' }}>Last Activity</span>
+                        <span style={{ fontSize: 13, fontWeight: 500, color: '#202124' }}>{selectedGap.lastActive}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 12 }}>
-                    <motion.button
-                      whileHover={{ scale: 1.02, background: "var(--brand-primary)", color: "#fff" }}
-                      whileTap={{ scale: 0.98 }}
+                  <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+                    <button
                       style={{
-                        padding: "16px",
-                        borderRadius: 16,
-                        background: "transparent",
-                        border: "1px solid var(--brand-primary)",
-                        color: "var(--brand-primary)",
-                        fontSize: 14,
-                        fontWeight: 800,
+                        padding: "12px",
+                        borderRadius: 4,
+                        background: "#1a73e8",
+                        border: "none",
+                        color: "#fff",
+                        fontSize: 13,
+                        fontWeight: 500,
                         cursor: "pointer",
-                        transition: "all 0.2s cubic-bezier(0.23, 1, 0.32, 1)"
+                        transition: "background 0.2s"
                       }}
+                      onMouseOver={(e) => e.currentTarget.style.background = "#185abc"}
+                      onMouseOut={(e) => e.currentTarget.style.background = "#1a73e8"}
                     >
                       Initiate Remediation
-                    </motion.button>
+                    </button>
                     <button 
                       onClick={() => setSelectedGapId(null)}
                       style={{
-                        padding: "16px",
-                        borderRadius: 16,
+                        padding: "12px",
+                        borderRadius: 4,
                         background: "transparent",
-                        border: "none",
-                        color: "var(--text-tertiary)",
+                        border: "1px solid #dadce0",
+                        color: "#5f6368",
                         fontSize: 13,
-                        fontWeight: 700,
+                        fontWeight: 500,
                         cursor: "pointer",
+                        transition: "background 0.2s"
                       }}
+                      onMouseOver={(e) => e.currentTarget.style.background = "#f1f3f4"}
+                      onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
                     >
                       Dismiss View
                     </button>

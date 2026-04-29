@@ -62,10 +62,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
       className={`sidebar ${isCollapsed ? "collapsed" : ""}`}
       style={{
         ...sidebarStyle,
-        background: "#ffffff",
-        borderRight: "1px solid var(--border-light)",
-        boxShadow: "10px 0 30px rgba(15, 23, 42, 0.02)",
-        ...(isCollapsed ? { width: 88, padding: "24px 14px 16px" } : {}),
+        background: "#f8f9fa",
+        borderRight: "1px solid #dadce0",
+        ...(isCollapsed ? { width: 72, padding: "16px 8px" } : {}),
       }}
     >
       <div
@@ -77,20 +76,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
       >
         <div style={{ 
           ...logoBadgeStyle, 
-          width: isCollapsed ? 42 : 48, 
-          height: isCollapsed ? 42 : 48, 
-          background: 'var(--brand-gradient)',
-          borderRadius: 18,
-          boxShadow: '0 8px 20px rgba(109, 40, 217, 0.25)'
+          width: isCollapsed ? 40 : 44, 
+          height: isCollapsed ? 40 : 44, 
+          background: '#1a73e8',
+          borderRadius: 8,
         }}>
           <Sparkles size={isCollapsed ? 20 : 24} color="#fff" />
         </div>
         {!isCollapsed && (
           <div style={{ marginLeft: 4 }}>
-            <div style={{ fontSize: 20, fontWeight: 900, color: "var(--text-primary)", letterSpacing: "-0.03em" }}>
+            <div style={{ fontSize: 22, fontWeight: 400, color: "#202124", fontFamily: "'Google Sans', sans-serif", letterSpacing: "-0.01em" }}>
               Orbit
             </div>
-            <div style={{ fontSize: 9, fontWeight: 800, color: "var(--brand-primary)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+            <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", letterSpacing: "0.05em", textTransform: "uppercase" }}>
               Executive AI
             </div>
           </div>
@@ -100,14 +98,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <button
         style={{
           ...primaryPillButton,
-          padding: isCollapsed ? "14px" : "16px 24px",
+          padding: isCollapsed ? "12px" : "10px 24px",
           justifyContent: isCollapsed ? "center" : "flex-start",
-          background: 'var(--brand-gradient)',
+          background: '#1a73e8',
           color: '#fff',
-          border: 'none',
-          borderRadius: 20,
-          boxShadow: '0 10px 25px rgba(79, 70, 229, 0.3)',
-          marginBottom: 32
+          borderRadius: 4,
+          boxShadow: '0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)',
+          marginBottom: 24,
+          fontFamily: "'Google Sans', sans-serif"
         }}
         onClick={onNewChat}
       >
@@ -147,12 +145,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
               style={{
                 ...navButtonStyle,
                 justifyContent: isCollapsed ? "center" : "flex-start",
-                padding: isCollapsed ? "12px 0" : "12px 18px",
-                color: isActive ? 'var(--brand-primary)' : 'var(--text-secondary)',
-                background: isActive ? 'var(--brand-light)' : 'transparent',
-                borderRadius: 14,
+                padding: isCollapsed ? "12px 0" : "10px 16px",
+                color: isActive ? '#1a73e8' : '#5f6368',
+                background: isActive ? '#e8f0fe' : 'transparent',
+                borderRadius: isCollapsed ? 0 : '0 24px 24px 0',
                 transition: 'all 0.2s ease',
-                fontWeight: isActive ? 800 : 600
+                fontWeight: isActive ? 500 : 400,
+                position: 'relative',
+                border: 'none',
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                cursor: 'pointer'
               }}
               onClick={() => setActiveTab(item.id)}
               title={isCollapsed ? item.label : undefined}
@@ -242,13 +246,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
             width: '100%',
             padding: '12px 16px',
             justifyContent: isCollapsed ? 'center' : 'flex-start',
-            background: 'rgba(220, 38, 38, 0.05)',
-            borderRadius: 14,
+            background: 'transparent',
+            borderRadius: 4,
             border: 'none',
-            color: 'var(--accent-red)',
+            color: '#d93025',
             cursor: 'pointer',
             fontSize: '13px',
-            fontWeight: 700,
+            fontWeight: 500,
             transition: 'all 0.2s ease'
           }}
           onClick={onLogout}
