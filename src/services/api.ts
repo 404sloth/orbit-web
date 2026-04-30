@@ -60,6 +60,7 @@ export const chatApi = {
   getHistory: (threadId: string) => fetchJson<any[]>(`${API_URL}/chat/history/${encodeURIComponent(threadId)}`),
   deleteThread: (threadId: string) => fetchJson(`${API_URL}/chat/threads/${encodeURIComponent(threadId)}`, { method: "DELETE" }),
   getSuggestions: (threadId: string) => fetchJson<string[]>(`${API_URL}/chat/suggestions/${encodeURIComponent(threadId)}`),
+  getReports: () => fetchJson<any[]>(`${API_URL}/reports/list`),
 };
 
 export const dashboardApi = {
@@ -72,6 +73,7 @@ export const dashboardApi = {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ action }),
   }),
+  getAccessGaps: () => fetchJson<any[]>(`${API_URL}/audit/access-gaps`),
 };
 
 export const knowledgeApi = {

@@ -110,11 +110,21 @@ export function useChat(token: string | null) {
     }
   }, []);
 
+  const loadReports = useCallback(async () => {
+    try {
+      const reports = await chatApi.getReports();
+      setGeneratedReports(reports);
+    } catch (error) {
+      console.error("Failed to load reports", error);
+    }
+  }, []);
+
   useEffect(() => {
     if (activeSession) {
       void loadSuggestions(activeSession);
+      void loadReports();
     }
-  }, [activeSession, messages.length, loadSuggestions]);
+  }, [activeSession, messages.length, loadSuggestions, loadReports]);
 
   const appendMessage = useCallback((message: Omit<Message, "id">) => {
     setMessages((previous) => [...previous, { ...message, id: nextMessageId() }]);
@@ -253,8 +263,9 @@ export function useChat(token: string | null) {
               });
               setLastRouting({ thought: event.reasoning });
               refreshSessionFromMessage(event.thread_id, event.response);
-              // Trigger suggestion reload
+              // Trigger suggestion and report reload
               void loadSuggestions(activeSession);
+              void loadReports();
             } else if (event.type === "approval_required") {
               setPendingApproval({ prompt: event.prompt });
               setIsThinking(false);
@@ -337,6 +348,7 @@ export function useChat(token: string | null) {
     loadSessions,
     loadHistory,
     loadSuggestions,
+    loadReports,
     handleSend,
     handleNewChat,
     handleDeleteChat,

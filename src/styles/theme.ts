@@ -259,7 +259,7 @@ export const contentLayout: CSSProperties = {
   minHeight: 0,
   display: "flex",
   flexDirection: "column",
-  overflow: "auto",
+  overflow: "hidden",
 };
 
 export const chatLayoutStyle: CSSProperties = {

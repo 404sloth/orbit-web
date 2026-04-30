@@ -5,6 +5,7 @@ import {
   ShieldCheck,
   Target,
   TrendingUp,
+  CreditCard,
 } from "lucide-react";
 
 export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
@@ -14,6 +15,7 @@ export const NAV = [
   { id: "dashboard", icon: LayoutDashboard, label: "Pulse" },
   { id: "knowledge", icon: Database, label: "Assets" },
   { id: "audit", icon: ShieldCheck, label: "Guard" },
+  { id: "credits", icon: CreditCard, label: "Credits" },
 ] as const;
 
 export const RESEARCH_CATEGORIES = [

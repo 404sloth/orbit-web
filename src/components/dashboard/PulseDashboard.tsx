@@ -283,7 +283,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
   const selectedEvent = timeline.find((e) => e.id + e.date === selectedEventId);
 
   return (
-    <div style={{ padding: "40px 40px 100px", width: "100%", maxWidth: "1400px", margin: "0 auto", minHeight: "fit-content" }}>
+    <div style={{ padding: "40px 40px 100px", width: "100%", maxWidth: "1400px", margin: "0 auto" }}>
 
       {!selectedPid ? (
         <>

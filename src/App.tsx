@@ -13,6 +13,7 @@ import { ReportPanel } from "./components/chat/ReportPanel";
 import { PulseDashboard } from "./components/dashboard/PulseDashboard";
 import { KnowledgeBase } from "./components/knowledge/KnowledgeBase";
 import { AccessAudit } from "./components/audit/AccessAudit";
+import { CreditDashboard } from "./components/credits/CreditDashboard";
 import { Toast } from "./components/common/Toast";
 import { OfflineOverlay } from "./components/common/OfflineOverlay";
 import { ApprovalGateway } from "./components/common/ApprovalGateway";
@@ -23,8 +24,10 @@ import { useChat } from "./hooks/useChat";
 import { usePulse } from "./hooks/usePulse";
 import { useKnowledge } from "./hooks/useKnowledge";
 
+import { Routes, Route, useLocation, useNavigate, Navigate } from "react-router-dom";
+
 // Utils & Types
-import { NAV } from "./utils/constants";
+import { NAV, INITIAL_SUGGESTIONS } from "./utils/constants";
 import { speechRecognitionCtor, prettifyAgent } from "./utils/helpers";
 import {
   appContainerStyle,
@@ -35,11 +38,27 @@ import {
   detailsPanelStyle,
 } from "./styles/theme";
 
+const TAB_MAP: Record<string, string> = {
+  "/chat": "conversations",
+  "/pulse": "dashboard",
+  "/assets": "knowledge",
+  "/guard": "audit",
+  "/credits": "credits",
+};
+
+const PATH_MAP: Record<string, string> = {
+  "conversations": "/chat",
+  "dashboard": "/pulse",
+  "knowledge": "/assets",
+  "audit": "/guard",
+  "credits": "/credits",
+};
+
 export default function App() {
   const { token, currentUser, handleLogin, handleLogout } = useAuth();
   const {
     messages, sessions, activeSession, setActiveSession, isThinking, lastRouting, liveTrace,
-    dynamicSuggestions, quickActions, loadSessions, loadHistory, handleSend, handleNewChat, handleDeleteChat,
+    dynamicSuggestions, quickActions, loadSessions, loadHistory, loadReports, handleSend, handleNewChat, handleDeleteChat,
     pendingApproval, setPendingApproval, generatedReports, endRef
   } = useChat(token);
   
@@ -53,8 +72,11 @@ export default function App() {
     kbFile, setKbFile, kbLoading, handleKbSubmit 
   } = useKnowledge(token);
 
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
   // UI State
-  const [activeTab, setActiveTab] = useState<(typeof NAV)[number]["id"]>("conversations");
+  const activeTab = TAB_MAP[pathname] || "conversations";
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [statusOpen, setStatusOpen] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -112,128 +134,149 @@ export default function App() {
     return (
       <AnimatePresence mode="wait">
         <motion.div
-          key={activeTab}
+          key={pathname}
           initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
           animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
           exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
           transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-          style={{ width: "100%", height: "100%", overflow: "auto", display: "flex", flexDirection: "column" }}
+          style={{ width: "100%", height: "100%", overflow: "hidden", display: "flex", flexDirection: "column" }}
         >
-          {(() => {
-            switch (activeTab) {
-              case "audit":
-                return <AccessAudit />;
-              case "dashboard":
-                return (
-                  <PulseDashboard
-                    projects={pulseProjects}
-                    selectedPid={selectedPid}
-                    timeline={pulseTimeline}
-                    loading={pulseLoading}
-                    onSelect={(id) => id ? void loadPulseTimeline(id) : void loadPulseTimeline("")}
-                    onSimulate={handleSimulateLifecycle}
-                  />
-                );
-              case "knowledge":
-                return (
-                  <KnowledgeBase
-                    kbText={kbText} setKbText={setKbText}
-                    kbSource={kbSource} setKbSource={setKbSource}
-                    kbScope={kbScope} setKbScope={setKbScope}
-                    kbFile={kbFile} setKbFile={setKbFile}
-                    kbLoading={kbLoading} handleKbSubmit={handleKbSubmit}
-                    setToast={setToast}
-                  />
-                );
-              default:
-                return (
-                  <div style={chatLayoutStyle}>
-                    <div style={chatColumnStyle}>
-                      <div style={messagesPaneStyle}>
-                        {messages.length === 0 ? (
-                          <EmptyState suggestions={dynamicSuggestions} onSelect={handleSendWithHint} />
-                        ) : (
-                          messages.map((msg, i) => (
-                            <MessageItem key={msg.id} msg={msg} isLast={i === messages.length - 1} />
-                          ))
-                        )}
-                        {isThinking && (
-                          <div style={{ padding: "20px", display: "flex", gap: "10px", alignItems: "center", color: "#64748b" }}>
-                            <div className="dot-typing"></div>
-                            <span style={{ fontSize: "13px", fontWeight: 500 }}>
-                              Consulting with {prettifyAgent(messages[messages.length - 1]?.metadata?.agent_hint as string | undefined) || "Supervisor"}...
-                            </span>
-                          </div>
-                        )}
-                        <div ref={endRef} />
-                      </div>
-
-                      <Composer
-                        onSend={handleSendWithHint}
-                        isThinking={isThinking}
-                        isListening={isListening}
-                        onVoice={handleVoice}
-                        suggestions={dynamicSuggestions}
-                        quickActions={quickActions}
-                        selectedAgentHint={selectedAgentHint}
-                        onAgentChange={setSelectedAgentHint}
-                      />
-                    </div>
-
-                    <div style={detailsPanelStyle}>
-                    <div style={{ 
-                      display: "flex", gap: 0, padding: "16px 20px", 
-                      background: "#f8f9fa", borderBottom: "1px solid #dadce0",
-                      position: "sticky", top: 0, zIndex: 10
-                    }}>
-                      <button 
-                        onClick={() => setStatusOpen(false)}
-                        style={{ 
-                          flex: 1, padding: '8px', borderRadius: "4px 0 0 4px", 
-                          border: '1px solid #dadce0',
-                          borderRight: "none",
-                          background: !statusOpen ? '#ffffff' : 'transparent', 
-                          fontSize: 12, fontWeight: 500, 
-                          color: !statusOpen ? '#1a73e8' : '#5f6368', 
-                          cursor: 'pointer', transition: 'all 0.2s ease'
-                        }}
-                      >
-                        Insights
-                      </button>
-                      <button 
-                        onClick={() => setStatusOpen(true)}
-                        style={{ 
-                          flex: 1, padding: '8px', borderRadius: "0 4px 4px 0", 
-                          border: '1px solid #dadce0',
-                          background: statusOpen ? '#ffffff' : 'transparent', 
-                          fontSize: 12, fontWeight: 500, 
-                          color: statusOpen ? '#1a73e8' : '#5f6368', 
-                          cursor: 'pointer', transition: 'all 0.2s ease'
-                        }}
-                      >
-                        Trace
-                      </button>
-                    </div>
-                    
-                    <div style={{ flex: 1, overflowY: "auto", padding: "20px" }} className="custom-scrollbar">
-                      {statusOpen ? (
-                        <TracePanel lastRouting={lastRouting} liveTrace={liveTrace} isThinking={isThinking} />
+          <Routes>
+            <Route path="/" element={<Navigate to="/chat" replace />} />
+            <Route path="/chat" element={
+              <div style={chatLayoutStyle}>
+                <div style={chatColumnStyle}>
+                  <div style={{ flex: 1, overflowY: "auto", padding: "20px 0" }} className="custom-scrollbar">
+                    <div style={{ padding: "0 40px" }}>
+                      {messages.length === 0 ? (
+                        <EmptyState 
+                          suggestions={[...INITIAL_SUGGESTIONS]} 
+                          onSelect={(text: string) => handleSendWithHint(text)} 
+                        />
                       ) : (
-                        <ReportPanel reports={generatedReports} />
+                        <>
+                          {messages.map((m, idx) => (
+                            <MessageItem 
+                              key={idx} 
+                              msg={m} 
+                              isLast={idx === messages.length - 1} 
+                            />
+                          ))}
+                          {isThinking && (
+                            <div style={{ padding: "20px", display: "flex", gap: "10px", alignItems: "center", color: "#64748b" }}>
+                              <div className="dot-typing"></div>
+                              <span style={{ fontSize: "13px", fontWeight: 500 }}>
+                                Consulting with {prettifyAgent(messages[messages.length - 1]?.metadata?.agent_hint as string | undefined) || "Supervisor"}...
+                              </span>
+                            </div>
+                          )}
+                          <div ref={endRef} />
+                        </>
                       )}
                     </div>
-                    </div>
                   </div>
-                );
-            }
-          })()}
+                  <div style={{ flexShrink: 0, background: "#ffffff", borderTop: "1px solid #f1f3f4" }}>
+                    <Composer
+                      onSend={handleSendWithHint}
+                      isThinking={isThinking}
+                      isListening={isListening}
+                      onVoice={handleVoice}
+                      suggestions={dynamicSuggestions}
+                      quickActions={quickActions}
+                      selectedAgentHint={selectedAgentHint}
+                      onAgentChange={setSelectedAgentHint}
+                    />
+                  </div>
+                </div>
+                <div style={detailsPanelStyle}>
+                  <div style={{ 
+                    display: "flex", gap: 0, padding: "16px 20px", 
+                    background: "#f8f9fa", borderBottom: "1px solid #dadce0",
+                    position: "sticky", top: 0, zIndex: 10
+                  }}>
+                    <button 
+                      onClick={() => setStatusOpen(false)}
+                      style={{ 
+                        flex: 1, padding: '8px', borderRadius: "4px 0 0 4px", 
+                        border: '1px solid #dadce0',
+                        borderRight: "none",
+                        background: !statusOpen ? '#ffffff' : 'transparent', 
+                        fontSize: 12, fontWeight: 500, 
+                        color: !statusOpen ? '#1a73e8' : '#5f6368', 
+                        cursor: 'pointer', transition: 'all 0.2s ease'
+                      }}
+                    >
+                      Insights
+                    </button>
+                    <button 
+                      onClick={() => setStatusOpen(true)}
+                      style={{ 
+                        flex: 1, padding: '8px', borderRadius: "0 4px 4px 0", 
+                        border: '1px solid #dadce0',
+                        background: statusOpen ? '#ffffff' : 'transparent', 
+                        fontSize: 12, fontWeight: 500, 
+                        color: statusOpen ? '#1a73e8' : '#5f6368', 
+                        cursor: 'pointer', transition: 'all 0.2s ease'
+                      }}
+                    >
+                      Trace
+                    </button>
+                  </div>
+                  
+                  <div style={{ flex: 1, overflowY: "auto", padding: "20px" }} className="custom-scrollbar">
+                    {statusOpen ? (
+                      <TracePanel liveTrace={liveTrace} lastRouting={lastRouting} isThinking={isThinking} />
+                    ) : (
+                      <ReportPanel reports={generatedReports} onRefresh={loadReports} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            } />
+            <Route path="/pulse" element={
+              <div style={{ flex: 1, overflowY: "auto", height: "100%" }} className="custom-scrollbar">
+                <PulseDashboard
+                  projects={pulseProjects}
+                  selectedPid={selectedPid}
+                  timeline={pulseTimeline}
+                  loading={pulseLoading}
+                  onSelect={(id) => id ? void loadPulseTimeline(id) : void loadPulseTimeline("")}
+                  onSimulate={handleSimulateLifecycle}
+                />
+              </div>
+            } />
+            <Route path="/assets" element={
+              <div style={{ flex: 1, overflowY: "auto", height: "100%" }} className="custom-scrollbar">
+                <KnowledgeBase
+                  kbText={kbText} setKbText={setKbText}
+                  kbSource={kbSource} setKbSource={setKbSource}
+                  kbScope={kbScope} setKbScope={setKbScope}
+                  kbFile={kbFile} setKbFile={setKbFile}
+                  kbLoading={kbLoading} handleKbSubmit={handleKbSubmit}
+                  setToast={setToast}
+                />
+              </div>
+            } />
+            <Route path="/guard" element={
+              <div style={{ flex: 1, overflowY: "auto", height: "100%" }} className="custom-scrollbar">
+                <AccessAudit />
+              </div>
+            } />
+            <Route path="/credits" element={
+              <div style={{ flex: 1, overflowY: "auto", height: "100%" }} className="custom-scrollbar">
+                <CreditDashboard />
+              </div>
+            } />
+            <Route path="*" element={<Navigate to="/chat" replace />} />
+          </Routes>
         </motion.div>
       </AnimatePresence>
     );
   }, [
-    activeTab, pulseProjects, selectedPid, pulseTimeline, pulseLoading, loadPulseTimeline, handleSimulateLifecycle,
-    kbText, kbSource, kbScope, kbFile, kbLoading, handleKbSubmit, messages, dynamicSuggestions, isThinking, isListening, quickActions,
-    selectedAgentHint, lastRouting, liveTrace, generatedReports, statusOpen, endRef, handleSendWithHint, handleVoice
+    pathname, messages, isThinking, dynamicSuggestions, quickActions, isListening, 
+    selectedAgentHint, lastRouting, liveTrace, generatedReports, statusOpen, 
+    pulseProjects, selectedPid, pulseTimeline, pulseLoading, kbText, kbSource, 
+    kbScope, kbFile, kbLoading, endRef, loadReports
   ]);
 
   if (!token) return <Login onLogin={handleLogin} />;
@@ -241,11 +284,11 @@ export default function App() {
   return (
     <div style={appContainerStyle}>
       <OfflineOverlay connected={connected} />
-      <Sidebar 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
-        isCollapsed={isCollapsed} 
+      <Sidebar
+        isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
+        activeTab={activeTab}
+        setActiveTab={(tab) => navigate(PATH_MAP[tab] || "/chat")}
         sessions={sessions}
         activeSession={activeSession}
         onSessionSelect={setActiveSession}
@@ -254,7 +297,7 @@ export default function App() {
         onLogout={handleLogout}
       />
       
-      <main style={{ ...contentLayout, overflow: "auto", position: "relative" }}>
+      <main style={{ ...contentLayout, overflow: "hidden", position: "relative" }}>
         <Header 
           activeTabLabel={activeTabLabel} 
           isThinking={isThinking} 
@@ -263,7 +306,7 @@ export default function App() {
           onNotificationAction={handleNotificationAction}
           currentUser={currentUser}
         />
-        <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column" }}>
+        <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column", overflow: "hidden" }}>
           {mainPanel}
         </div>
       </main>

@@ -15,7 +15,7 @@ import {
   RefreshCw,
   Loader2,
 } from "lucide-react";
-import { API_URL } from "../../utils/constants";
+import { dashboardApi } from "../../services/api";
 
 interface AccessGap {
   id: string;
@@ -45,11 +45,15 @@ export const AccessAudit: React.FC = () => {
   const fetchGaps = async () => {
     setRefreshing(true);
     try {
-      const response = await fetch(`${API_URL}/audit/access-gaps`);
-      const data = await response.json();
-      setGaps(data);
+      const data = await dashboardApi.getAccessGaps();
+      if (Array.isArray(data)) {
+        setGaps(data);
+      } else {
+        setGaps([]);
+      }
     } catch (error) {
       console.error("Failed to fetch access gaps:", error);
+      setGaps([]);
     } finally {
       setLoading(false);
       setRefreshing(false);
