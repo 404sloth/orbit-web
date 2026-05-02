@@ -38,7 +38,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ suggestions, onSelect })
             style={{ 
               ...suggestionButtonStyle, 
               border: '1px solid var(--border-light)', 
-              background: '#fff', 
+              background: 'var(--bg-card)', 
               color: 'var(--text-secondary)',
               borderRadius: '16px',
               padding: '12px 24px'

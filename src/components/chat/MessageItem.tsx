@@ -143,7 +143,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
               <summary style={{ fontSize: "11px", fontWeight: 500, color: "#1a73e8", cursor: "pointer", listStyle: "none", display: "flex", alignItems: "center", gap: "6px" }}>
                 <Clock size={12} /> Thinking Process
               </summary>
-              <div style={{ marginTop: "8px", fontSize: "12px", color: "#5f6368", background: "#f8f9fa", padding: "8px", borderRadius: "4px", border: "1px solid #dadce0" }}>
+              <div style={{ marginTop: "8px", fontSize: "12px", color: "#5f6368", background: "var(--bg-sidebar)", padding: "8px", borderRadius: "4px", border: "1px solid #dadce0" }}>
                 {msg.metadata.reasoning as string}
               </div>
             </details>
@@ -157,7 +157,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
                 alignItems: "center",
                 gap: "8px",
                 padding: "6px 12px",
-                background: "#f8f9fa",
+                background: "var(--bg-sidebar)",
                 borderRadius: "4px",
                 fontSize: "10px",
                 fontWeight: 500,
@@ -190,7 +190,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
             style={{
               marginTop: "16px",
               width: "100%",
-              background: "#ffffff",
+              background: "var(--bg-main)",
               borderRadius: "8px",
               border: "1px solid #dadce0",
               padding: "4px",

@@ -96,12 +96,12 @@ export const Header: React.FC<HeaderProps> = ({
                 exit={{ opacity: 0, y: 15, scale: 0.95, filter: "blur(4px)" }}
                 transition={{ type: "spring", damping: 20, stiffness: 300 }}
                 style={{ 
-                  position: "absolute", top: "100%", right: 0, width: 320, background: "#fff", 
+                  position: "absolute", top: "100%", right: 0, width: 320, background: "var(--bg-card)", 
                   borderRadius: 8, boxShadow: "0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)", 
                   border: "1px solid #dadce0", zIndex: 100, marginTop: 8, overflow: "hidden" 
                 }}
               >
-                <div style={{ padding: "16px", borderBottom: "1px solid #dadce0", display: "flex", justifyContent: "space-between", alignItems: "center", background: "#f8f9fa" }}>
+                <div style={{ padding: "16px", borderBottom: "1px solid #dadce0", display: "flex", justifyContent: "space-between", alignItems: "center", background: "var(--bg-sidebar)" }}>
                   <span style={{ fontWeight: 500, fontSize: "14px", color: "#202124" }}>Notifications</span>
                   <span style={{ 
                     fontSize: "11px", fontWeight: 500, color: "#1a73e8", 
@@ -182,7 +182,7 @@ export const Header: React.FC<HeaderProps> = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 15, scale: 0.95 }}
                 style={{ 
-                  position: "absolute", top: "100%", right: 0, width: 240, background: "#fff", 
+                  position: "absolute", top: "100%", right: 0, width: 240, background: "var(--bg-card)", 
                   borderRadius: 8, boxShadow: "0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)", 
                   border: "1px solid #dadce0", zIndex: 100, marginTop: 8, overflow: "hidden",
                   padding: "8px 0"

@@ -374,11 +374,6 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             </p>
           </div>
         )}
-
-        <div style={footerStyle}>
-          <div style={dividerStyle} />
-          <p style={footerTextStyle}>Secured by H-CoPilot RSA-256 Engine</p>
-        </div>
       </motion.div>
     </div>
   );
@@ -392,7 +387,7 @@ const containerStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: '#f8f9fa',
+  background: 'var(--bg-sidebar)',
   fontFamily: 'Inter, sans-serif',
 };
 
@@ -400,7 +395,7 @@ const cardStyle: React.CSSProperties = {
   width: '100%',
   maxWidth: 400,
   padding: '40px',
-  background: '#ffffff',
+  background: 'var(--bg-main)',
   borderRadius: 8,
   boxShadow: '0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)',
   border: '1px solid #dadce0',
@@ -469,7 +464,7 @@ const iconStyle: React.CSSProperties = {
 const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '12px 16px 12px 48px',
-  background: '#ffffff',
+  background: 'var(--bg-main)',
   border: '1px solid #dadce0',
   borderRadius: 4,
   fontSize: 14,
@@ -612,7 +607,7 @@ const switchModeButtonStyle: React.CSSProperties = {
 const demoCredentialsStyle: React.CSSProperties = {
   marginTop: 20,
   padding: 12,
-  background: '#f8f9fa',
+  background: 'var(--bg-sidebar)',
   borderRadius: 12,
   border: '1px solid #f1f3f4',
 };

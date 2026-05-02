@@ -29,7 +29,7 @@ export const CreditSummaryCard: React.FC<CreditSummaryProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.1 }}
           style={{
-            background: "#ffffff",
+            background: "var(--bg-main)",
             padding: "24px",
             borderRadius: "8px",
             border: "1px solid #dadce0",

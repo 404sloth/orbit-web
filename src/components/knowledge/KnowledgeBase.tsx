@@ -118,21 +118,21 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
         {ingestionMode === "file" ? (
           <div 
-            style={{ ...contentCardStyle, borderColor: isDragOver ? "#1a73e8" : "#dadce0", background: "#fff", padding: "24px", borderRadius: 8, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)" }} 
+            style={{ ...contentCardStyle, borderColor: isDragOver ? "#1a73e8" : "#dadce0", background: "var(--bg-card)", padding: "24px", borderRadius: 8, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)" }} 
             onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }} 
             onDragLeave={() => setIsDragOver(false)} 
             onDrop={(e) => { e.preventDefault(); setIsDragOver(false); const file = e.dataTransfer.files?.[0]; if (file) handleFileChange(file); }}
           >
             <div style={{ marginBottom: 16 }}><span style={{ fontSize: 18, fontWeight: 500, color: '#202124', fontFamily: "'Google Sans', sans-serif" }}>Ingest Documents</span></div>
             <p style={{ fontSize: 14, color: "#5f6368", marginBottom: 24 }}>Upload internal documents for RAG-based strategic reasoning and recall.</p>
-            <div onClick={() => fileInputRef.current?.click()} style={{ height: 180, border: `2px dashed ${isDragOver ? "#1a73e8" : (kbFile ? "#1a73e8" : "#dadce0")}`, borderRadius: 8, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s ease", background: kbFile ? "#e8f0fe" : "#f8f9fa", position: "relative" }}>
+            <div onClick={() => fileInputRef.current?.click()} style={{ height: 180, border: `2px dashed ${isDragOver ? "#1a73e8" : (kbFile ? "#1a73e8" : "#dadce0")}`, borderRadius: 8, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s ease", background: kbFile ? "#e8f0fe" : "var(--bg-sidebar)", position: "relative" }}>
               <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={(e) => handleFileChange(e.target.files?.[0] || null)} accept=".pdf,.json,.md,.txt" />
               {kbFile ? (
                 <>
                   <FileText size={40} color="#1a73e8" />
                   <div style={{ fontSize: 14, fontWeight: 500, color: "#202124", marginTop: 12 }}>{kbFile.name}</div>
                   <div style={{ fontSize: 12, color: "#5f6368", marginTop: 4 }}>{(kbFile.size / 1024).toFixed(1)} KB ready</div>
-                  <button onClick={(e) => { e.stopPropagation(); handleFileChange(null); if (fileInputRef.current) fileInputRef.current.value = ''; }} style={{ position: "absolute", top: 12, right: 12, background: "#fff", border: "1px solid #dadce0", borderRadius: 4, padding: "4px 10px", color: "#202124", fontSize: 12, fontWeight: 500, cursor: "pointer" }}>Clear</button>
+                  <button onClick={(e) => { e.stopPropagation(); handleFileChange(null); if (fileInputRef.current) fileInputRef.current.value = ''; }} style={{ position: "absolute", top: 12, right: 12, background: "var(--bg-card)", border: "1px solid #dadce0", borderRadius: 4, padding: "4px 10px", color: "#202124", fontSize: 12, fontWeight: 500, cursor: "pointer" }}>Clear</button>
                 </>
               ) : (
                 <>
@@ -153,7 +153,7 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
                   id="kbScopeFile" 
                   value={kbScope} 
                   onChange={(event) => setKbScope(event.target.value)} 
-                  style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14, background: "#fff" }}
+                  style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14, background: "var(--bg-card)" }}
                   disabled={kbLoading}
                 >
                   <option value="global">Global (All Users)</option>
@@ -168,10 +168,10 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
             </button>
           </div>
         ) : (
-          <div style={{ ...contentCardStyle, background: "#fff", padding: "24px", borderRadius: 8, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)" }}>
+          <div style={{ ...contentCardStyle, background: "var(--bg-card)", padding: "24px", borderRadius: 8, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)" }}>
             <div style={{ marginBottom: 16 }}><span style={{ fontSize: 18, fontWeight: 500, color: '#202124', fontFamily: "'Google Sans', sans-serif" }}>Ingest Text</span></div>
             <p style={{ fontSize: 14, color: "#5f6368", marginBottom: 24 }}>Add structured text content directly to the knowledge repository.</p>
-            <textarea value={kbText} onChange={(event) => setKbText(event.target.value)} rows={10} style={{ width: "100%", border: "1px solid #dadce0", borderRadius: 4, padding: "12px", fontSize: 14, background: "#f8f9fa" }} placeholder="Enter or paste content here..." disabled={kbLoading} />
+            <textarea value={kbText} onChange={(event) => setKbText(event.target.value)} rows={10} style={{ width: "100%", border: "1px solid #dadce0", borderRadius: 4, padding: "12px", fontSize: 14, background: "var(--bg-sidebar)" }} placeholder="Enter or paste content here..." disabled={kbLoading} />
             <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
               <div>
                 <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Source Label</label>
@@ -183,7 +183,7 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
                   id="kbScopeText" 
                   value={kbScope} 
                   onChange={(event) => setKbScope(event.target.value)} 
-                  style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14, background: "#fff" }}
+                  style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14, background: "var(--bg-card)" }}
                   disabled={kbLoading}
                 >
                   <option value="global">Global (All Users)</option>

@@ -39,7 +39,7 @@ export const TransactionLedger: React.FC<Props> = ({ transactions }) => {
 
   return (
     <div style={{ 
-      background: "#ffffff", 
+      background: "var(--bg-main)", 
       borderRadius: "8px", 
       padding: "24px",
       border: "1px solid #dadce0",
@@ -47,7 +47,7 @@ export const TransactionLedger: React.FC<Props> = ({ transactions }) => {
       height: "100%"
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "24px" }}>
-        <div style={{ background: "#f8f9fa", padding: "8px", borderRadius: "4px", color: "#5f6368", border: "1px solid #dadce0" }}>
+        <div style={{ background: "var(--bg-sidebar)", padding: "8px", borderRadius: "4px", color: "#5f6368", border: "1px solid #dadce0" }}>
           <History size={18} />
         </div>
         <h3 style={{ margin: 0, fontSize: "16px", fontWeight: 500, color: "#202124", fontFamily: "'Google Sans', sans-serif" }}>Audit Trail</h3>

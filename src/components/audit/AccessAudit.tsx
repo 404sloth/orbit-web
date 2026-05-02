@@ -156,7 +156,7 @@ export const AccessAudit: React.FC = () => {
               display: "flex",
               alignItems: "center",
               gap: 0,
-              background: "#ffffff",
+              background: "var(--bg-main)",
               padding: "8px 16px",
               borderRadius: "12px",
               border: "1px solid #dadce0",
@@ -180,7 +180,7 @@ export const AccessAudit: React.FC = () => {
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
             <div
               style={{
-                background: "#fff",
+                background: "var(--bg-card)",
                 border: "1px solid #dadce0",
                 borderRadius: 4,
                 padding: "0 12px",
@@ -211,7 +211,7 @@ export const AccessAudit: React.FC = () => {
             <button
               onClick={fetchGaps}
               style={{
-                background: "#fff",
+                background: "var(--bg-card)",
                 border: "1px solid #dadce0",
                 borderRadius: 4,
                 width: 32,
@@ -254,7 +254,7 @@ export const AccessAudit: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
               style={{
-                background: "#fff",
+                background: "var(--bg-card)",
                 padding: "16px",
                 borderRadius: 8,
                 border: "1px solid #dadce0",
@@ -290,7 +290,7 @@ export const AccessAudit: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             style={{
-              background: "#fff",
+              background: "var(--bg-card)",
               borderRadius: 8,
               border: "1px solid #dadce0",
               overflow: "hidden",
@@ -307,7 +307,7 @@ export const AccessAudit: React.FC = () => {
                 alignItems: "center",
                 flexWrap: "wrap",
                 gap: 16,
-                background: "#f8f9fa",
+                background: "var(--bg-sidebar)",
               }}
             >
               <div style={{ display: "flex", gap: 32 }}>
@@ -363,7 +363,7 @@ export const AccessAudit: React.FC = () => {
                   display: "flex",
                   alignItems: "center",
                   gap: 8,
-                  background: "#fff",
+                  background: "var(--bg-card)",
                   padding: "4px 12px",
                   borderRadius: 4,
                   border: "1px solid #dadce0"
@@ -376,305 +376,272 @@ export const AccessAudit: React.FC = () => {
 
             {/* Table area */}
             <div style={{ padding: "0 40px", overflowX: "auto" }}>
-              <table
-                style={{
-                  width: "100%",
-                  borderCollapse: "separate",
-                  borderSpacing: "0 16px",
-                }}
-              >
-                <thead>
-                  <tr style={{ textAlign: "left" }}>
-                    <th
-                      style={{
-                        padding: "16px 12px 8px 24px",
-                        fontSize: 10,
-                        fontWeight: 900,
-                        color: "var(--text-tertiary)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.1em",
-                        width: "25%",
-                      }}
-                    >
-                      User
-                    </th>
-                    <th
-                      style={{
-                        padding: "16px 12px 8px",
-                        fontSize: 10,
-                        fontWeight: 900,
-                        color: "var(--text-tertiary)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.1em",
-                        width: "30%",
-                      }}
-                    >
-                      Access Scope
-                    </th>
-                    <th
-                      style={{
-                        padding: "16px 12px 8px",
-                        fontSize: 10,
-                        fontWeight: 900,
-                        color: "var(--text-tertiary)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.1em",
-                        width: "15%",
-                        textAlign: "center"
-                      }}
-                    >
-                      Risk
-                    </th>
-                    <th
-                      style={{
-                        padding: "16px 12px 8px",
-                        fontSize: 10,
-                        fontWeight: 900,
-                        color: "var(--text-tertiary)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.1em",
-                        width: "15%",
-                        textAlign: "center"
-                      }}
-                    >
-                      Last Sync
-                    </th>
-                    <th
-                      style={{
-                        padding: "16px 24px 8px 12px",
-                        fontSize: 10,
-                        fontWeight: 900,
-                        color: "var(--text-tertiary)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.1em",
-                        textAlign: "right",
-                        width: "15%",
-                      }}
-                    >
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <AnimatePresence mode="wait">
-                    {filteredGaps.map((gap, i) => (
-                      <motion.tr
-                        key={gap.id}
-                        onClick={() => setSelectedGapId(selectedGapId === gap.id ? null : gap.id)}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        style={{
-                          background: selectedGapId === gap.id ? "#e8f0fe" : "transparent",
-                          cursor: "pointer",
-                          borderBottom: "1px solid #f1f3f4",
-                          transition: "background 0.2s"
-                        }}
-                        onMouseOver={(e) => { if (selectedGapId !== gap.id) e.currentTarget.style.background = "#f8f9fa"; }}
-                        onMouseOut={(e) => { if (selectedGapId !== gap.id) e.currentTarget.style.background = "transparent"; }}
-                      >
-                        <td style={{ padding: "16px 12px 16px 24px", borderRadius: "18px 0 0 18px" }}>
-                          <div
-                            style={{ display: "flex", alignItems: "center", gap: 16 }}
-                          >
-                            <div
-                              style={{
-                                width: 32,
-                                height: 32,
-                                borderRadius: 4,
-                                background: "#f1f3f4",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                fontSize: 12,
-                                fontWeight: 500,
-                                color: "#1a73e8",
-                              }}
-                            >
-                              {gap.user.avatar}
-                            </div>
-                            <div>
-                              <div style={{ fontSize: 13, fontWeight: 500, color: "#202124", marginBottom: 2 }}>
-                                {gap.user.name}
-                              </div>
-                              <div style={{ fontSize: 11, color: "#5f6368" }}>
-                                {gap.user.role}
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td style={{ padding: "16px 12px" }}>
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: 8,
-                            }}
-                          >
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 10,
-                                fontSize: 13,
-                                fontWeight: 800,
-                                color: "var(--text-primary)",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  background: "var(--brand-light)",
-                                  padding: 6,
-                                  borderRadius: 8,
-                                }}
-                              >
-                                <Lock size={14} color="var(--brand-primary)" />
-                              </div>
-                              {gap.permission}
-                            </div>
-                            <div
-                              style={{
-                                fontSize: 12,
-                                fontWeight: 600,
-                                color: "var(--text-secondary)",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 6,
-                                paddingLeft: 30,
-                              }}
-                            >
-                              Scope:{" "}
-                              <span
-                                style={{
-                                  color: "var(--brand-primary)",
-                                  fontWeight: 800,
-                                }}
-                              >
-                                {gap.project}
-                              </span>
-                            </div>
-                          </div>
-                        </td>
-                        <td style={{ padding: "16px 12px", textAlign: "center" }}>
-                          <span
-                            style={{
-                              padding: "4px 10px",
-                              borderRadius: 8,
-                              fontSize: 10,
-                              fontWeight: 900,
-                              textTransform: "uppercase",
-                              letterSpacing: "0.03em",
-                              background:
-                                gap.severity === "high"
-                                  ? "#fee2e2"
-                                  : gap.severity === "medium"
-                                    ? "#fef3c7"
-                                    : "#d1fae5",
-                              color:
-                                gap.severity === "high"
-                                  ? "#ef4444"
-                                  : gap.severity === "medium"
-                                    ? "#d97706"
-                                    : "#10b981",
-                            }}
-                          >
-                            {gap.severity}
-                          </span>
-                        </td>
-                        <td style={{ padding: "16px 12px", textAlign: "center" }}>
-                          <div style={{ fontSize: 11, fontWeight: 600, color: "var(--text-tertiary)" }}>
-                            {gap.lastActive}
-                          </div>
-                        </td>
-                        <td
+              {gaps.length > 0 ? (
+                <>
+                  <table
+                    style={{
+                      width: "100%",
+                      borderCollapse: "separate",
+                      borderSpacing: "0 16px",
+                    }}
+                  >
+                    <thead>
+                      <tr style={{ textAlign: "left" }}>
+                        <th
                           style={{
-                            padding: "16px 24px 16px 12px",
-                            textAlign: "right",
-                            borderRadius: "0 18px 18px 0",
+                            padding: "16px 12px 8px 24px",
+                            fontSize: 10,
+                            fontWeight: 900,
+                            color: "var(--text-tertiary)",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em",
+                            width: "25%",
                           }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: 10,
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            <button
-                               onClick={(e) => { e.stopPropagation(); handleRevoke(gap.id); }}
-                               style={{
-                                 padding: "4px 12px",
-                                 borderRadius: 4,
-                                 background: "#fff",
-                                 border: "1px solid #dadce0",
-                                 color: "#5f6368",
-                                 fontSize: 11,
-                                 fontWeight: 500,
-                                 cursor: "pointer",
-                                 display: "flex",
-                                 alignItems: "center",
-                                 gap: 4,
-                                 transition: "all 0.2s"
-                               }}
-                               onMouseOver={(e) => { e.currentTarget.style.background = "#f1f3f4"; e.currentTarget.style.color = "#d93025"; }}
-                               onMouseOut={(e) => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#5f6368"; }}
+                          User
+                        </th>
+                        <th
+                          style={{
+                            padding: "16px 12px 8px",
+                            fontSize: 10,
+                            fontWeight: 900,
+                            color: "var(--text-tertiary)",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em",
+                            width: "30%",
+                          }}
+                        >
+                          Access Scope
+                        </th>
+                        <th
+                          style={{
+                            padding: "16px 12px 8px",
+                            fontSize: 10,
+                            fontWeight: 900,
+                            color: "var(--text-tertiary)",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em",
+                            width: "15%",
+                            textAlign: "center"
+                          }}
+                        >
+                          Risk
+                        </th>
+                        <th
+                          style={{
+                            padding: "16px 12px 8px",
+                            fontSize: 10,
+                            fontWeight: 900,
+                            color: "var(--text-tertiary)",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em",
+                            width: "15%",
+                            textAlign: "center"
+                          }}
+                        >
+                          Last Sync
+                        </th>
+                        <th
+                          style={{
+                            padding: "16px 24px 8px 12px",
+                            fontSize: 10,
+                            fontWeight: 900,
+                            color: "var(--text-tertiary)",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em",
+                            textAlign: "right",
+                            width: "15%",
+                          }}
+                        >
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <AnimatePresence mode="wait">
+                        {filteredGaps.length > 0 ? (
+                          filteredGaps.map((gap, i) => (
+                            <motion.tr
+                              key={gap.id}
+                              onClick={() => setSelectedGapId(selectedGapId === gap.id ? null : gap.id)}
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              style={{
+                                background: selectedGapId === gap.id ? "#e8f0fe" : "transparent",
+                                cursor: "pointer",
+                                borderBottom: "1px solid #f1f3f4",
+                                transition: "background 0.2s"
+                              }}
+                              onMouseOver={(e) => { if (selectedGapId !== gap.id) e.currentTarget.style.background = "var(--bg-sidebar)"; }}
+                              onMouseOut={(e) => { if (selectedGapId !== gap.id) e.currentTarget.style.background = "transparent"; }}
                             >
-                              <UserMinus size={14} /> Revoke
-                            </button>
-                          </div>
-                        </td>
-                      </motion.tr>
-                    ))}
-                  </AnimatePresence>
-                </tbody>
-              </table>
+                              <td style={{ padding: "16px 12px 16px 24px", borderRadius: "18px 0 0 18px" }}>
+                                <div
+                                  style={{ display: "flex", alignItems: "center", gap: 16 }}
+                                >
+                                  <div
+                                    style={{
+                                      width: 32,
+                                      height: 32,
+                                      borderRadius: 4,
+                                      background: "#f1f3f4",
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      fontSize: 12,
+                                      fontWeight: 500,
+                                      color: "#1a73e8",
+                                    }}
+                                  >
+                                    {gap.user.avatar}
+                                  </div>
+                                  <div>
+                                    <div style={{ fontSize: 13, fontWeight: 500, color: "#202124", marginBottom: 2 }}>
+                                      {gap.user.name}
+                                    </div>
+                                    <div style={{ fontSize: 11, color: "#5f6368" }}>
+                                      {gap.user.role}
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td style={{ padding: "16px 12px" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                                  <span style={{ fontSize: 13, fontWeight: 500, color: "#202124" }}>{gap.permission}</span>
+                                </div>
+                                <div style={{ fontSize: 11, color: "#1a73e8", fontWeight: 500 }}>{gap.project}</div>
+                              </td>
+                              <td style={{ padding: "16px 12px", textAlign: "center" }}>
+                                <span
+                                  style={{
+                                    padding: "4px 8px",
+                                    borderRadius: 4,
+                                    fontSize: 10,
+                                    fontWeight: 800,
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.02em",
+                                    background:
+                                      gap.severity === "high"
+                                        ? "#fef2f2"
+                                        : gap.severity === "medium"
+                                          ? "#fffbeb"
+                                          : "#f0f7ff",
+                                    color:
+                                      gap.severity === "high"
+                                        ? "#d93025"
+                                        : gap.severity === "medium"
+                                          ? "#b06000"
+                                          : "#1a73e8",
+                                  }}
+                                >
+                                  {gap.severity}
+                                </span>
+                              </td>
+                              <td style={{ padding: "16px 12px", textAlign: "center" }}>
+                                <div style={{ fontSize: 12, color: "#5f6368" }}>{gap.lastActive}</div>
+                              </td>
+                              <td style={{ padding: "16px 24px 16px 12px", textAlign: "right", borderRadius: "0 18px 18px 0" }}>
+                                <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleRevoke(gap.id);
+                                    }}
+                                    style={{
+                                      background: "transparent",
+                                      border: "1px solid #dadce0",
+                                      borderRadius: 4,
+                                      padding: "4px 8px",
+                                      fontSize: 11,
+                                      fontWeight: 500,
+                                      color: "#5f6368",
+                                      cursor: "pointer",
+                                      transition: "all 0.2s"
+                                    }}
+                                    onMouseOver={(e) => {
+                                      e.currentTarget.style.background = "#f1f3f4";
+                                      e.currentTarget.style.color = "#202124";
+                                    }}
+                                    onMouseOut={(e) => {
+                                      e.currentTarget.style.background = "transparent";
+                                      e.currentTarget.style.color = "#5f6368";
+                                    }}
+                                  >
+                                    Remediate
+                                  </button>
+                                </div>
+                              </td>
+                            </motion.tr>
+                          ))
+                        ) : null}
+                      </AnimatePresence>
+                    </tbody>
+                  </table>
 
-              {filteredGaps.length === 0 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  style={{
-                    padding: "80px 0",
-                    textAlign: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 64,
-                      height: 64,
-                      borderRadius: "50%",
-                      background: "#e6f4ea",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      margin: "0 auto 24px",
-                    }}
-                  >
-                    <CheckCircle2 color="#188038" size={32} />
-                  </div>
-                  <h3
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 500,
-                      color: "#202124",
-                      marginBottom: 8,
-                      fontFamily: "'Google Sans', sans-serif"
-                    }}
-                  >
-                    Security Perimeter Integrity Confirmed
-                  </h3>
-                  <p
-                    style={{
-                      color: "#5f6368",
-                      fontSize: 14,
-                      fontWeight: 400,
-                      maxWidth: 420,
-                      margin: "0 auto",
-                    }}
-                  >
-                    No redundant access permissions detected. All privilege
-                    assignments align with current project lifecycle states.
+                  {filteredGaps.length === 0 && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      style={{
+                        padding: "80px 0",
+                        textAlign: "center",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 64,
+                          height: 64,
+                          borderRadius: "50%",
+                          background: "#e6f4ea",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          margin: "0 auto 24px",
+                        }}
+                      >
+                        <CheckCircle2 color="#188038" size={32} />
+                      </div>
+                      <h3
+                        style={{
+                          fontSize: 18,
+                          fontWeight: 500,
+                          color: "#202124",
+                          marginBottom: 8,
+                          fontFamily: "'Google Sans', sans-serif"
+                        }}
+                      >
+                        Security Perimeter Integrity Confirmed
+                      </h3>
+                      <p
+                        style={{
+                          color: "#5f6368",
+                          fontSize: 14,
+                          fontWeight: 400,
+                          maxWidth: 420,
+                          margin: "0 auto",
+                        }}
+                      >
+                        No redundant access permissions detected. All privilege
+                        assignments align with current project lifecycle states.
+                      </p>
+                    </motion.div>
+                  )}
+                </>
+              ) : (
+                <div style={{ 
+                  background: "var(--bg-main)", 
+                  borderRadius: "8px", 
+                  padding: "80px 40px", 
+                  textAlign: "center", 
+                  border: "1px dashed #dadce0",
+                  marginTop: "20px"
+                }}>
+                  <ShieldAlert size={48} color="#dadce0" style={{ marginBottom: "16px" }} />
+                  <h3 style={{ margin: "0 0 8px", fontSize: "18px", fontWeight: 500, color: "#202124" }}>No Managed Projects</h3>
+                  <p style={{ margin: 0, color: "#5f6368", fontSize: "14px" }}>
+                    You don't have any projects yet to manage. Security monitoring will commence once projects are initialized.
                   </p>
-                </motion.div>
+                </div>
               )}
             </div>
 
@@ -799,7 +766,7 @@ export const AccessAudit: React.FC = () => {
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
                 onClick={(e) => e.stopPropagation()}
                 style={{
-                  background: "#fff",
+                  background: "var(--bg-card)",
                   borderRadius: 8,
                   border: "1px solid #dadce0",
                   padding: "32px",
@@ -846,7 +813,7 @@ export const AccessAudit: React.FC = () => {
                 <p style={{ fontSize: 13, color: "#5f6368", marginBottom: 24 }}>{selectedGap.user.role}</p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                  <div style={{ background: '#f8f9fa', padding: 20, borderRadius: 8, border: '1px solid #dadce0' }}>
+                  <div style={{ background: 'var(--bg-sidebar)', padding: 20, borderRadius: 8, border: '1px solid #dadce0' }}>
                     <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", textTransform: "uppercase", marginBottom: 8, letterSpacing: "0.05em" }}>
                       Risk Rationale
                     </div>

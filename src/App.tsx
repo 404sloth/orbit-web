@@ -175,7 +175,7 @@ export default function App() {
                       )}
                     </div>
                   </div>
-                  <div style={{ flexShrink: 0, background: "#ffffff", borderTop: "1px solid #f1f3f4" }}>
+                  <div style={{ flexShrink: 0, background: "var(--bg-main)", borderTop: "1px solid #f1f3f4" }}>
                     <Composer
                       onSend={handleSendWithHint}
                       isThinking={isThinking}
@@ -295,9 +295,10 @@ export default function App() {
         onNewChat={handleNewChat}
         onDeleteChat={handleDeleteChat}
         onLogout={handleLogout}
+        className="sidebar matte-surface"
       />
       
-      <main style={{ ...contentLayout, overflow: "hidden", position: "relative" }}>
+      <main className="main-content matte-surface" style={{ ...contentLayout, overflow: "hidden", position: "relative" }}>
         <Header 
           activeTabLabel={activeTabLabel} 
           isThinking={isThinking} 

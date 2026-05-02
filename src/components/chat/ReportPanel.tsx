@@ -49,7 +49,7 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
           letterSpacing: "0.05em"
         }}>
           <Layers size={18} color="#1a73e8" />
-          STRATEGY ARTIFACTS
+          STRATEGIC ASSETS
         </div>
         <button 
           onClick={onRefresh}
@@ -96,7 +96,7 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
               style={{ 
                 padding: "12px", 
                 borderRadius: "12px", 
-                background: "#ffffff",
+                background: "var(--bg-main)",
                 border: "1px solid #e2e8f0",
                 display: "flex",
                 alignItems: "center",

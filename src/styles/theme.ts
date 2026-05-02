@@ -4,14 +4,14 @@ export const appContainerStyle: CSSProperties = {
   display: "flex",
   height: "100vh",
   width: "100vw",
-  background: "#f8fafc",
+  background: "var(--bg-main)",
   overflow: "hidden",
   color: "#1e293b"
 };
 
 export const sidebarStyle: CSSProperties = {
   width: 280,
-  background: "#f8f9fa",
+  background: "var(--bg-sidebar)",
   padding: "24px 8px 16px",
   display: "flex",
   flexDirection: "column",
@@ -121,7 +121,7 @@ export const sessionCardStyle: CSSProperties = {
 };
 
 export const activeSessionCardStyle: CSSProperties = {
-  background: "#f8f9fa",
+  background: "var(--bg-sidebar)",
 };
 
 export const sessionButtonStyle: CSSProperties = {
@@ -142,7 +142,7 @@ export const sessionIconStyle = (active: boolean): CSSProperties => ({
   width: 28,
   height: 28,
   borderRadius: 4,
-  background: active ? "#e8f0fe" : "#ffffff",
+  background: active ? "#e8f0fe" : "var(--bg-main)",
   border: `1px solid ${active ? "#e8f0fe" : "#dadce0"}`,
   display: "flex",
   alignItems: "center",
@@ -217,7 +217,7 @@ export const statusCardStyle: CSSProperties = {
   margin: "4px 8px 12px",
   padding: "12px",
   borderRadius: 8,
-  background: "#f8f9fa",
+  background: "var(--bg-sidebar)",
   border: "1px solid #dadce0",
   display: "grid",
   gap: 8,
@@ -269,7 +269,7 @@ export const chatLayoutStyle: CSSProperties = {
   gap: 0,
   minHeight: 0,
   overflow: "hidden",
-  background: "#ffffff",
+  background: "var(--bg-main)",
 };
 
 export const chatColumnStyle: CSSProperties = {
@@ -300,7 +300,7 @@ export const contextualSuggestionsWrap: CSSProperties = {
 export const inlineSuggestionButtonStyle: CSSProperties = {
   padding: "6px 12px",
   borderRadius: 4,
-  background: "#ffffff",
+  background: "var(--bg-main)",
   border: "1px solid #dadce0",
   fontSize: 12,
   fontWeight: 400,
@@ -321,7 +321,7 @@ export const iconCircleButton = (active: boolean): CSSProperties => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: active ? "#d93025" : "#f8f9fa",
+  background: active ? "#d93025" : "var(--bg-sidebar)",
   border: "none",
   cursor: "pointer",
 });
@@ -342,7 +342,7 @@ export const sendButtonStyle: CSSProperties = {
 };
 
 export const detailsPanelStyle: CSSProperties = {
-  background: "#f8f9fa",
+  background: "var(--bg-sidebar)",
   display: "flex",
   flexDirection: "column",
   padding: "0",
@@ -353,7 +353,7 @@ export const detailsPanelStyle: CSSProperties = {
 
 export const premiumCardStyle: CSSProperties = {
   borderRadius: 8,
-  background: "#ffffff",
+  background: "var(--bg-main)",
   padding: 16,
   boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
   border: "1px solid #dadce0",
@@ -433,7 +433,7 @@ export const tracePathIconBox = (complete: boolean, current: boolean): CSSProper
   width: 28,
   height: 28,
   borderRadius: 10,
-  background: current || complete ? "#e8f0fe" : "#f8f9fa",
+  background: current || complete ? "#e8f0fe" : "var(--bg-sidebar)",
   border: `1px solid ${current || complete ? "#d2e3fc" : "#f1f3f4"}`,
   display: "flex",
   alignItems: "center",
@@ -509,7 +509,7 @@ export const helpIconWrap: CSSProperties = {
   width: 28,
   height: 28,
   borderRadius: 8,
-  background: "#ffffff",
+  background: "var(--bg-main)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -534,7 +534,7 @@ export const selectedAgentBarStyle: CSSProperties = {
   alignItems: "center",
   gap: 8,
   padding: "6px 12px",
-  background: "#f8f9fa",
+  background: "var(--bg-sidebar)",
   borderRadius: "12px 12px 0 0",
   border: "1px solid #f1f3f4",
   borderBottom: "none",
@@ -576,7 +576,7 @@ export const agentPickerButtonStyle: CSSProperties = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: "#f8f9fa",
+  background: "var(--bg-sidebar)",
   border: "none",
   color: "#5f6368",
   cursor: "pointer",
@@ -587,7 +587,7 @@ export const agentPickerMenuStyle: CSSProperties = {
   bottom: "100%",
   left: 0,
   width: 240,
-  background: "#ffffff",
+  background: "var(--bg-main)",
   borderRadius: 20,
   boxShadow: "0 12px 40px rgba(0,0,0,0.15)",
   border: "1px solid #f1f3f4",
@@ -691,7 +691,7 @@ export const suggestionsContainerStyle: CSSProperties = {
 export const suggestionButtonStyle: CSSProperties = {
   padding: "8px 16px",
   borderRadius: 4,
-  background: "#ffffff",
+  background: "var(--bg-main)",
   border: "1px solid #dadce0",
   fontSize: 13,
   fontWeight: 400,
@@ -715,7 +715,7 @@ export const researchGridStyle: CSSProperties = {
 };
 
 export const contentCardStyle: CSSProperties = {
-  background: "#ffffff",
+  background: "var(--bg-main)",
   borderRadius: 8,
   padding: "24px",
   border: "1px solid #dadce0",
@@ -750,7 +750,7 @@ export const researchButtonStyle: CSSProperties = {
   gap: 12,
   padding: "12px 16px",
   borderRadius: 4,
-  background: "#ffffff",
+  background: "var(--bg-main)",
   border: "1px solid #dadce0",
   textAlign: "left",
   fontSize: 13,
@@ -841,7 +841,7 @@ export const modalBackdropStyle: CSSProperties = {
 export const modalCardStyle: CSSProperties = {
   width: "100%",
   maxWidth: 500,
-  background: "#ffffff",
+  background: "var(--bg-main)",
   borderRadius: 32,
   padding: 32,
   boxShadow: "0 24px 64px rgba(0,0,0,0.2)",
@@ -865,7 +865,7 @@ export const warningIconWrapStyle: CSSProperties = {
 };
 
 export const modalPromptWrapStyle: CSSProperties = {
-  background: "#f8f9fa",
+  background: "var(--bg-sidebar)",
   borderRadius: 20,
   padding: 20,
   marginBottom: 32,
@@ -912,7 +912,7 @@ export const secondaryActionButton: CSSProperties = {
   padding: "14px",
   borderRadius: 16,
   border: "1px solid #dadce0",
-  background: "#ffffff",
+  background: "var(--bg-main)",
   color: "#3c4043",
   fontWeight: 700,
   fontSize: 14,

@@ -69,7 +69,7 @@ export const Composer: React.FC<ComposerProps> = ({
             disabled={isThinking}
             style={{
               ...inlineSuggestionButtonStyle,
-              background: '#ffffff',
+              background: 'var(--bg-main)',
               border: '1px solid #dadce0',
               color: '#5f6368',
               fontSize: '13px',
@@ -144,7 +144,7 @@ export const Composer: React.FC<ComposerProps> = ({
       ) : null}
 
       <form className="input-area" style={{ 
-        background: '#fff', borderRadius: '8px', 
+        background: 'var(--bg-card)', borderRadius: '8px', 
         border: `1px solid ${agentPickerOpen ? '#1a73e8' : '#dadce0'}`, 
         boxShadow: agentPickerOpen ? '0 1px 6px rgba(32,33,36,.28)' : 'none', 
         padding: '8px 16px', transition: 'all 0.2s ease',

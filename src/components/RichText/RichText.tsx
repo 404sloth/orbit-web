@@ -135,7 +135,7 @@ const injectStyles = () => {
     }
     /* Code Blocks */
     .md-code-block {
-      background: #f8f9fa;
+      background: var(--bg-sidebar);
       border: 1px solid #e0e4e9;
       border-radius: 12px;
       padding: 16px;
@@ -155,7 +155,7 @@ const injectStyles = () => {
       border-left: 4px solid #1a73e8;
       padding: 0.6em 1em;
       margin: 1em 0;
-      background: #f8f9fa;
+      background: var(--bg-sidebar);
       border-radius: 0 12px 12px 0;
       color: #5f6368;
       font-style: italic;
@@ -199,7 +199,7 @@ const injectStyles = () => {
       border-bottom: 1px solid #f1f3f4;
     }
     .md-table th {
-      background: #f8f9fa;
+      background: var(--bg-sidebar);
       font-weight: 700;
       color: #1a73e8;
       text-transform: uppercase;

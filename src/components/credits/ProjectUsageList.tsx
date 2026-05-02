@@ -15,7 +15,7 @@ interface Props {
 export const ProjectUsageList: React.FC<Props> = ({ projects }) => {
   return (
     <div style={{ 
-      background: "#ffffff", 
+      background: "var(--bg-main)", 
       borderRadius: "8px", 
       padding: "24px",
       border: "1px solid #dadce0",
@@ -47,7 +47,7 @@ export const ProjectUsageList: React.FC<Props> = ({ projects }) => {
                 alignItems: "center",
                 padding: "16px",
                 borderRadius: "8px",
-                background: "#f8f9fa",
+                background: "var(--bg-sidebar)",
                 border: "1px solid #dadce0"
               }}
             >

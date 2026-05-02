@@ -46,7 +46,7 @@ const TracePathStep = ({ label, status, icon: Icon }: { label: string, status: "
 
 export const TracePanel: React.FC<TracePanelProps> = ({ lastRouting, isThinking, liveTrace }) => {
   return (
-    <div style={{ ...detailsCardStyle, borderRadius: 8, background: "#fff", border: "1px solid #dadce0", boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)", padding: "16px" }}>
+    <div style={{ ...detailsCardStyle, borderRadius: 8, background: "var(--bg-card)", border: "1px solid #dadce0", boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)", padding: "16px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
         <div style={{ color: '#202124', fontSize: 14, fontWeight: 500, fontFamily: "'Google Sans', sans-serif" }}>Execution Trace</div>
         <div style={{ 
@@ -95,7 +95,7 @@ export const TracePanel: React.FC<TracePanelProps> = ({ lastRouting, isThinking,
                 )}
                 <div style={{ 
                   width: 28, height: 28, borderRadius: 4, 
-                  background: step.status === 'running' ? '#e8f0fe' : '#ffffff', 
+                  background: step.status === 'running' ? '#e8f0fe' : 'var(--bg-card)', 
                   border: `1px solid ${step.status === 'running' ? '#1a73e8' : '#dadce0'}`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   zIndex: 2

@@ -45,7 +45,7 @@ const ProjectCard = ({
       layout
       whileHover={{ boxShadow: "0 1px 6px rgba(32,33,36,.28)" }}
       style={{
-        background: "#ffffff",
+        background: "var(--bg-main)",
         padding: "20px",
         borderRadius: "8px",
         border: `1px solid #dadce0`,
@@ -176,7 +176,7 @@ const CurvedTimeline = ({
   if (!timeline.length) return <div style={{ padding: 60, textAlign: "center", color: "var(--text-tertiary)", fontSize: 13 }}>No events detected in current timeline.</div>;
 
   return (
-    <div ref={containerRef} style={{ position: "relative", width: "100%", height: totalHeight, minHeight: 400, overflow: "hidden", borderRadius: 8, background: "#f8f9fa", border: "1px solid #dadce0" }}>
+    <div ref={containerRef} style={{ position: "relative", width: "100%", height: totalHeight, minHeight: 400, overflow: "hidden", borderRadius: 8, background: "var(--bg-sidebar)", border: "1px solid #dadce0" }}>
       <svg style={{ position: "absolute", inset: 0, overflow: "visible", pointerEvents: "none" }}>
         <defs>
           <linearGradient id="curveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -236,7 +236,7 @@ const CurvedTimeline = ({
               }}
               style={{
                 width: 36, height: 36, borderRadius: event.type === "milestone" ? 10 : "50%",
-                background: isSelected ? color : "#ffffff", border: `2.5px solid ${color}`,
+                background: isSelected ? color : "var(--bg-card)", border: `2.5px solid ${color}`,
                 display: "flex", alignItems: "center", justifyContent: "center",
                 transform: event.type === "milestone" ? "rotate(45deg)" : "none",
                 cursor: "pointer", transition: "all 0.3s cubic-bezier(0.23, 1, 0.32, 1)"
@@ -287,11 +287,28 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
 
       {!selectedPid ? (
         <>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 24 }}>
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} isSelected={false} onClick={() => onSelect(project.id)} />
-            ))}
-          </div>
+          {projects.length > 0 ? (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 24 }}>
+              {projects.map((project) => (
+                <ProjectCard key={project.id} project={project} isSelected={false} onClick={() => onSelect(project.id)} />
+              ))}
+            </div>
+          ) : (
+            <div style={{ 
+              background: "var(--bg-main)", 
+              borderRadius: "8px", 
+              padding: "80px 40px", 
+              textAlign: "center", 
+              border: "1px dashed #dadce0",
+              marginTop: "20px"
+            }}>
+              <Target size={48} color="#dadce0" style={{ marginBottom: "16px" }} />
+              <h3 style={{ margin: "0 0 8px", fontSize: "18px", fontWeight: 500, color: "#202124" }}>No Managed Projects</h3>
+              <p style={{ margin: 0, color: "#5f6368", fontSize: "14px" }}>
+                You don't have any projects yet to manage. Portfolio insights will appear once projects are initialized.
+              </p>
+            </div>
+          )}
         </>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
@@ -300,7 +317,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
             display: "flex", 
             alignItems: "center", 
             gap: 0, 
-            background: "#ffffff", 
+            background: "var(--bg-main)", 
             padding: "8px 16px", 
             borderRadius: "12px", 
             border: "1px solid #dadce0",
@@ -345,7 +362,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 24, alignItems: "flex-start" }}>
             {/* Timeline View */}
-            <div style={{ background: "#ffffff", borderRadius: 8, padding: "24px", border: "1px solid #dadce0", minHeight: 600, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)" }}>
+            <div style={{ background: "var(--bg-main)", borderRadius: 8, padding: "24px", border: "1px solid #dadce0", minHeight: 600, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)" }}>
               <CurvedTimeline timeline={timeline} loading={loading} selectedEventId={selectedEventId} onEventClick={setSelectedEventId} />
             </div>
 
@@ -359,7 +376,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 5 }}
                     style={{ 
-                      background: "#ffffff", 
+                      background: "var(--bg-main)", 
                       borderRadius: 8, 
                       border: "1px solid #dadce0", 
                       padding: "24px", 
@@ -392,7 +409,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                       {/* Summary Section */}
-                      <div style={{ background: '#f8f9fa', padding: 20, borderRadius: 8, border: '1px solid #dadce0' }}>
+                      <div style={{ background: 'var(--bg-sidebar)', padding: 20, borderRadius: 8, border: '1px solid #dadce0' }}>
                         <div style={{ fontSize: 10, fontWeight: 900, color: "var(--brand-primary)", textTransform: "uppercase", marginBottom: 12, letterSpacing: "0.1em" }}>
                           Strategic Briefing
                         </div>
@@ -457,13 +474,13 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                                   style={{
                                     display: 'flex', alignItems: 'center', gap: 10,
                                     padding: '8px 12px', borderRadius: 4,
-                                    background: isDone ? '#f8f9fa' : '#fff',
+                                    background: isDone ? 'var(--bg-sidebar)' : 'var(--bg-card)',
                                     border: `1px solid ${isDone ? '#e8f0fe' : '#dadce0'}`
                                   }}
                                 >
                                   <div style={{
                                     width: 16, height: 16, borderRadius: 2,
-                                    background: isDone ? '#1a73e8' : '#fff',
+                                    background: isDone ? '#1a73e8' : 'var(--bg-card)',
                                     border: `1px solid ${isDone ? '#1a73e8' : '#dadce0'}`,
                                     display: 'flex', alignItems: 'center', justifyContent: 'center'
                                   }}>
@@ -481,7 +498,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                     </div>
                   </motion.div>
                 ) : (
-                  <div style={{ height: 300, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#5f6368", textAlign: "center", background: "#ffffff", borderRadius: 8, border: "1px dashed #dadce0", padding: 32 }}>
+                  <div style={{ height: 300, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#5f6368", textAlign: "center", background: "var(--bg-main)", borderRadius: 8, border: "1px dashed #dadce0", padding: 32 }}>
                     <Target size={40} style={{ opacity: 0.2, marginBottom: 16, color: "#1a73e8" }} />
                     <div style={{ fontSize: 14, fontWeight: 500, color: "#202124" }}>Event Details</div>
                     <p style={{ fontSize: 12, color: "#5f6368", marginTop: 4 }}>Select a node to view insights.</p>

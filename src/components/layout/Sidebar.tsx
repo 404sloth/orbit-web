@@ -43,6 +43,7 @@ interface SidebarProps {
   onNewChat: () => void;
   onDeleteChat: (id: string) => void;
   onLogout: () => void;
+  className?: string;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -56,13 +57,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onNewChat,
   onDeleteChat,
   onLogout,
+  className = "",
 }) => {
   return (
     <aside
-      className={`sidebar ${isCollapsed ? "collapsed" : ""}`}
+      className={`sidebar ${className} ${isCollapsed ? "collapsed" : ""}`}
       style={{
         ...sidebarStyle,
-        background: "#f8f9fa",
+        background: "var(--bg-sidebar)",
         borderRight: "1px solid #dadce0",
         ...(isCollapsed ? { width: 72, padding: "16px 8px" } : {}),
       }}
@@ -121,7 +123,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           width: 28,
           height: 28,
           borderRadius: "10px",
-          background: "#fff",
+          background: "var(--bg-card)",
           border: "1px solid var(--border-light)",
           display: "flex",
           alignItems: "center",
