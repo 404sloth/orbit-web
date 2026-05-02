@@ -46,19 +46,19 @@ const TracePathStep = ({ label, status, icon: Icon }: { label: string, status: "
 
 export const TracePanel: React.FC<TracePanelProps> = ({ lastRouting, isThinking, liveTrace }) => {
   return (
-    <div style={{ ...detailsCardStyle, borderRadius: 8, background: "var(--bg-card)", border: "1px solid #dadce0", boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)", padding: "16px" }}>
+    <div style={{ ...detailsCardStyle, borderRadius: 8, background: "var(--bg-card)", border: "1px solid var(--border-light)", boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)", padding: "16px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-        <div style={{ color: '#202124', fontSize: 14, fontWeight: 500, fontFamily: "'Google Sans', sans-serif" }}>Execution Trace</div>
+        <div style={{ color: 'var(--text-primary)', fontSize: 14, fontWeight: 500, fontFamily: "'Google Sans', sans-serif" }}>Execution Trace</div>
         <div style={{ 
           display: "flex", alignItems: "center", gap: 6,
-          background: '#e8f0fe', 
-          color: '#1a73e8', 
+          background: 'var(--brand-light)', 
+          color: 'var(--brand-primary)', 
           fontWeight: 500,
           fontSize: '11px',
           padding: '4px 10px',
           borderRadius: '4px'
         }}>
-          <div style={{ width: 6, height: 6, borderRadius: "50%", background: '#1a73e8' }} />
+          <div style={{ width: 6, height: 6, borderRadius: "50%", background: 'var(--brand-primary)' }} />
           EXECUTION
         </div>
       </div>
@@ -95,20 +95,20 @@ export const TracePanel: React.FC<TracePanelProps> = ({ lastRouting, isThinking,
                 )}
                 <div style={{ 
                   width: 28, height: 28, borderRadius: 4, 
-                  background: step.status === 'running' ? '#e8f0fe' : 'var(--bg-card)', 
-                  border: `1px solid ${step.status === 'running' ? '#1a73e8' : '#dadce0'}`,
+                  background: step.status === 'running' ? 'var(--brand-light)' : 'var(--bg-card)', 
+                  border: `1px solid ${step.status === 'running' ? 'var(--brand-primary)' : 'var(--border-light)'}`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   zIndex: 2
                 }}>
                   {step.status === "running" ? (
-                    <Loader2 size={12} color="#1a73e8" className="spin" />
+                    <Loader2 size={12} color="var(--brand-primary)" className="spin" />
                   ) : (
-                    <CheckCircle2 size={12} color="#188038" />
+                    <CheckCircle2 size={12} color="var(--accent-green)" />
                   )}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 500, color: "#202124" }}>{step.name}</div>
-                  <div style={{ fontSize: 11, color: "#5f6368", lineHeight: 1.4, marginTop: 2 }}>{step.details}</div>
+                  <div style={{ fontSize: 13, fontWeight: 500, color: "var(--text-primary)" }}>{step.name}</div>
+                  <div style={{ fontSize: 11, color: "var(--text-secondary)", lineHeight: 1.4, marginTop: 2 }}>{step.details}</div>
                 </div>
               </motion.div>
             ))

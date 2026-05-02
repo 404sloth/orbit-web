@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 // Components
@@ -37,6 +37,7 @@ import {
   messagesPaneStyle,
   detailsPanelStyle,
 } from "./styles/theme";
+import { ChevronUp } from "lucide-react";
 
 const TAB_MAP: Record<string, string> = {
   "/chat": "conversations",
@@ -82,6 +83,20 @@ export default function App() {
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [connected] = useState(true);
+  const [showScrollBottom, setShowScrollBottom] = useState(false);
+  const viewportRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (viewportRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = viewportRef.current;
+      const isAtBottom = scrollHeight - scrollTop - clientHeight < 100;
+      setShowScrollBottom(!isAtBottom);
+    }
+  };
+
+  const scrollToBottom = () => {
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
     if (token) {
@@ -146,8 +161,12 @@ export default function App() {
             <Route path="/chat" element={
               <div style={chatLayoutStyle}>
                 <div style={chatColumnStyle}>
-                  <div style={{ flex: 1, overflowY: "auto", padding: "20px 0" }} className="custom-scrollbar">
-                    <div style={{ padding: "0 40px" }}>
+                  <div 
+                    ref={viewportRef}
+                    onScroll={handleScroll}
+                    className="chat-viewport custom-scrollbar"
+                  >
+                    <div style={{ padding: "0 40px", paddingBottom: "20px" }}>
                       {messages.length === 0 ? (
                         <EmptyState 
                           suggestions={[...INITIAL_SUGGESTIONS]} 
@@ -163,10 +182,10 @@ export default function App() {
                             />
                           ))}
                           {isThinking && (
-                            <div style={{ padding: "20px", display: "flex", gap: "10px", alignItems: "center", color: "#64748b" }}>
-                              <div className="dot-typing"></div>
+                            <div style={{ padding: "20px", display: "flex", gap: "12px", alignItems: "center", color: "var(--text-tertiary)" }}>
+                              <div className="thinking-dot"></div>
                               <span style={{ fontSize: "13px", fontWeight: 500 }}>
-                                Consulting with {prettifyAgent(messages[messages.length - 1]?.metadata?.agent_hint as string | undefined) || "Supervisor"}...
+                                Consulting...
                               </span>
                             </div>
                           )}
@@ -175,7 +194,22 @@ export default function App() {
                       )}
                     </div>
                   </div>
-                  <div style={{ flexShrink: 0, background: "var(--bg-main)", borderTop: "1px solid #f1f3f4" }}>
+
+                  <AnimatePresence>
+                    {showScrollBottom && (
+                      <motion.button
+                        initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.8, y: 10 }}
+                        className="scroll-bottom-btn"
+                        onClick={scrollToBottom}
+                      >
+                        <ChevronUp style={{ transform: "rotate(180deg)" }} size={20} />
+                      </motion.button>
+                    )}
+                  </AnimatePresence>
+
+                  <div style={{ flexShrink: 0, background: "transparent" }}>
                     <Composer
                       onSend={handleSendWithHint}
                       isThinking={isThinking}
@@ -295,10 +329,10 @@ export default function App() {
         onNewChat={handleNewChat}
         onDeleteChat={handleDeleteChat}
         onLogout={handleLogout}
-        className="sidebar matte-surface"
+        className="sidebar"
       />
       
-      <main className="main-content matte-surface" style={{ ...contentLayout, overflow: "hidden", position: "relative" }}>
+      <main className="main-content" style={{ ...contentLayout, overflow: "hidden", position: "relative" }}>
         <Header 
           activeTabLabel={activeTabLabel} 
           isThinking={isThinking} 

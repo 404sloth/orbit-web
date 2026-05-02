@@ -181,7 +181,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       >
         <div style={logoSectionStyle}>
           <div style={logoIconStyle}>
-            <Shield size={32} color="#1a73e8" />
+            <Shield size={32} color="var(--brand-primary)" />
           </div>
           <h1 style={titleStyle}>
             {isRegister ? 'Create Account' : 'Executive Gateway'}
@@ -369,7 +369,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
         {!isRegister && (
           <div style={demoCredentialsStyle}>
-            <p style={{ margin: 0, fontSize: 11, color: '#5f6368', textAlign: 'center' }}>
+            <p style={{ margin: 0, fontSize: 11, color: 'var(--text-secondary)', textAlign: 'center' }}>
               <strong>Demo Access:</strong> admin / admin123
             </p>
           </div>
@@ -398,7 +398,7 @@ const cardStyle: React.CSSProperties = {
   background: 'var(--bg-main)',
   borderRadius: 8,
   boxShadow: '0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)',
-  border: '1px solid #dadce0',
+  border: '1px solid var(--border-light)',
 };
 
 const logoSectionStyle: React.CSSProperties = {
@@ -409,7 +409,7 @@ const logoSectionStyle: React.CSSProperties = {
 const logoIconStyle: React.CSSProperties = {
   width: 48,
   height: 48,
-  background: '#e8f0fe',
+  background: 'var(--brand-light)',
   borderRadius: 8,
   display: 'flex',
   alignItems: 'center',
@@ -420,14 +420,14 @@ const logoIconStyle: React.CSSProperties = {
 const titleStyle: React.CSSProperties = {
   fontSize: 24,
   fontWeight: 500,
-  color: '#202124',
+  color: 'var(--text-primary)',
   marginBottom: 8,
   fontFamily: "'Google Sans', sans-serif"
 };
 
 const subtitleStyle: React.CSSProperties = {
   fontSize: 14,
-  color: '#5f6368',
+  color: 'var(--text-secondary)',
   fontWeight: 400,
 };
 
@@ -444,7 +444,7 @@ const inputGroupStyle: React.CSSProperties = {
 const labelStyle: React.CSSProperties = {
   fontSize: 12,
   fontWeight: 500,
-  color: '#5f6368',
+  color: 'var(--text-secondary)',
   display: 'block',
   marginBottom: 4,
 };
@@ -458,24 +458,24 @@ const inputWrapperStyle: React.CSSProperties = {
 const iconStyle: React.CSSProperties = {
   position: 'absolute',
   left: 16,
-  color: '#9aa0a6',
+  color: 'var(--text-tertiary)',
 };
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '12px 16px 12px 48px',
   background: 'var(--bg-main)',
-  border: '1px solid #dadce0',
+  border: '1px solid var(--border-light)',
   borderRadius: 4,
   fontSize: 14,
-  color: '#202124',
+  color: 'var(--text-primary)',
   outline: 'none',
   transition: 'border 0.2s',
 };
 
 const buttonStyle: React.CSSProperties = {
   padding: '12px',
-  background: '#1a73e8',
+  background: 'var(--brand-primary)',
   color: '#ffffff',
   border: 'none',
   borderRadius: 4,
@@ -490,11 +490,11 @@ const buttonStyle: React.CSSProperties = {
 };
 
 const errorStyle: React.CSSProperties = {
-  color: '#d93025',
+  color: 'var(--accent-red)',
   fontSize: 13,
   fontWeight: 600,
   textAlign: 'center',
-  background: '#fce8e6',
+  background: 'var(--accent-red-light)',
   padding: '10px',
   borderRadius: 12,
 };
@@ -506,14 +506,14 @@ const footerStyle: React.CSSProperties = {
 
 const dividerStyle: React.CSSProperties = {
   height: 1,
-  background: '#f1f3f4',
+  background: 'var(--border-subtle)',
   marginBottom: 20,
 };
 
 const footerTextStyle: React.CSSProperties = {
   fontSize: 11,
   fontWeight: 700,
-  color: '#bdc1c6',
+  color: 'var(--text-tertiary)',
   textTransform: 'uppercase',
   letterSpacing: '0.05em',
 };
@@ -524,7 +524,7 @@ const passwordToggleStyle: React.CSSProperties = {
   background: 'none',
   border: 'none',
   cursor: 'pointer',
-  color: '#5f6368',
+  color: 'var(--text-secondary)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -537,7 +537,7 @@ const passwordStrengthStyle: React.CSSProperties = {
 
 const passwordStrengthBarStyle: React.CSSProperties = {
   height: 6,
-  background: '#f1f3f4',
+  background: 'var(--border-subtle)',
   borderRadius: 3,
   marginBottom: 8,
   transition: 'all 0.3s ease',
@@ -553,7 +553,7 @@ const passwordFeedbackStyle: React.CSSProperties = {
 const passwordFeedbackItemStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
-  color: '#d93025',
+  color: 'var(--accent-red)',
 };
 
 const checkboxGroupStyle: React.CSSProperties = {
@@ -572,12 +572,12 @@ const checkboxStyle: React.CSSProperties = {
   width: 18,
   height: 18,
   cursor: 'pointer',
-  accentColor: '#1a73e8',
+  accentColor: 'var(--brand-primary)',
 };
 
 const checkboxTextStyle: React.CSSProperties = {
   fontSize: 13,
-  color: '#5f6368',
+  color: 'var(--text-secondary)',
 };
 
 const successStyle: React.CSSProperties = {
@@ -585,7 +585,7 @@ const successStyle: React.CSSProperties = {
   fontSize: 13,
   fontWeight: 600,
   textAlign: 'center',
-  background: '#e6f4ea',
+  background: 'var(--accent-green-light)',
   padding: '10px',
   borderRadius: 12,
 };
@@ -594,8 +594,8 @@ const switchModeButtonStyle: React.CSSProperties = {
   width: '100%',
   padding: '10px',
   background: 'transparent',
-  color: '#1a73e8',
-  border: '1px solid #dadce0',
+  color: 'var(--brand-primary)',
+  border: '1px solid var(--border-light)',
   borderRadius: 4,
   fontSize: 14,
   fontWeight: 500,
@@ -609,5 +609,5 @@ const demoCredentialsStyle: React.CSSProperties = {
   padding: 12,
   background: 'var(--bg-sidebar)',
   borderRadius: 12,
-  border: '1px solid #f1f3f4',
+  border: '1px solid var(--border-subtle)',
 };

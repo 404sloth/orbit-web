@@ -20,7 +20,7 @@ export const ApprovalGateway: React.FC<ApprovalGatewayProps> = ({ prompt, onReje
           <div style={warningIconWrapStyle}><AlertTriangle size={20} color="#f9ab00" /></div>
           <div>
             <div style={{ fontSize: 20, fontWeight: 700 }}>Approval Gateway</div>
-            <div style={{ fontSize: 14, color: "#5f6368" }}>Human intervention required for this high-impact action.</div>
+            <div style={{ fontSize: 14, color: "var(--text-secondary)" }}>Human intervention required for this high-impact action.</div>
           </div>
         </div>
         <div style={modalPromptWrapStyle}><pre style={modalPromptStyle}>{prompt}</pre></div>

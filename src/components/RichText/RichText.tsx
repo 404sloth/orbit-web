@@ -110,24 +110,24 @@ const injectStyles = () => {
     .md-content {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       line-height: 1.7;
-      color: #3c4043;
+      color: var(--text-primary);
     }
     /* Headings */
     .md-content h2, .md-content h3, .md-content h4 {
       font-weight: 700;
       letter-spacing: -0.02em;
-      color: #202124;
+      color: var(--text-primary);
       margin: 1.2em 0 0.6em;
-      border-bottom: 1px solid #f1f3f4;
+      border-bottom: 1px solid var(--border-subtle);
       padding-bottom: 0.4em;
     }
     /* Bold & Italic */
-    .md-bold { font-weight: 700; color: #202124; }
+    .md-bold { font-weight: 700; color: var(--text-primary); }
     .md-italic { font-style: italic; }
     /* Inline Code */
     .md-inline-code {
-      background: #f1f3f4;
-      color: #1a73e8;
+      background: var(--border-subtle);
+      color: var(--brand-primary);
       padding: 2px 6px;
       border-radius: 6px;
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -135,7 +135,7 @@ const injectStyles = () => {
     }
     /* Code Blocks */
     .md-code-block {
-      background: var(--bg-sidebar);
+      background: var(--bg-subtle);
       border: 1px solid #e0e4e9;
       border-radius: 12px;
       padding: 16px;
@@ -147,23 +147,23 @@ const injectStyles = () => {
     .md-code-block code {
       background: none;
       padding: 0;
-      color: #3c4043;
+      color: var(--text-primary);
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
     }
     /* Blockquotes */
     .md-quote {
-      border-left: 4px solid #1a73e8;
+      border-left: 4px solid var(--brand-primary);
       padding: 0.6em 1em;
       margin: 1em 0;
-      background: var(--bg-sidebar);
+      background: var(--bg-subtle);
       border-radius: 0 12px 12px 0;
-      color: #5f6368;
+      color: var(--text-secondary);
       font-style: italic;
     }
     .md-quote p { margin: 0; }
     /* Inline Quote */
     .md-inline-quote {
-      color: #1a73e8;
+      color: var(--brand-primary);
       font-style: italic;
     }
     /* Lists */
@@ -176,7 +176,7 @@ const injectStyles = () => {
       line-height: 1.6;
     }
     .md-list li::marker {
-      color: #1a73e8;
+      color: var(--brand-primary);
     }
     /* Tables */
     .md-table-wrapper {
@@ -196,12 +196,12 @@ const injectStyles = () => {
     .md-table td {
       padding: 12px 16px;
       text-align: left;
-      border-bottom: 1px solid #f1f3f4;
+      border-bottom: 1px solid var(--border-subtle);
     }
     .md-table th {
-      background: var(--bg-sidebar);
+      background: var(--bg-subtle);
       font-weight: 700;
-      color: #1a73e8;
+      color: var(--brand-primary);
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
@@ -210,14 +210,14 @@ const injectStyles = () => {
     .md-hr {
       border: none;
       height: 1px;
-      background: #f1f3f4;
+      background: var(--border-subtle);
       margin: 1.5em 0;
     }
     /* Links (markdown + raw) */
     .md-link {
-      color: #1a73e8;
+      color: var(--brand-primary);
       text-decoration: none;
-      border-bottom: 1px dotted #1a73e8;
+      border-bottom: 1px dotted var(--brand-primary);
       transition: all 0.2s;
     }
     .md-link:hover {

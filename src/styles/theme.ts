@@ -6,7 +6,7 @@ export const appContainerStyle: CSSProperties = {
   width: "100vw",
   background: "var(--bg-main)",
   overflow: "hidden",
-  color: "#1e293b"
+  color: "var(--text-primary)"
 };
 
 export const sidebarStyle: CSSProperties = {
@@ -16,7 +16,7 @@ export const sidebarStyle: CSSProperties = {
   display: "flex",
   flexDirection: "column",
   gap: 4,
-  borderRight: "1px solid #dadce0",
+  borderRight: "1px solid var(--border-light)",
   zIndex: 10,
   position: "relative",
 };
@@ -32,7 +32,7 @@ export const logoBadgeStyle: CSSProperties = {
   width: 44,
   height: 44,
   borderRadius: 8,
-  background: "#1a73e8",
+  background: "var(--brand-primary)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -45,11 +45,11 @@ export const primaryPillButton: CSSProperties = {
   padding: "10px 24px",
   borderRadius: 4,
   border: "none",
-  background: "#1a73e8",
+  background: "var(--brand-primary)",
   color: "#ffffff",
   fontWeight: 500,
   fontSize: 14,
-  boxShadow: "0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)",
+  boxShadow: "var(--shadow-sm)",
   transition: "background 0.2s ease, box-shadow 0.2s ease",
   cursor: "pointer",
   marginBottom: 12,
@@ -69,7 +69,7 @@ export const navButtonStyle: CSSProperties = {
   width: "100%",
   padding: "10px 16px",
   borderRadius: 8,
-  color: "#5f6368",
+  color: "var(--text-secondary)",
   fontWeight: 500,
   fontSize: 13,
   background: "transparent",
@@ -79,8 +79,8 @@ export const navButtonStyle: CSSProperties = {
 };
 
 export const activeNavButtonStyle: CSSProperties = {
-  color: "#1a73e8",
-  background: "#e8f0fe",
+  color: "var(--brand-primary)",
+  background: "var(--brand-light)",
 };
 
 export const activeNavIndicatorStyle: CSSProperties = {
@@ -105,9 +105,9 @@ export const sectionLabelStyle: CSSProperties = {
   fontSize: 11,
   textTransform: "uppercase",
   letterSpacing: "0.05em",
-  color: "#5f6368",
+  color: "var(--text-secondary)",
   fontWeight: 500,
-  borderBottom: "1px solid #dadce0",
+  borderBottom: "1px solid var(--border-light)",
   margin: "0 8px 12px",
 };
 
@@ -142,18 +142,18 @@ export const sessionIconStyle = (active: boolean): CSSProperties => ({
   width: 28,
   height: 28,
   borderRadius: 4,
-  background: active ? "#e8f0fe" : "var(--bg-main)",
-  border: `1px solid ${active ? "#e8f0fe" : "#dadce0"}`,
+  background: active ? "var(--brand-light)" : "var(--bg-main)",
+  border: `1px solid ${active ? "var(--brand-light)" : "var(--border-light)"}`,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: active ? "#1a73e8" : "#dadce0",
+  color: active ? "var(--brand-primary)" : "var(--border-light)",
 });
 
 export const sessionTitleStyle: CSSProperties = {
   fontSize: 13,
   fontWeight: 400,
-  color: "#202124",
+  color: "var(--text-primary)",
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -161,14 +161,14 @@ export const sessionTitleStyle: CSSProperties = {
 
 export const sessionTimestampStyle: CSSProperties = {
   fontSize: 10,
-  color: "#9aa0a6",
+  color: "var(--text-tertiary)",
   marginTop: 2,
 };
 
 export const trashButtonStyle: CSSProperties = {
   padding: 8,
   borderRadius: 10,
-  color: "#dadce0",
+  color: "var(--border-light)",
   background: "transparent",
   border: "none",
   cursor: "pointer",
@@ -176,7 +176,7 @@ export const trashButtonStyle: CSSProperties = {
 
 export const sidebarFooterStyle: CSSProperties = {
   marginTop: "auto",
-  borderTop: "1px solid #f1f3f4",
+  borderTop: "1px solid var(--border-subtle)",
   paddingTop: 12,
   flexShrink: 0,
 };
@@ -189,7 +189,7 @@ export const statusToggleStyle: CSSProperties = {
   padding: "12px 16px",
   borderRadius: 8,
   background: "transparent",
-  color: "#3c4043",
+  color: "var(--text-primary)",
   fontWeight: 500,
   fontSize: 12,
   border: "none",
@@ -210,7 +210,7 @@ export const statusDotStyle = (connected: boolean): CSSProperties => ({
   width: 6,
   height: 6,
   borderRadius: 99,
-  background: connected ? "#1e8e3e" : "#d93025",
+  background: connected ? "var(--accent-green)" : "var(--accent-red)",
 });
 
 export const statusCardStyle: CSSProperties = {
@@ -218,7 +218,7 @@ export const statusCardStyle: CSSProperties = {
   padding: "12px",
   borderRadius: 8,
   background: "var(--bg-sidebar)",
-  border: "1px solid #dadce0",
+  border: "1px solid var(--border-light)",
   display: "grid",
   gap: 8,
 };
@@ -233,7 +233,7 @@ export const messagesPaneStyle: CSSProperties = {
 export const emptyRoutingStyle: CSSProperties = {
   padding: 24,
   textAlign: "center",
-  color: "#9aa0a6",
+  color: "var(--text-tertiary)",
   fontSize: 13,
 };
 
@@ -250,7 +250,7 @@ export const mainStyle: CSSProperties = {
 export const pageTitleStyle: CSSProperties = {
   fontSize: 22,
   fontWeight: 400,
-  color: "#202124",
+  color: "var(--text-primary)",
   fontFamily: "'Google Sans', Roboto, Arial, sans-serif",
 };
 
@@ -301,10 +301,10 @@ export const inlineSuggestionButtonStyle: CSSProperties = {
   padding: "6px 12px",
   borderRadius: 4,
   background: "var(--bg-main)",
-  border: "1px solid #dadce0",
+  border: "1px solid var(--border-light)",
   fontSize: 12,
   fontWeight: 400,
-  color: "#5f6368",
+  color: "var(--text-secondary)",
   cursor: "pointer",
   whiteSpace: "nowrap",
 };
@@ -321,7 +321,7 @@ export const iconCircleButton = (active: boolean): CSSProperties => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: active ? "#d93025" : "var(--bg-sidebar)",
+  background: active ? "var(--accent-red)" : "var(--bg-sidebar)",
   border: "none",
   cursor: "pointer",
 });
@@ -333,30 +333,30 @@ export const sendButtonStyle: CSSProperties = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: "#1a73e8",
+  background: "var(--brand-primary)",
   color: "#ffffff",
   border: "none",
   cursor: "pointer",
-  boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
+  boxShadow: "var(--shadow-sm)",
   transition: "all 0.2s ease",
 };
 
 export const detailsPanelStyle: CSSProperties = {
-  background: "var(--bg-sidebar)",
+  background: "var(--bg-card)",
   display: "flex",
   flexDirection: "column",
   padding: "0",
   gap: 0,
   overflow: "hidden",
-  borderLeft: "1px solid #dadce0",
+  borderLeft: "1px solid var(--border-light)",
 };
 
 export const premiumCardStyle: CSSProperties = {
-  borderRadius: 8,
-  background: "var(--bg-main)",
+  borderRadius: 10,
+  background: "var(--bg-card)",
   padding: 16,
-  boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
-  border: "1px solid #dadce0",
+  boxShadow: "var(--shadow-xs)",
+  border: "1px solid var(--border-light)",
   transition: "all 0.2s ease",
 };
 
@@ -384,7 +384,7 @@ export const traceIndicatorWrap: CSSProperties = {
   gap: 6,
   fontSize: 10,
   fontWeight: 700,
-  color: "#1e8e3e",
+  color: "var(--accent-green)",
   textTransform: "uppercase",
 };
 
@@ -392,7 +392,7 @@ export const traceDot: CSSProperties = {
   width: 6,
   height: 6,
   borderRadius: 99,
-  background: "#1e8e3e",
+  background: "var(--accent-green)",
 };
 
 export const detailsLabelStyle: CSSProperties = {
@@ -400,7 +400,7 @@ export const detailsLabelStyle: CSSProperties = {
   textTransform: "uppercase",
   letterSpacing: "0.06em",
   fontWeight: 700,
-  color: "#80868b",
+  color: "var(--text-secondary)",
   marginBottom: 4,
 };
 
@@ -425,7 +425,7 @@ export const tracePathLine = (complete: boolean): CSSProperties => ({
   top: 30,
   bottom: -10,
   width: 2,
-  background: complete ? "#e8f0fe" : "#f1f3f4",
+  background: complete ? "var(--brand-light)" : "var(--border-subtle)",
   zIndex: 1,
 });
 
@@ -433,8 +433,8 @@ export const tracePathIconBox = (complete: boolean, current: boolean): CSSProper
   width: 28,
   height: 28,
   borderRadius: 10,
-  background: current || complete ? "#e8f0fe" : "var(--bg-sidebar)",
-  border: `1px solid ${current || complete ? "#d2e3fc" : "#f1f3f4"}`,
+  background: current || complete ? "var(--brand-light)" : "var(--bg-sidebar)",
+  border: `1px solid ${current || complete ? "#d2e3fc" : "var(--border-subtle)"}`,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -445,7 +445,7 @@ export const tracePathIconBox = (complete: boolean, current: boolean): CSSProper
 export const tracePathLabel = (complete: boolean, current: boolean): CSSProperties => ({
   fontSize: 13,
   fontWeight: current ? 700 : 500,
-  color: current ? "#1a73e8" : (complete ? "#3c4043" : "#9aa0a6"),
+  color: current ? "var(--brand-primary)" : (complete ? "var(--text-primary)" : "var(--text-tertiary)"),
 });
 
 export const reasoningBoxStyle: CSSProperties = {
@@ -454,7 +454,7 @@ export const reasoningBoxStyle: CSSProperties = {
   borderRadius: 14,
   background: "rgba(26,115,232,0.03)",
   border: "1px solid rgba(26,115,232,0.08)",
-  color: "#3c4043",
+  color: "var(--text-primary)",
   boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
 };
 
@@ -485,14 +485,14 @@ export const toolChipStyle: CSSProperties = {
   letterSpacing: "0.04em",
   display: "flex",
   alignItems: "center",
-  border: "1px solid #e8f0fe",
+  border: "1px solid var(--brand-light)",
 };
 
 export const toolDotStyle: CSSProperties = {
   width: 5,
   height: 5,
   borderRadius: 99,
-  background: "#1a73e8",
+  background: "var(--brand-primary)",
   marginRight: 8,
 };
 
@@ -525,7 +525,7 @@ export const helpTitle: CSSProperties = {
 
 export const helpText: CSSProperties = {
   fontSize: 11,
-  color: "#5f6368",
+  color: "var(--text-secondary)",
   lineHeight: 1.4,
 };
 
@@ -536,14 +536,14 @@ export const selectedAgentBarStyle: CSSProperties = {
   padding: "6px 12px",
   background: "var(--bg-sidebar)",
   borderRadius: "12px 12px 0 0",
-  border: "1px solid #f1f3f4",
+  border: "1px solid var(--border-subtle)",
   borderBottom: "none",
 };
 
 export const selectedAgentLabelStyle: CSSProperties = {
   fontSize: 10,
   fontWeight: 700,
-  color: "#5f6368",
+  color: "var(--text-secondary)",
   textTransform: "uppercase",
 };
 
@@ -560,7 +560,7 @@ export const clearAgentHintButtonStyle: CSSProperties = {
   padding: 4,
   background: "transparent",
   border: "none",
-  color: "#dadce0",
+  color: "var(--border-light)",
   cursor: "pointer",
   marginLeft: "auto",
 };
@@ -578,7 +578,7 @@ export const agentPickerButtonStyle: CSSProperties = {
   justifyContent: "center",
   background: "var(--bg-sidebar)",
   border: "none",
-  color: "#5f6368",
+  color: "var(--text-secondary)",
   cursor: "pointer",
 };
 
@@ -589,8 +589,8 @@ export const agentPickerMenuStyle: CSSProperties = {
   width: 240,
   background: "var(--bg-main)",
   borderRadius: 20,
-  boxShadow: "0 12px 40px rgba(0,0,0,0.15)",
-  border: "1px solid #f1f3f4",
+  boxShadow: "var(--shadow-xl)",
+  border: "1px solid var(--border-subtle)",
   padding: 8,
   marginBottom: 12,
   zIndex: 100,
@@ -599,7 +599,7 @@ export const agentPickerMenuStyle: CSSProperties = {
 export const pickerHeaderStyle: CSSProperties = {
   fontSize: 10,
   fontWeight: 800,
-  color: "#9aa0a6",
+  color: "var(--text-tertiary)",
   textTransform: "uppercase",
   padding: "8px 12px",
   letterSpacing: "0.05em",
@@ -609,7 +609,7 @@ export const agentPickerItemStyle = (selected: boolean): CSSProperties => ({
   width: "100%",
   padding: "10px 12px",
   borderRadius: 4,
-  background: selected ? "#e8f0fe" : "transparent",
+  background: selected ? "var(--brand-light)" : "transparent",
   border: "none",
   textAlign: "left",
   cursor: "pointer",
@@ -634,12 +634,12 @@ export const pickerDot = (color: string): CSSProperties => ({
 export const agentPickerItemTitleStyle: CSSProperties = {
   fontSize: 13,
   fontWeight: 500,
-  color: "#202124",
+  color: "var(--text-primary)",
 };
 
 export const agentPickerItemDescriptionStyle: CSSProperties = {
   fontSize: 11,
-  color: "#5f6368",
+  color: "var(--text-secondary)",
   paddingLeft: 14,
 };
 
@@ -657,7 +657,7 @@ export const emptyLogoWrap: CSSProperties = {
   width: 64,
   height: 64,
   borderRadius: 8,
-  background: "#e8f0fe",
+  background: "var(--brand-light)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -667,14 +667,14 @@ export const emptyLogoWrap: CSSProperties = {
 export const emptyStateTitleStyle: CSSProperties = {
   fontSize: 28,
   fontWeight: 400,
-  color: "#202124",
+  color: "var(--text-primary)",
   marginBottom: 8,
   fontFamily: "'Google Sans', sans-serif"
 };
 
 export const emptyStateSubtitleStyle: CSSProperties = {
   fontSize: 15,
-  color: "#5f6368",
+  color: "var(--text-secondary)",
   maxWidth: 400,
   lineHeight: 1.6,
   marginBottom: 40,
@@ -692,13 +692,13 @@ export const suggestionButtonStyle: CSSProperties = {
   padding: "8px 16px",
   borderRadius: 4,
   background: "var(--bg-main)",
-  border: "1px solid #dadce0",
+  border: "1px solid var(--border-light)",
   fontSize: 13,
   fontWeight: 400,
-  color: "#202124",
+  color: "var(--text-primary)",
   cursor: "pointer",
   transition: "all 0.2s ease",
-  boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
+  boxShadow: "var(--shadow-sm)",
 };
 
 export const contentWrapStyle: CSSProperties = {
@@ -718,8 +718,8 @@ export const contentCardStyle: CSSProperties = {
   background: "var(--bg-main)",
   borderRadius: 8,
   padding: "24px",
-  border: "1px solid #dadce0",
-  boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
+  border: "1px solid var(--border-light)",
+  boxShadow: "var(--shadow-sm)",
 };
 
 export const cardHeaderStyle: CSSProperties = {
@@ -735,7 +735,7 @@ export const cardHeaderTitleStyle: CSSProperties = {
   gap: 12,
   fontSize: 16,
   fontWeight: 500,
-  color: "#202124",
+  color: "var(--text-primary)",
   fontFamily: "'Google Sans', sans-serif"
 };
 
@@ -751,11 +751,11 @@ export const researchButtonStyle: CSSProperties = {
   padding: "12px 16px",
   borderRadius: 4,
   background: "var(--bg-main)",
-  border: "1px solid #dadce0",
+  border: "1px solid var(--border-light)",
   textAlign: "left",
   fontSize: 13,
   fontWeight: 400,
-  color: "#202124",
+  color: "var(--text-primary)",
   cursor: "pointer",
   transition: "all 0.2s ease",
 };
@@ -767,14 +767,14 @@ export const messageIconWrap = (isUser: boolean, agentColor: string): CSSPropert
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: isUser ? "#1a73e8" : agentColor,
+  background: isUser ? "var(--brand-primary)" : agentColor,
   flexShrink: 0,
 });
 
 export const messageSenderStyle = (isUser: boolean, agentColor: string): CSSProperties => ({
   fontSize: 11,
   fontWeight: 500,
-  color: isUser ? "#1a73e8" : agentColor,
+  color: isUser ? "var(--brand-primary)" : agentColor,
 });
 
 export const messageMetaStyle = (isUser: boolean): CSSProperties => ({
@@ -782,7 +782,7 @@ export const messageMetaStyle = (isUser: boolean): CSSProperties => ({
   alignItems: "center",
   justifyContent: isUser ? "flex-end" : "flex-start",
   marginTop: 4,
-  color: "#9aa0a6",
+  color: "var(--text-tertiary)",
 });
 
 export const statusLineStyle: CSSProperties = {
@@ -793,12 +793,12 @@ export const statusLineStyle: CSSProperties = {
 };
 
 export const statusLineLabelStyle: CSSProperties = {
-  color: "#80868b",
+  color: "var(--text-secondary)",
   fontWeight: 500,
 };
 
 export const statusLineValueStyle: CSSProperties = {
-  color: "#202124",
+  color: "var(--text-primary)",
   fontWeight: 700,
 };
 
@@ -812,7 +812,7 @@ export const detailRowStyle: CSSProperties = {
 export const detailValueStyle = (highlight: boolean): CSSProperties => ({
   fontSize: 13,
   fontWeight: 700,
-  color: highlight ? "#1a73e8" : "#202124",
+  color: highlight ? "var(--brand-primary)" : "var(--text-primary)",
 });
 
 export const systemMessageStyle: CSSProperties = {
@@ -820,8 +820,8 @@ export const systemMessageStyle: CSSProperties = {
   borderRadius: 40,
   fontSize: 12,
   fontWeight: 500,
-  color: "#5f6368",
-  background: "#e8eaed",
+  color: "var(--text-secondary)",
+  background: "var(--bg-subtle)",
 };
 
 export const modalBackdropStyle: CSSProperties = {
@@ -844,7 +844,7 @@ export const modalCardStyle: CSSProperties = {
   background: "var(--bg-main)",
   borderRadius: 32,
   padding: 32,
-  boxShadow: "0 24px 64px rgba(0,0,0,0.2)",
+  boxShadow: "var(--shadow-xl)",
 };
 
 export const modalHeaderStyle: CSSProperties = {
@@ -869,14 +869,14 @@ export const modalPromptWrapStyle: CSSProperties = {
   borderRadius: 20,
   padding: 20,
   marginBottom: 32,
-  border: "1px solid #f1f3f4",
+  border: "1px solid var(--border-subtle)",
 };
 
 export const modalPromptStyle: CSSProperties = {
   margin: 0,
   fontSize: 14,
   lineHeight: 1.6,
-  color: "#3c4043",
+  color: "var(--text-primary)",
   whiteSpace: "pre-wrap",
   fontFamily: "inherit",
 };
@@ -895,12 +895,12 @@ export const primaryActionButton: CSSProperties = {
   padding: "14px",
   borderRadius: 16,
   border: "none",
-  background: "#1a73e8",
+  background: "var(--brand-primary)",
   color: "#ffffff",
   fontWeight: 700,
   fontSize: 14,
   cursor: "pointer",
-  boxShadow: "0 8px 16px rgba(26,115,232,0.2)",
+  boxShadow: "var(--shadow-md)",
 };
 
 export const secondaryActionButton: CSSProperties = {
@@ -911,9 +911,9 @@ export const secondaryActionButton: CSSProperties = {
   gap: 10,
   padding: "14px",
   borderRadius: 16,
-  border: "1px solid #dadce0",
+  border: "1px solid var(--border-light)",
   background: "var(--bg-main)",
-  color: "#3c4043",
+  color: "var(--text-primary)",
   fontWeight: 700,
   fontSize: 14,
   cursor: "pointer",
@@ -937,7 +937,7 @@ export const offlineOverlayStyle: CSSProperties = {
 
 export const kbIntroText: CSSProperties = {
   fontSize: 14,
-  color: "#5f6368",
+  color: "var(--text-secondary)",
   lineHeight: 1.6,
 };
 
@@ -945,7 +945,7 @@ export const fieldLabelStyle: CSSProperties = {
   display: "block",
   fontSize: 11,
   fontWeight: 800,
-  color: "#5f6368",
+  color: "var(--text-secondary)",
   textTransform: "uppercase",
   marginBottom: 8,
 };
@@ -954,7 +954,7 @@ export const textInputStyle: CSSProperties = {
   width: "100%",
   padding: "12px 16px",
   borderRadius: 14,
-  border: "1px solid #dadce0",
+  border: "1px solid var(--border-light)",
   fontSize: 14,
   outline: "none",
   transition: "all 0.2s ease",
@@ -964,7 +964,7 @@ export const textareaStyle: CSSProperties = {
   width: "100%",
   padding: "16px",
   borderRadius: 14,
-  border: "1px solid #dadce0",
+  border: "1px solid var(--border-light)",
   fontSize: 14,
   outline: "none",
   resize: "none",

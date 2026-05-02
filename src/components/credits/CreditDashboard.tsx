@@ -39,19 +39,19 @@ export const CreditDashboard: React.FC = () => {
         animate={{ rotate: 360 }}
         transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
       >
-        <RefreshCw size={32} color="#1a73e8" />
+        <RefreshCw size={32} color="var(--brand-primary)" />
       </motion.div>
     </div>
   );
 
   if (error) return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", gap: "10px" }}>
-      <ShieldAlert size={48} color="#d93025" />
-      <div style={{ color: "#5f6368", fontSize: "14px" }}>{error}</div>
+      <ShieldAlert size={48} color="var(--accent-red)" />
+      <div style={{ color: "var(--text-secondary)", fontSize: "14px" }}>{error}</div>
       <button 
         onClick={fetchData} 
         style={{ 
-          background: "#1a73e8", 
+          background: "var(--brand-primary)", 
           color: "#fff", 
           border: "none", 
           padding: "8px 24px", 
@@ -73,9 +73,9 @@ export const CreditDashboard: React.FC = () => {
     <div style={{ padding: "40px 40px 100px", width: "100%", maxWidth: "1400px", margin: "0 auto" }}>
       <header style={{ marginBottom: "40px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
         <div>
-          <div style={{ fontSize: 10, fontWeight: 900, color: "#1a73e8", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Financial Operations</div>
-          <h1 style={{ margin: 0, fontSize: "28px", fontWeight: 400, color: "#202124", fontFamily: "'Google Sans', sans-serif" }}>Billing & Credits</h1>
-          <p style={{ margin: "8px 0 0", color: "#5f6368", fontSize: "14px", fontWeight: 400 }}>
+          <div style={{ fontSize: 10, fontWeight: 900, color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Financial Operations</div>
+          <h1 style={{ margin: 0, fontSize: "28px", fontWeight: 400, color: "var(--text-primary)", fontFamily: "'Google Sans', sans-serif" }}>Billing & Credits</h1>
+          <p style={{ margin: "8px 0 0", color: "var(--text-secondary)", fontSize: "14px", fontWeight: 400 }}>
             Monitor resource allocation and project-level consumption across the platform.
           </p>
         </div>
@@ -102,12 +102,12 @@ export const CreditDashboard: React.FC = () => {
           borderRadius: "8px", 
           padding: "80px 40px", 
           textAlign: "center", 
-          border: "1px dashed #dadce0",
+          border: "1px dashed var(--border-light)",
           marginTop: "20px"
         }}>
-          <PieChart size={48} color="#dadce0" style={{ marginBottom: "16px" }} />
-          <h3 style={{ margin: "0 0 8px", fontSize: "18px", fontWeight: 500, color: "#202124" }}>No Managed Projects</h3>
-          <p style={{ margin: 0, color: "#5f6368", fontSize: "14px" }}>
+          <PieChart size={48} color="var(--border-light)" style={{ marginBottom: "16px" }} />
+          <h3 style={{ margin: "0 0 8px", fontSize: "18px", fontWeight: 500, color: "var(--text-primary)" }}>No Managed Projects</h3>
+          <p style={{ margin: 0, color: "var(--text-secondary)", fontSize: "14px" }}>
             You don't have any projects yet to manage. Billing data will appear once project activities commence.
           </p>
         </div>

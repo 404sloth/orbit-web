@@ -50,13 +50,19 @@ export const INITIAL_SUGGESTIONS = [
 ];
 
 export const AGENT_COLORS: Record<string, string> = {
-  vendor_management: "#7c3aed", // Premium Purple
-  meetings_communication: "#db2777", // Pink/Rose for contrast
-  knowledge_base: "#059669", // Emerald for balance
+  hybrid: "#7c3aed",   // Strategic Intelligence (Purple)
+  sql: "#2563eb",      // Data Analytics (Blue)
+  rag: "#059669",      // Knowledge Base (Emerald)
+  report: "#d97706",   // Executive Reporting (Amber)
+  image: "#db2777",    // Visual Intelligence (Pink)
+  human: "#dc2626",    // Strategic Approval (Red)
 };
 
 export const AGENT_OPTIONS = [
-  { id: "vendor_management", label: "Vendor Management", description: "Contracts, SLA, and scoring" },
-  { id: "meetings_communication", label: "Communications", description: "Meetings and transcripts" },
-  { id: "knowledge_base", label: "Knowledge Base", description: "Search docs and notes" },
+  { id: "hybrid", label: "Strategic Intelligence", description: "People search and general advisory" },
+  { id: "sql", label: "Data Analytics", description: "Quantitative metrics and budget analysis" },
+  { id: "rag", label: "Knowledge Base", description: "Semantic search in documents and notes" },
+  { id: "report", label: "Executive Reporting", description: "Exports, Excel, and PDF generation" },
+  { id: "image", label: "Visual Intelligence", description: "Data visualization and chart generation" },
+  { id: "human", label: "Strategic Approval", description: "Irreversible actions and gates" },
 ] as const;

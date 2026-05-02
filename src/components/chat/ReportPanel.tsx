@@ -42,13 +42,13 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
           display: "flex", 
           alignItems: "center", 
           gap: "10px", 
-          color: "#0f172a",
+          color: "var(--text-primary)",
           fontWeight: 700,
           fontSize: "13px",
-          fontFamily: "'Outfit', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           letterSpacing: "0.05em"
         }}>
-          <Layers size={18} color="#1a73e8" />
+          <Layers size={18} color="var(--brand-primary)" />
           STRATEGIC ASSETS
         </div>
         <button 
@@ -56,7 +56,7 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
           style={{
             background: "none",
             border: "none",
-            color: "#94a3b8",
+            color: "var(--text-tertiary)",
             cursor: "pointer",
             padding: "4px",
             borderRadius: "4px",
@@ -65,8 +65,8 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
             transition: "all 0.2s ease"
           }}
           title="Refresh Artifacts"
-          onMouseOver={(e) => e.currentTarget.style.color = "#1a73e8"}
-          onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}
+          onMouseOver={(e) => e.currentTarget.style.color = "var(--brand-primary)"}
+          onMouseOut={(e) => e.currentTarget.style.color = "var(--text-tertiary)"}
         >
           <RefreshCw size={14} />
         </button>
@@ -78,11 +78,11 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
           textAlign: "center", 
           background: "rgba(248, 250, 252, 0.5)", 
           borderRadius: "16px",
-          border: "2px dashed #e2e8f0"
+          border: "2px dashed var(--border-light)"
         }}>
-          <FileText size={32} color="#cbd5e1" style={{ marginBottom: "12px", opacity: 0.5 }} />
-          <div style={{ fontSize: "14px", fontWeight: 600, color: "#64748b", marginBottom: "4px" }}>No Artifacts Generated</div>
-          <div style={{ fontSize: "12px", color: "#94a3b8", lineHeight: "1.4" }}>Generated reports and data extracts will appear here for quick access.</div>
+          <FileText size={32} color="var(--border-light)" style={{ marginBottom: "12px", opacity: 0.5 }} />
+          <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "4px" }}>No Artifacts Generated</div>
+          <div style={{ fontSize: "12px", color: "var(--text-tertiary)", lineHeight: "1.4" }}>Generated reports and data extracts will appear here for quick access.</div>
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -97,7 +97,7 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
                 padding: "12px", 
                 borderRadius: "12px", 
                 background: "var(--bg-main)",
-                border: "1px solid #e2e8f0",
+                border: "1px solid var(--border-light)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
@@ -121,14 +121,14 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
                 {report.type === "excel" && <FileSpreadsheet size={18} color="#16a34a" />}
                 {report.type === "pdf" && <FileText size={18} color="#dc2626" />}
                 {report.type === "image" && <ImageIcon size={18} color="#2563eb" />}
-                {!["excel", "pdf", "image"].includes(report.type) && <File size={18} color="#64748b" />}
+                {!["excel", "pdf", "image"].includes(report.type) && <File size={18} color="var(--text-secondary)" />}
               </div>
 
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ 
                   fontSize: "12px", 
                   fontWeight: 600, 
-                  color: "#1e293b", 
+                  color: "var(--text-primary)", 
                   whiteSpace: 'nowrap', 
                   overflow: 'hidden', 
                   textOverflow: 'ellipsis',
@@ -148,7 +148,7 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
                   }}>
                     {report.type}
                   </span>
-                  <span style={{ fontSize: "10px", color: "#94a3b8" }}>
+                  <span style={{ fontSize: "10px", color: "var(--text-tertiary)" }}>
                     {new Date(report.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
@@ -160,7 +160,7 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
                   handleDownload(report.url, report.filename);
                 }}
                 style={{ 
-                  color: "#94a3b8",
+                  color: "var(--text-tertiary)",
                   padding: "6px",
                   borderRadius: "8px",
                   display: "flex",
@@ -172,12 +172,12 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
                   cursor: "pointer"
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.background = "#f1f5f9";
-                  e.currentTarget.style.color = "#1a73e8";
+                  e.currentTarget.style.background = "var(--bg-subtle)";
+                  e.currentTarget.style.color = "var(--brand-primary)";
                 }}
                 onMouseOut={(e) => {
                   e.currentTarget.style.background = "transparent";
-                  e.currentTarget.style.color = "#94a3b8";
+                  e.currentTarget.style.color = "var(--text-tertiary)";
                 }}
               >
                 <Download size={16} />

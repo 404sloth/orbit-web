@@ -48,7 +48,7 @@ const ProjectCard = ({
         background: "var(--bg-main)",
         padding: "20px",
         borderRadius: "8px",
-        border: `1px solid #dadce0`,
+        border: `1px solid var(--border-light)`,
         cursor: "pointer",
         position: "relative",
         boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
@@ -59,9 +59,9 @@ const ProjectCard = ({
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
         <div style={{
           width: 36, height: 36, borderRadius: 4,
-          background: '#e8f0fe',
+          background: 'var(--brand-light)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: '#1a73e8'
+          color: 'var(--brand-primary)'
         }}>
           <Target size={18} />
         </div>
@@ -75,15 +75,15 @@ const ProjectCard = ({
         </span>
       </div>
 
-      <h3 style={{ fontSize: 15, fontWeight: 500, color: "#202124", marginBottom: 4, lineHeight: 1.4, fontFamily: "'Google Sans', sans-serif" }}>{project.name}</h3>
-      <p style={{ fontSize: 12, color: '#5f6368', marginBottom: 16, fontWeight: 400 }}>#{project.id}</p>
+      <h3 style={{ fontSize: 15, fontWeight: 500, color: "var(--text-primary)", marginBottom: 4, lineHeight: 1.4, fontFamily: "'Google Sans', sans-serif" }}>{project.name}</h3>
+      <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 16, fontWeight: 400 }}>#{project.id}</p>
       
       <div style={{ marginBottom: 16 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-          <span style={{ fontSize: 10, fontWeight: 500, color: '#5f6368', textTransform: 'uppercase' }}>Delivery Status</span>
+          <span style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Delivery Status</span>
           <span style={{ fontSize: 10, fontWeight: 800, color: healthColor }}>{project.health_color === 'green' ? 'High' : 'At Risk'}</span>
         </div>
-        <div style={{ height: 4, background: '#f1f3f4', borderRadius: 2, overflow: 'hidden' }}>
+        <div style={{ height: 4, background: 'var(--border-subtle)', borderRadius: 2, overflow: 'hidden' }}>
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: project.health_color === 'green' ? '85%' : project.health_color === 'amber' ? '60%' : '35%' }}
@@ -92,7 +92,7 @@ const ProjectCard = ({
         </div>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 12, color: "#5f6368", fontSize: 11, fontWeight: 400 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, color: "var(--text-secondary)", fontSize: 11, fontWeight: 400 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 4 }}><Calendar size={12} /><span>{project.end_date || "TBD"}</span></div>
       </div>
     </motion.div>
@@ -176,7 +176,7 @@ const CurvedTimeline = ({
   if (!timeline.length) return <div style={{ padding: 60, textAlign: "center", color: "var(--text-tertiary)", fontSize: 13 }}>No events detected in current timeline.</div>;
 
   return (
-    <div ref={containerRef} style={{ position: "relative", width: "100%", height: totalHeight, minHeight: 400, overflow: "hidden", borderRadius: 8, background: "var(--bg-sidebar)", border: "1px solid #dadce0" }}>
+    <div ref={containerRef} style={{ position: "relative", width: "100%", height: totalHeight, minHeight: 400, overflow: "hidden", borderRadius: 8, background: "var(--bg-sidebar)", border: "1px solid var(--border-light)" }}>
       <svg style={{ position: "absolute", inset: 0, overflow: "visible", pointerEvents: "none" }}>
         <defs>
           <linearGradient id="curveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -299,12 +299,12 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
               borderRadius: "8px", 
               padding: "80px 40px", 
               textAlign: "center", 
-              border: "1px dashed #dadce0",
+              border: "1px dashed var(--border-light)",
               marginTop: "20px"
             }}>
-              <Target size={48} color="#dadce0" style={{ marginBottom: "16px" }} />
-              <h3 style={{ margin: "0 0 8px", fontSize: "18px", fontWeight: 500, color: "#202124" }}>No Managed Projects</h3>
-              <p style={{ margin: 0, color: "#5f6368", fontSize: "14px" }}>
+              <Target size={48} color="var(--border-light)" style={{ marginBottom: "16px" }} />
+              <h3 style={{ margin: "0 0 8px", fontSize: "18px", fontWeight: 500, color: "var(--text-primary)" }}>No Managed Projects</h3>
+              <p style={{ margin: 0, color: "var(--text-secondary)", fontSize: "14px" }}>
                 You don't have any projects yet to manage. Portfolio insights will appear once projects are initialized.
               </p>
             </div>
@@ -320,7 +320,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
             background: "var(--bg-main)", 
             padding: "8px 16px", 
             borderRadius: "12px", 
-            border: "1px solid #dadce0",
+            border: "1px solid var(--border-light)",
             boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
             width: "fit-content"
           }}>
@@ -328,7 +328,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
               onClick={() => { onSelect(null); setSelectedEventId(null); }} 
               style={{ 
                 background: "transparent", 
-                color: "#5f6368", 
+                color: "var(--text-secondary)", 
                 border: "none", 
                 width: 32, 
                 height: 32, 
@@ -339,30 +339,30 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                 cursor: "pointer",
                 transition: "background 0.2s"
               }}
-              onMouseOver={(e) => e.currentTarget.style.background = "#f1f3f4"}
+              onMouseOver={(e) => e.currentTarget.style.background = "var(--border-subtle)"}
               onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
             >
               <ArrowLeft size={18} />
             </button>
             
-            <div style={{ width: 1, height: 24, background: "#dadce0", margin: "0 16px" }} />
+            <div style={{ width: 1, height: 24, background: "var(--border-light)", margin: "0 16px" }} />
             
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", textTransform: "uppercase", letterSpacing: "0.05em", lineHeight: 1 }}>Project Portfolio</div>
-              <h2 style={{ fontSize: 16, fontWeight: 500, color: "#202124", margin: 0, fontFamily: "'Google Sans', sans-serif" }}>{selectedProject?.name}</h2>
+              <div style={{ fontSize: 10, fontWeight: 500, color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "0.05em", lineHeight: 1 }}>Project Portfolio</div>
+              <h2 style={{ fontSize: 16, fontWeight: 500, color: "var(--text-primary)", margin: 0, fontFamily: "'Google Sans', sans-serif" }}>{selectedProject?.name}</h2>
             </div>
 
-            <div style={{ width: 1, height: 24, background: "#dadce0", margin: "0 16px" }} />
+            <div style={{ width: 1, height: 24, background: "var(--border-light)", margin: "0 16px" }} />
 
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#188038" }} />
-              <span style={{ fontSize: 12, color: "#5f6368", fontWeight: 400 }}>Live Execution</span>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent-green)" }} />
+              <span style={{ fontSize: 12, color: "var(--text-secondary)", fontWeight: 400 }}>Live Execution</span>
             </div>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 24, alignItems: "flex-start" }}>
             {/* Timeline View */}
-            <div style={{ background: "var(--bg-main)", borderRadius: 8, padding: "24px", border: "1px solid #dadce0", minHeight: 600, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)" }}>
+            <div style={{ background: "var(--bg-main)", borderRadius: 8, padding: "24px", border: "1px solid var(--border-light)", minHeight: 600, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)" }}>
               <CurvedTimeline timeline={timeline} loading={loading} selectedEventId={selectedEventId} onEventClick={setSelectedEventId} />
             </div>
 
@@ -378,7 +378,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                     style={{ 
                       background: "var(--bg-main)", 
                       borderRadius: 8, 
-                      border: "1px solid #dadce0", 
+                      border: "1px solid var(--border-light)", 
                       padding: "24px", 
                       boxShadow: "0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)", 
                       minHeight: 300, 
@@ -388,28 +388,28 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                   >
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: selectedEvent.status?.toLowerCase() === "completed" ? "#188038" : "#1a73e8" }} />
-                        <span style={{ fontSize: 11, fontWeight: 500, color: "#5f6368", textTransform: "uppercase", letterSpacing: "0.03em" }}>
+                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: selectedEvent.status?.toLowerCase() === "completed" ? "var(--accent-green)" : "var(--brand-primary)" }} />
+                        <span style={{ fontSize: 11, fontWeight: 500, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.03em" }}>
                           {new Date(selectedEvent.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                         </span>
                       </div>
                       <span style={{
                         padding: "2px 8px", borderRadius: 4,
-                        background: selectedEvent.status?.toLowerCase() === "completed" ? "#e6f4ea" : "#e8f0fe",
-                        color: selectedEvent.status?.toLowerCase() === "completed" ? "#188038" : "#1a73e8",
+                        background: selectedEvent.status?.toLowerCase() === "completed" ? "var(--accent-green-light)" : "var(--brand-light)",
+                        color: selectedEvent.status?.toLowerCase() === "completed" ? "var(--accent-green)" : "var(--brand-primary)",
                         fontSize: 10, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.03em"
                       }}>
                         {selectedEvent.status}
                       </span>
                     </div>
 
-                    <h3 style={{ fontSize: 18, fontWeight: 500, color: "#202124", marginBottom: 20, lineHeight: 1.3, letterSpacing: "-0.01em", fontFamily: "'Google Sans', sans-serif" }}>
+                    <h3 style={{ fontSize: 18, fontWeight: 500, color: "var(--text-primary)", marginBottom: 20, lineHeight: 1.3, letterSpacing: "-0.01em", fontFamily: "'Google Sans', sans-serif" }}>
                       {selectedEvent.title}
                     </h3>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                       {/* Summary Section */}
-                      <div style={{ background: 'var(--bg-sidebar)', padding: 20, borderRadius: 8, border: '1px solid #dadce0' }}>
+                      <div style={{ background: 'var(--bg-subtle)', padding: 20, borderRadius: 8, border: '1px solid var(--border-light)' }}>
                         <div style={{ fontSize: 10, fontWeight: 900, color: "var(--brand-primary)", textTransform: "uppercase", marginBottom: 12, letterSpacing: "0.1em" }}>
                           Strategic Briefing
                         </div>
@@ -475,18 +475,18 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                                     display: 'flex', alignItems: 'center', gap: 10,
                                     padding: '8px 12px', borderRadius: 4,
                                     background: isDone ? 'var(--bg-sidebar)' : 'var(--bg-card)',
-                                    border: `1px solid ${isDone ? '#e8f0fe' : '#dadce0'}`
+                                    border: `1px solid ${isDone ? 'var(--brand-light)' : 'var(--border-light)'}`
                                   }}
                                 >
                                   <div style={{
                                     width: 16, height: 16, borderRadius: 2,
-                                    background: isDone ? '#1a73e8' : 'var(--bg-card)',
-                                    border: `1px solid ${isDone ? '#1a73e8' : '#dadce0'}`,
+                                    background: isDone ? 'var(--brand-primary)' : 'var(--bg-card)',
+                                    border: `1px solid ${isDone ? 'var(--brand-primary)' : 'var(--border-light)'}`,
                                     display: 'flex', alignItems: 'center', justifyContent: 'center'
                                   }}>
                                     {isDone && <Check size={10} color="#fff" />}
                                   </div>
-                                  <span style={{ fontSize: 13, fontWeight: 400, color: isDone ? '#5f6368' : '#202124', textDecoration: isDone ? 'line-through' : 'none' }}>
+                                  <span style={{ fontSize: 13, fontWeight: 400, color: isDone ? 'var(--text-secondary)' : 'var(--text-primary)', textDecoration: isDone ? 'line-through' : 'none' }}>
                                     {text}
                                   </span>
                                 </motion.div>
@@ -498,10 +498,10 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
                     </div>
                   </motion.div>
                 ) : (
-                  <div style={{ height: 300, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#5f6368", textAlign: "center", background: "var(--bg-main)", borderRadius: 8, border: "1px dashed #dadce0", padding: 32 }}>
-                    <Target size={40} style={{ opacity: 0.2, marginBottom: 16, color: "#1a73e8" }} />
-                    <div style={{ fontSize: 14, fontWeight: 500, color: "#202124" }}>Event Details</div>
-                    <p style={{ fontSize: 12, color: "#5f6368", marginTop: 4 }}>Select a node to view insights.</p>
+                  <div style={{ height: 300, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--text-secondary)", textAlign: "center", background: "var(--bg-main)", borderRadius: 8, border: "1px dashed var(--border-light)", padding: 32 }}>
+                    <Target size={40} style={{ opacity: 0.2, marginBottom: 16, color: "var(--brand-primary)" }} />
+                    <div style={{ fontSize: 14, fontWeight: 500, color: "var(--text-primary)" }}>Event Details</div>
+                    <p style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 4 }}>Select a node to view insights.</p>
                   </div>
                 )}
               </AnimatePresence>

@@ -14,9 +14,9 @@ export const CreditSummaryCard: React.FC<CreditSummaryProps> = ({
   total, used, remaining, carryForward, financialYear 
 }) => {
   const cards = [
-    { title: "Allocated Credits", value: total, icon: Wallet, color: "#1a73e8", sub: financialYear, desc: "Annual Budget" },
-    { title: "Used Credits", value: used, icon: PieChart, color: "#d93025", sub: "Consumption", desc: "Total Usage" },
-    { title: "Available Balance", value: remaining, icon: ArrowUpRight, color: "#188038", sub: "Live", desc: "Current Liquidity" },
+    { title: "Allocated Credits", value: total, icon: Wallet, color: "var(--brand-primary)", sub: financialYear, desc: "Annual Budget" },
+    { title: "Used Credits", value: used, icon: PieChart, color: "var(--accent-red)", sub: "Consumption", desc: "Total Usage" },
+    { title: "Available Balance", value: remaining, icon: ArrowUpRight, color: "var(--accent-green)", sub: "Live", desc: "Current Liquidity" },
     { title: "Carry Forward", value: carryForward, icon: History, color: "#f9ab00", sub: "Previous Year", desc: "Rollover Amount" },
   ];
 
@@ -32,7 +32,7 @@ export const CreditSummaryCard: React.FC<CreditSummaryProps> = ({
             background: "var(--bg-main)",
             padding: "24px",
             borderRadius: "8px",
-            border: "1px solid #dadce0",
+            border: "1px solid var(--border-light)",
             boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
             display: "flex",
             flexDirection: "column",
@@ -58,11 +58,11 @@ export const CreditSummaryCard: React.FC<CreditSummaryProps> = ({
           </div>
           
           <div>
-            <div style={{ fontSize: "13px", color: "#5f6368", marginBottom: 4, fontWeight: 400 }}>{card.title}</div>
-            <div style={{ fontSize: "28px", fontWeight: 400, color: "#202124", fontFamily: "'Google Sans', sans-serif" }}>
+            <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: 4, fontWeight: 400 }}>{card.title}</div>
+            <div style={{ fontSize: "28px", fontWeight: 400, color: "var(--text-primary)", fontFamily: "'Google Sans', sans-serif" }}>
               {card.value.toLocaleString()}
             </div>
-            <div style={{ fontSize: "11px", color: "#9aa0a6", marginTop: 4 }}>{card.desc}</div>
+            <div style={{ fontSize: "11px", color: "var(--text-tertiary)", marginTop: 4 }}>{card.desc}</div>
           </div>
         </motion.div>
       ))}

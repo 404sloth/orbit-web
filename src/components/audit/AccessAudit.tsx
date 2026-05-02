@@ -100,21 +100,21 @@ export const AccessAudit: React.FC = () => {
       val: highSeverityCount.toString(),
       sub: `Across ${new Set(gaps.map((g) => g.project)).size} projects`,
       icon: AlertTriangle,
-      color: "#d93025",
+      color: "var(--accent-red)",
     },
     {
       label: "Stale Permissions",
       val: gaps.length.toString(),
       sub: "Awaiting remediation",
       icon: History,
-      color: "#1a73e8",
+      color: "var(--brand-primary)",
     },
     {
       label: "System Integrity",
       val: `${integrityPercentage.toFixed(1)}%`,
       sub: "Target: 100%",
       icon: ShieldCheck,
-      color: "#188038",
+      color: "var(--accent-green)",
     },
   ];
 
@@ -159,21 +159,21 @@ export const AccessAudit: React.FC = () => {
               background: "var(--bg-main)",
               padding: "8px 16px",
               borderRadius: "12px",
-              border: "1px solid #dadce0",
+              border: "1px solid var(--border-light)",
               boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
               width: "fit-content",
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", textTransform: "uppercase", letterSpacing: "0.05em", lineHeight: 1 }}>Security</div>
-              <h1 style={{ fontSize: 16, fontWeight: 500, color: "#202124", margin: 0, fontFamily: "'Google Sans', sans-serif" }}>Security Audit</h1>
+              <div style={{ fontSize: 10, fontWeight: 500, color: "var(--brand-primary)", textTransform: "uppercase", letterSpacing: "0.05em", lineHeight: 1 }}>Security</div>
+              <h1 style={{ fontSize: 16, fontWeight: 500, color: "var(--text-primary)", margin: 0, fontFamily: "'Google Sans', sans-serif" }}>Security Audit</h1>
             </div>
 
-            <div style={{ width: 1, height: 24, background: "#dadce0", margin: "0 16px" }} />
+            <div style={{ width: 1, height: 24, background: "var(--border-light)", margin: "0 16px" }} />
 
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#188038" }} />
-              <span style={{ fontSize: 12, color: "#5f6368", fontWeight: 400 }}>Monitoring Active</span>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent-green)" }} />
+              <span style={{ fontSize: 12, color: "var(--text-secondary)", fontWeight: 400 }}>Monitoring Active</span>
             </div>
           </div>
 
@@ -181,7 +181,7 @@ export const AccessAudit: React.FC = () => {
             <div
               style={{
                 background: "var(--bg-card)",
-                border: "1px solid #dadce0",
+                border: "1px solid var(--border-light)",
                 borderRadius: 4,
                 padding: "0 12px",
                 display: "flex",
@@ -190,7 +190,7 @@ export const AccessAudit: React.FC = () => {
                 boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
               }}
             >
-              <Search size={16} color="#5f6368" />
+              <Search size={16} color="var(--text-secondary)" />
               <input
                 type="text"
                 placeholder="Search audit findings..."
@@ -204,7 +204,7 @@ export const AccessAudit: React.FC = () => {
                   fontWeight: 400,
                   width: 200,
                   background: "transparent",
-                  color: "#202124",
+                  color: "var(--text-primary)",
                 }}
               />
             </div>
@@ -212,7 +212,7 @@ export const AccessAudit: React.FC = () => {
               onClick={fetchGaps}
               style={{
                 background: "var(--bg-card)",
-                border: "1px solid #dadce0",
+                border: "1px solid var(--border-light)",
                 borderRadius: 4,
                 width: 32,
                 height: 32,
@@ -223,7 +223,7 @@ export const AccessAudit: React.FC = () => {
                 boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
                 transition: "background 0.2s"
               }}
-              onMouseOver={(e) => e.currentTarget.style.background = "#f1f3f4"}
+              onMouseOver={(e) => e.currentTarget.style.background = "var(--border-subtle)"}
               onMouseOut={(e) => e.currentTarget.style.background = "#fff"}
             >
               <motion.div
@@ -231,7 +231,7 @@ export const AccessAudit: React.FC = () => {
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 style={{ display: "flex", alignItems: "center" }}
               >
-                <RefreshCw size={16} color="#5f6368" />
+                <RefreshCw size={16} color="var(--text-secondary)" />
               </motion.div>
             </button>
           </div>
@@ -257,7 +257,7 @@ export const AccessAudit: React.FC = () => {
                 background: "var(--bg-card)",
                 padding: "16px",
                 borderRadius: 8,
-                border: "1px solid #dadce0",
+                border: "1px solid var(--border-light)",
                 boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
                 display: "flex",
                 flexDirection: "column",
@@ -268,12 +268,12 @@ export const AccessAudit: React.FC = () => {
                 <div style={{ background: `${kpi.color}10`, padding: 8, borderRadius: 4 }}>
                   <kpi.icon color={kpi.color} size={20} />
                 </div>
-                <div style={{ fontSize: 10, fontWeight: 500, color: "#188038", background: "#e6f4ea", padding: "2px 8px", borderRadius: 4 }}>Live</div>
+                <div style={{ fontSize: 10, fontWeight: 500, color: "var(--accent-green)", background: "var(--accent-green-light)", padding: "2px 8px", borderRadius: 4 }}>Live</div>
               </div>
               <div>
-                <div style={{ fontSize: 24, fontWeight: 500, color: "#202124", letterSpacing: "-0.01em" }}>{kpi.val}</div>
-                <div style={{ fontSize: 13, fontWeight: 500, color: "#202124", marginTop: 4 }}>{kpi.label}</div>
-                <div style={{ fontSize: 11, color: "#5f6368", marginTop: 2 }}>{kpi.sub}</div>
+                <div style={{ fontSize: 24, fontWeight: 500, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>{kpi.val}</div>
+                <div style={{ fontSize: 13, fontWeight: 500, color: "var(--text-primary)", marginTop: 4 }}>{kpi.label}</div>
+                <div style={{ fontSize: 11, color: "var(--text-secondary)", marginTop: 2 }}>{kpi.sub}</div>
               </div>
             </motion.div>
           ))}
@@ -292,7 +292,7 @@ export const AccessAudit: React.FC = () => {
             style={{
               background: "var(--bg-card)",
               borderRadius: 8,
-              border: "1px solid #dadce0",
+              border: "1px solid var(--border-light)",
               overflow: "hidden",
               boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)",
             }}
@@ -301,13 +301,13 @@ export const AccessAudit: React.FC = () => {
             <div
               style={{
                 padding: "8px 24px",
-                borderBottom: "1px solid #dadce0",
+                borderBottom: "1px solid var(--border-light)",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 flexWrap: "wrap",
                 gap: 16,
-                background: "var(--bg-sidebar)",
+                background: "var(--bg-subtle)",
               }}
             >
               <div style={{ display: "flex", gap: 32 }}>
@@ -359,18 +359,18 @@ export const AccessAudit: React.FC = () => {
                 style={{
                   fontSize: 11,
                   fontWeight: 500,
-                  color: "#5f6368",
+                  color: "var(--text-secondary)",
                   display: "flex",
                   alignItems: "center",
                   gap: 8,
                   background: "var(--bg-card)",
                   padding: "4px 12px",
                   borderRadius: 4,
-                  border: "1px solid #dadce0"
+                  border: "1px solid var(--border-light)"
                 }}
               >
-                <Filter size={14} color="#1a73e8" />
-                <span>Identified <strong style={{ color: "#202124" }}>{filteredGaps.length}</strong> Risks</span>
+                <Filter size={14} color="var(--brand-primary)" />
+                <span>Identified <strong style={{ color: "var(--text-primary)" }}>{filteredGaps.length}</strong> Risks</span>
               </div>
             </div>
 
@@ -467,9 +467,9 @@ export const AccessAudit: React.FC = () => {
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               style={{
-                                background: selectedGapId === gap.id ? "#e8f0fe" : "transparent",
+                                background: selectedGapId === gap.id ? "var(--brand-light)" : "transparent",
                                 cursor: "pointer",
-                                borderBottom: "1px solid #f1f3f4",
+                                borderBottom: "1px solid var(--border-subtle)",
                                 transition: "background 0.2s"
                               }}
                               onMouseOver={(e) => { if (selectedGapId !== gap.id) e.currentTarget.style.background = "var(--bg-sidebar)"; }}
@@ -484,22 +484,22 @@ export const AccessAudit: React.FC = () => {
                                       width: 32,
                                       height: 32,
                                       borderRadius: 4,
-                                      background: "#f1f3f4",
+                                      background: "var(--border-subtle)",
                                       display: "flex",
                                       alignItems: "center",
                                       justifyContent: "center",
                                       fontSize: 12,
                                       fontWeight: 500,
-                                      color: "#1a73e8",
+                                      color: "var(--brand-primary)",
                                     }}
                                   >
                                     {gap.user.avatar}
                                   </div>
                                   <div>
-                                    <div style={{ fontSize: 13, fontWeight: 500, color: "#202124", marginBottom: 2 }}>
+                                    <div style={{ fontSize: 13, fontWeight: 500, color: "var(--text-primary)", marginBottom: 2 }}>
                                       {gap.user.name}
                                     </div>
-                                    <div style={{ fontSize: 11, color: "#5f6368" }}>
+                                    <div style={{ fontSize: 11, color: "var(--text-secondary)" }}>
                                       {gap.user.role}
                                     </div>
                                   </div>
@@ -507,9 +507,9 @@ export const AccessAudit: React.FC = () => {
                               </td>
                               <td style={{ padding: "16px 12px" }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                                  <span style={{ fontSize: 13, fontWeight: 500, color: "#202124" }}>{gap.permission}</span>
+                                  <span style={{ fontSize: 13, fontWeight: 500, color: "var(--text-primary)" }}>{gap.permission}</span>
                                 </div>
-                                <div style={{ fontSize: 11, color: "#1a73e8", fontWeight: 500 }}>{gap.project}</div>
+                                <div style={{ fontSize: 11, color: "var(--brand-primary)", fontWeight: 500 }}>{gap.project}</div>
                               </td>
                               <td style={{ padding: "16px 12px", textAlign: "center" }}>
                                 <span
@@ -528,17 +528,17 @@ export const AccessAudit: React.FC = () => {
                                           : "#f0f7ff",
                                     color:
                                       gap.severity === "high"
-                                        ? "#d93025"
+                                        ? "var(--accent-red)"
                                         : gap.severity === "medium"
                                           ? "#b06000"
-                                          : "#1a73e8",
+                                          : "var(--brand-primary)",
                                   }}
                                 >
                                   {gap.severity}
                                 </span>
                               </td>
                               <td style={{ padding: "16px 12px", textAlign: "center" }}>
-                                <div style={{ fontSize: 12, color: "#5f6368" }}>{gap.lastActive}</div>
+                                <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>{gap.lastActive}</div>
                               </td>
                               <td style={{ padding: "16px 24px 16px 12px", textAlign: "right", borderRadius: "0 18px 18px 0" }}>
                                 <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
@@ -549,22 +549,22 @@ export const AccessAudit: React.FC = () => {
                                     }}
                                     style={{
                                       background: "transparent",
-                                      border: "1px solid #dadce0",
+                                      border: "1px solid var(--border-light)",
                                       borderRadius: 4,
                                       padding: "4px 8px",
                                       fontSize: 11,
                                       fontWeight: 500,
-                                      color: "#5f6368",
+                                      color: "var(--text-secondary)",
                                       cursor: "pointer",
                                       transition: "all 0.2s"
                                     }}
                                     onMouseOver={(e) => {
-                                      e.currentTarget.style.background = "#f1f3f4";
-                                      e.currentTarget.style.color = "#202124";
+                                      e.currentTarget.style.background = "var(--border-subtle)";
+                                      e.currentTarget.style.color = "var(--text-primary)";
                                     }}
                                     onMouseOut={(e) => {
                                       e.currentTarget.style.background = "transparent";
-                                      e.currentTarget.style.color = "#5f6368";
+                                      e.currentTarget.style.color = "var(--text-secondary)";
                                     }}
                                   >
                                     Remediate
@@ -592,20 +592,20 @@ export const AccessAudit: React.FC = () => {
                           width: 64,
                           height: 64,
                           borderRadius: "50%",
-                          background: "#e6f4ea",
+                          background: "var(--accent-green-light)",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                           margin: "0 auto 24px",
                         }}
                       >
-                        <CheckCircle2 color="#188038" size={32} />
+                        <CheckCircle2 color="var(--accent-green)" size={32} />
                       </div>
                       <h3
                         style={{
                           fontSize: 18,
                           fontWeight: 500,
-                          color: "#202124",
+                          color: "var(--text-primary)",
                           marginBottom: 8,
                           fontFamily: "'Google Sans', sans-serif"
                         }}
@@ -614,7 +614,7 @@ export const AccessAudit: React.FC = () => {
                       </h3>
                       <p
                         style={{
-                          color: "#5f6368",
+                          color: "var(--text-secondary)",
                           fontSize: 14,
                           fontWeight: 400,
                           maxWidth: 420,
@@ -633,12 +633,12 @@ export const AccessAudit: React.FC = () => {
                   borderRadius: "8px", 
                   padding: "80px 40px", 
                   textAlign: "center", 
-                  border: "1px dashed #dadce0",
+                  border: "1px dashed var(--border-light)",
                   marginTop: "20px"
                 }}>
-                  <ShieldAlert size={48} color="#dadce0" style={{ marginBottom: "16px" }} />
-                  <h3 style={{ margin: "0 0 8px", fontSize: "18px", fontWeight: 500, color: "#202124" }}>No Managed Projects</h3>
-                  <p style={{ margin: 0, color: "#5f6368", fontSize: "14px" }}>
+                  <ShieldAlert size={48} color="var(--border-light)" style={{ marginBottom: "16px" }} />
+                  <h3 style={{ margin: "0 0 8px", fontSize: "18px", fontWeight: 500, color: "var(--text-primary)" }}>No Managed Projects</h3>
+                  <p style={{ margin: 0, color: "var(--text-secondary)", fontSize: "14px" }}>
                     You don't have any projects yet to manage. Security monitoring will commence once projects are initialized.
                   </p>
                 </div>
@@ -768,7 +768,7 @@ export const AccessAudit: React.FC = () => {
                 style={{
                   background: "var(--bg-card)",
                   borderRadius: 8,
-                  border: "1px solid #dadce0",
+                  border: "1px solid var(--border-light)",
                   padding: "32px",
                   boxShadow: "0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)",
                   width: "100%",
@@ -781,10 +781,10 @@ export const AccessAudit: React.FC = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
                   <div style={{ 
                     width: 48, height: 48, borderRadius: 8, 
-                    background: '#e8f0fe', 
+                    background: 'var(--brand-light)', 
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 20, fontWeight: 500, color: '#1a73e8',
-                    border: "1px solid #1a73e8"
+                    fontSize: 20, fontWeight: 500, color: 'var(--brand-primary)',
+                    border: "1px solid var(--brand-primary)"
                   }}>
                     {selectedGap.user.avatar}
                   </div>
@@ -794,7 +794,7 @@ export const AccessAudit: React.FC = () => {
                       background: 'transparent', 
                       border: 'none', 
                       cursor: 'pointer', 
-                      color: '#5f6368',
+                      color: 'var(--text-secondary)',
                       width: 24,
                       height: 24,
                       borderRadius: "50%",
@@ -802,42 +802,42 @@ export const AccessAudit: React.FC = () => {
                       alignItems: "center",
                       justifyContent: "center"
                     }}
-                    onMouseOver={(e) => e.currentTarget.style.background = "#f1f3f4"}
+                    onMouseOver={(e) => e.currentTarget.style.background = "var(--border-subtle)"}
                     onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
                   >
                     ✕
                   </button>
                 </div>
 
-                <h3 style={{ fontSize: 20, fontWeight: 500, color: "#202124", marginBottom: 4, fontFamily: "'Google Sans', sans-serif" }}>{selectedGap.user.name}</h3>
-                <p style={{ fontSize: 13, color: "#5f6368", marginBottom: 24 }}>{selectedGap.user.role}</p>
+                <h3 style={{ fontSize: 20, fontWeight: 500, color: "var(--text-primary)", marginBottom: 4, fontFamily: "'Google Sans', sans-serif" }}>{selectedGap.user.name}</h3>
+                <p style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 24 }}>{selectedGap.user.role}</p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                  <div style={{ background: 'var(--bg-sidebar)', padding: 20, borderRadius: 8, border: '1px solid #dadce0' }}>
-                    <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", textTransform: "uppercase", marginBottom: 8, letterSpacing: "0.05em" }}>
+                  <div style={{ background: 'var(--bg-subtle)', padding: 20, borderRadius: 8, border: '1px solid var(--border-light)' }}>
+                    <div style={{ fontSize: 10, fontWeight: 500, color: "var(--brand-primary)", textTransform: "uppercase", marginBottom: 8, letterSpacing: "0.05em" }}>
                       Risk Rationale
                     </div>
-                    <p style={{ fontSize: 13, color: "#3c4043", lineHeight: 1.6, margin: 0, fontWeight: 400 }}>
+                    <p style={{ fontSize: 13, color: "var(--text-primary)", lineHeight: 1.6, margin: 0, fontWeight: 400 }}>
                       {selectedGap.reason}
                     </p>
                   </div>
 
                   <div style={{ padding: '0 4px' }}>
-                    <div style={{ fontSize: 10, fontWeight: 500, color: "#5f6368", textTransform: "uppercase", marginBottom: 12, letterSpacing: "0.05em" }}>
+                    <div style={{ fontSize: 10, fontWeight: 500, color: "var(--text-secondary)", textTransform: "uppercase", marginBottom: 12, letterSpacing: "0.05em" }}>
                       Technical Context
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: 13, color: '#5f6368' }}>Permission</span>
-                        <span style={{ fontSize: 13, fontWeight: 500, color: '#202124' }}>{selectedGap.permission}</span>
+                        <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Permission</span>
+                        <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)' }}>{selectedGap.permission}</span>
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: 13, color: '#5f6368' }}>Project Scope</span>
-                        <span style={{ fontSize: 13, fontWeight: 500, color: '#1a73e8' }}>{selectedGap.project}</span>
+                        <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Project Scope</span>
+                        <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--brand-primary)' }}>{selectedGap.project}</span>
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: 13, color: '#5f6368' }}>Last Activity</span>
-                        <span style={{ fontSize: 13, fontWeight: 500, color: '#202124' }}>{selectedGap.lastActive}</span>
+                        <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Last Activity</span>
+                        <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)' }}>{selectedGap.lastActive}</span>
                       </div>
                     </div>
                   </div>
@@ -848,7 +848,7 @@ export const AccessAudit: React.FC = () => {
                       style={{
                         padding: "12px",
                         borderRadius: 4,
-                        background: "#1a73e8",
+                        background: "var(--brand-primary)",
                         border: "none",
                         color: "#fff",
                         fontSize: 13,
@@ -857,7 +857,7 @@ export const AccessAudit: React.FC = () => {
                         transition: "background 0.2s"
                       }}
                       onMouseOver={(e) => e.currentTarget.style.background = "#185abc"}
-                      onMouseOut={(e) => e.currentTarget.style.background = "#1a73e8"}
+                      onMouseOut={(e) => e.currentTarget.style.background = "var(--brand-primary)"}
                     >
                       Initiate Remediation
                     </button>
@@ -867,14 +867,14 @@ export const AccessAudit: React.FC = () => {
                         padding: "12px",
                         borderRadius: 4,
                         background: "transparent",
-                        border: "1px solid #dadce0",
-                        color: "#5f6368",
+                        border: "1px solid var(--border-light)",
+                        color: "var(--text-secondary)",
                         fontSize: 13,
                         fontWeight: 500,
                         cursor: "pointer",
                         transition: "background 0.2s"
                       }}
-                      onMouseOver={(e) => e.currentTarget.style.background = "#f1f3f4"}
+                      onMouseOver={(e) => e.currentTarget.style.background = "var(--border-subtle)"}
                       onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
                     >
                       Dismiss View

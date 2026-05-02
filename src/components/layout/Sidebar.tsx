@@ -65,7 +65,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       style={{
         ...sidebarStyle,
         background: "var(--bg-sidebar)",
-        borderRight: "1px solid #dadce0",
+        borderRight: "1px solid var(--border-light)",
         ...(isCollapsed ? { width: 72, padding: "16px 8px" } : {}),
       }}
     >
@@ -80,17 +80,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
           ...logoBadgeStyle, 
           width: isCollapsed ? 40 : 44, 
           height: isCollapsed ? 40 : 44, 
-          background: '#1a73e8',
+          background: 'var(--brand-primary)',
           borderRadius: 8,
         }}>
           <Sparkles size={isCollapsed ? 20 : 24} color="#fff" />
         </div>
         {!isCollapsed && (
           <div style={{ marginLeft: 4 }}>
-            <div style={{ fontSize: 22, fontWeight: 400, color: "#202124", fontFamily: "'Google Sans', sans-serif", letterSpacing: "-0.01em" }}>
+            <div style={{ fontSize: 22, fontWeight: 400, color: "var(--text-primary)", fontFamily: "'Google Sans', sans-serif", letterSpacing: "-0.01em" }}>
               Orbit
             </div>
-            <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", letterSpacing: "0.05em", textTransform: "uppercase" }}>
+            <div style={{ fontSize: 10, fontWeight: 500, color: "var(--brand-primary)", letterSpacing: "0.05em", textTransform: "uppercase" }}>
               Executive AI
             </div>
           </div>
@@ -102,7 +102,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           ...primaryPillButton,
           padding: isCollapsed ? "12px" : "10px 24px",
           justifyContent: isCollapsed ? "center" : "flex-start",
-          background: '#1a73e8',
+          background: 'var(--brand-primary)',
           color: '#fff',
           borderRadius: 4,
           boxShadow: '0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)',
@@ -148,8 +148,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 ...navButtonStyle,
                 justifyContent: isCollapsed ? "center" : "flex-start",
                 padding: isCollapsed ? "12px 0" : "10px 16px",
-                color: isActive ? '#1a73e8' : '#5f6368',
-                background: isActive ? '#e8f0fe' : 'transparent',
+                color: isActive ? 'var(--brand-primary)' : 'var(--text-secondary)',
+                background: isActive ? 'var(--brand-light)' : 'transparent',
                 borderRadius: isCollapsed ? 0 : '0 24px 24px 0',
                 transition: 'all 0.2s ease',
                 fontWeight: isActive ? 500 : 400,
@@ -179,8 +179,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
         })}
       </nav>
 
-      <div style={{ ...sessionsContainerStyle, marginTop: 40 }} className="hide-scrollbar">
-        {!isCollapsed && <div style={{ ...sectionLabelStyle, color: 'var(--text-tertiary)', fontSize: 10, fontWeight: 800 }}>Consultation History</div>}
+      <div style={{ ...sessionsContainerStyle, marginTop: 24, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+        {!isCollapsed && (
+          <div style={{ 
+            ...sectionLabelStyle, 
+            color: 'var(--text-tertiary)', 
+            fontSize: 10, 
+            fontWeight: 700,
+            position: 'sticky',
+            top: 0,
+            background: 'var(--bg-sidebar)',
+            zIndex: 2,
+            paddingTop: 4,
+            paddingBottom: 8,
+            marginBottom: 4,
+            borderBottom: '1px solid var(--border-light)'
+          }}>Consultation History</div>
+        )}
+        <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }} className="hide-scrollbar">
         {sessions.map((session) => {
           const isActive = session.id === activeSession && activeTab === "conversations";
           return (
@@ -188,17 +204,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
               key={session.id}
               style={{
                 ...sessionCardStyle,
-                padding: isCollapsed ? "4px 0" : "4px 8px",
+                padding: isCollapsed ? "2px 0" : "2px 4px",
                 justifyContent: isCollapsed ? "center" : "flex-start",
-                marginBottom: 6
+                marginBottom: 1
               }}
             >
               <button
                 style={{
                   ...sessionButtonStyle,
-                  background: isActive ? '#f8fafd' : 'transparent',
-                  borderRadius: 14,
-                  padding: '10px'
+                  background: isActive ? 'var(--bg-subtle)' : 'transparent',
+                  borderRadius: 8,
+                  padding: '8px'
                 }}
                 onClick={() => {
                   onSessionSelect(session.id);
@@ -211,9 +227,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   ...sessionIconStyle(isActive), 
                   background: isActive ? 'var(--brand-primary)' : 'var(--bg-main)', 
                   color: isActive ? '#fff' : 'var(--text-tertiary)',
-                  width: 32, height: 32, borderRadius: 10
+                  width: 28, height: 28, borderRadius: 8
                 }}>
-                  <MessageCircle size={16} />
+                  <MessageCircle size={14} />
                 </div>
                 {!isCollapsed && (
                   <div style={{ minWidth: 0, flex: 1, textAlign: "left", marginLeft: 4 }}>
@@ -221,7 +237,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       ...sessionTitleStyle, 
                       color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
                       fontSize: 13,
-                      fontWeight: isActive ? 700 : 500
+                      fontWeight: isActive ? 600 : 400
                     }}>{session.title}</div>
                     <div style={{ ...sessionTimestampStyle, fontSize: 10 }}>
                       {new Date(session.updatedAt).toLocaleDateString([], { month: "short", day: "numeric" })}
@@ -230,13 +246,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 )}
               </button>
               {!isCollapsed && (
-                <button style={{ ...trashButtonStyle, opacity: isActive ? 1 : 0.4 }} onClick={() => onDeleteChat(session.id)}>
+                <button 
+                  style={{ 
+                    ...trashButtonStyle, 
+                    opacity: 0.3,
+                    transition: 'all 0.15s ease',
+                    borderRadius: 6,
+                    padding: 6,
+                  }} 
+                  onClick={() => onDeleteChat(session.id)}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.opacity = '1';
+                    e.currentTarget.style.color = 'var(--accent-red)';
+                    e.currentTarget.style.background = 'var(--accent-red-light)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.opacity = '0.3';
+                    e.currentTarget.style.color = 'var(--border-light)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
                   <Trash2 size={14} />
                 </button>
               )}
             </div>
           );
         })}
+        </div>
       </div>
 
       <div style={{ ...sidebarFooterStyle, padding: isCollapsed ? '16px 0' : '16px 8px' }}>
@@ -251,7 +287,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             background: 'transparent',
             borderRadius: 4,
             border: 'none',
-            color: '#d93025',
+            color: 'var(--accent-red)',
             cursor: 'pointer',
             fontSize: '13px',
             fontWeight: 500,

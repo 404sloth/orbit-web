@@ -30,7 +30,7 @@ export const ResearchPanel: React.FC<ResearchPanelProps> = ({ onSend, setActiveT
                     onSend(query);
                   }}
                 >
-                  <ChevronRight size={14} color="#dadce0" />
+                  <ChevronRight size={14} color="var(--border-light)" />
                   {query}
                 </button>
               ))}

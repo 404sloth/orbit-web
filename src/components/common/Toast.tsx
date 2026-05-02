@@ -30,7 +30,7 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
         gap: 12,
         padding: "10px 20px",
         borderRadius: 40,
-        background: type === "success" ? "#1e8e3e" : "#d93025",
+        background: type === "success" ? "#1e8e3e" : "var(--accent-red)",
         color: "#fff",
         boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
         backdropFilter: "blur(12px)",
