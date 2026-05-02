@@ -35,7 +35,7 @@ export function prettifyAgent(agent?: string | null): string | undefined {
   const map: Record<string, string> = {
     "sql": "Data Intelligence",
     "rag": "Knowledge Specialist",
-    "hybrid": "Strategic Intelligence",
+    "hybrid": "Executive Consultant",
     "human": "Executive Approval",
     "report": "Strategic Analyst",
   };

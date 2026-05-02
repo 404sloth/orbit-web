@@ -95,10 +95,10 @@ export const CreditDashboard: React.FC = () => {
     <div style={{ padding: "40px 40px 100px", width: "100%", maxWidth: "1400px", margin: "0 auto" }}>
       <header style={{ marginBottom: "40px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
         <div>
-          <div style={{ fontSize: 10, fontWeight: 900, color: "#1a73e8", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Resource Engine</div>
-          <h1 style={{ margin: 0, fontSize: "28px", fontWeight: 400, color: "#202124", fontFamily: "'Google Sans', sans-serif" }}>Credit Management</h1>
+          <div style={{ fontSize: 10, fontWeight: 900, color: "#1a73e8", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Financial Operations</div>
+          <h1 style={{ margin: 0, fontSize: "28px", fontWeight: 400, color: "#202124", fontFamily: "'Google Sans', sans-serif" }}>Billing & Credits</h1>
           <p style={{ margin: "8px 0 0", color: "#5f6368", fontSize: "14px", fontWeight: 400 }}>
-            Monitor strategic resource allocation and project-wise consumption across the orchestration layer.
+            Monitor resource allocation and project-level consumption across the platform.
           </p>
         </div>
 

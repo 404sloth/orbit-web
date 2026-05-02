@@ -49,7 +49,7 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
           letterSpacing: "0.05em"
         }}>
           <Layers size={18} color="#1a73e8" />
-          EXECUTIVE ARTIFACTS
+          STRATEGY ARTIFACTS
         </div>
         <button 
           onClick={onRefresh}
@@ -64,7 +64,7 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
             alignItems: "center",
             transition: "all 0.2s ease"
           }}
-          title="Refresh Artifact Ledger"
+          title="Refresh Artifacts"
           onMouseOver={(e) => e.currentTarget.style.color = "#1a73e8"}
           onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}
         >
@@ -81,7 +81,7 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
           border: "2px dashed #e2e8f0"
         }}>
           <FileText size={32} color="#cbd5e1" style={{ marginBottom: "12px", opacity: 0.5 }} />
-          <div style={{ fontSize: "14px", fontWeight: 600, color: "#64748b", marginBottom: "4px" }}>No Artifacts Yet</div>
+          <div style={{ fontSize: "14px", fontWeight: 600, color: "#64748b", marginBottom: "4px" }}>No Artifacts Generated</div>
           <div style={{ fontSize: "12px", color: "#94a3b8", lineHeight: "1.4" }}>Generated reports and data extracts will appear here for quick access.</div>
         </div>
       ) : (

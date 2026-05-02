@@ -172,7 +172,7 @@ const CurvedTimeline = ({
     return { timelinePath: points.join(" "), nodes: initialNodes, totalHeight: height };
   }, [timeline, dimensions.width]);
 
-  if (loading) return <div style={{ padding: 60, textAlign: "center", color: "var(--text-tertiary)", fontSize: 13, fontWeight: 700 }}>Synchronizing intelligence core...</div>;
+  if (loading) return <div style={{ padding: 60, textAlign: "center", color: "var(--text-tertiary)", fontSize: 13, fontWeight: 700 }}>Synchronizing project data...</div>;
   if (!timeline.length) return <div style={{ padding: 60, textAlign: "center", color: "var(--text-tertiary)", fontSize: 13 }}>No events detected in current timeline.</div>;
 
   return (
@@ -331,7 +331,7 @@ export const PulseDashboard: React.FC<PulseDashboardProps> = ({ projects, select
             <div style={{ width: 1, height: 24, background: "#dadce0", margin: "0 16px" }} />
             
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", textTransform: "uppercase", letterSpacing: "0.05em", lineHeight: 1 }}>Portfolio</div>
+              <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", textTransform: "uppercase", letterSpacing: "0.05em", lineHeight: 1 }}>Project Portfolio</div>
               <h2 style={{ fontSize: 16, fontWeight: 500, color: "#202124", margin: 0, fontFamily: "'Google Sans', sans-serif" }}>{selectedProject?.name}</h2>
             </div>
 

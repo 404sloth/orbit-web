@@ -60,6 +60,15 @@ export const AccessAudit: React.FC = () => {
     }
   };
 
+  const handleRevoke = async (id: string) => {
+    try {
+      await dashboardApi.resolveAccessGap(id);
+      await fetchGaps();
+    } catch (error) {
+      console.error("Failed to revoke access:", error);
+    }
+  };
+
   useEffect(() => {
     fetchGaps();
   }, []);
@@ -157,7 +166,7 @@ export const AccessAudit: React.FC = () => {
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ fontSize: 10, fontWeight: 500, color: "#1a73e8", textTransform: "uppercase", letterSpacing: "0.05em", lineHeight: 1 }}>Security</div>
-              <h1 style={{ fontSize: 16, fontWeight: 500, color: "#202124", margin: 0, fontFamily: "'Google Sans', sans-serif" }}>Access Guard</h1>
+              <h1 style={{ fontSize: 16, fontWeight: 500, color: "#202124", margin: 0, fontFamily: "'Google Sans', sans-serif" }}>Security Audit</h1>
             </div>
 
             <div style={{ width: 1, height: 24, background: "#dadce0", margin: "0 16px" }} />
@@ -184,7 +193,7 @@ export const AccessAudit: React.FC = () => {
               <Search size={16} color="#5f6368" />
               <input
                 type="text"
-                placeholder="Search anomalies..."
+                placeholder="Search audit findings..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 style={{
@@ -361,7 +370,7 @@ export const AccessAudit: React.FC = () => {
                 }}
               >
                 <Filter size={14} color="#1a73e8" />
-                <span>Monitoring <strong style={{ color: "#202124" }}>{filteredGaps.length}</strong> Anomalies</span>
+                <span>Identified <strong style={{ color: "#202124" }}>{filteredGaps.length}</strong> Risks</span>
               </div>
             </div>
 
@@ -591,7 +600,7 @@ export const AccessAudit: React.FC = () => {
                             }}
                           >
                             <button
-                               onClick={(e) => { e.stopPropagation(); }}
+                               onClick={(e) => { e.stopPropagation(); handleRevoke(gap.id); }}
                                style={{
                                  padding: "4px 12px",
                                  borderRadius: 4,
@@ -691,7 +700,7 @@ export const AccessAudit: React.FC = () => {
               >
                 System:{" "}
                 <span style={{ color: "var(--brand-primary)", fontWeight: 700 }}>
-                  Orbit Guard v2.4
+                  Security Audit v2.4
                 </span>{" "}
                 | Last sync: Just now
               </div>
@@ -868,6 +877,7 @@ export const AccessAudit: React.FC = () => {
 
                   <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
                     <button
+                      onClick={() => { handleRevoke(selectedGap.id); setSelectedGapId(null); }}
                       style={{
                         padding: "12px",
                         borderRadius: 4,

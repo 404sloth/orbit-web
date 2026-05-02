@@ -23,6 +23,10 @@ export function usePulse() {
 
   const loadPulseTimeline = useCallback(async (projectId: string) => {
     setSelectedPid(projectId);
+    if (!projectId) {
+      setPulseTimeline([]);
+      return;
+    }
     setPulseLoading(true);
     try {
       const data = await dashboardApi.getTimeline(projectId);

@@ -172,7 +172,7 @@ export const Composer: React.FC<ComposerProps> = ({
                 style={{ ...agentPickerMenuStyle, width: 280, borderRadius: 8, padding: 8, boxShadow: '0 1px 3px 0 rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15)' }}
               >
                 <div style={{ ...pickerHeaderStyle, color: '#1a73e8', display: 'flex', justifyContent: 'space-between', padding: '8px 12px' }}>
-                  <span style={{ fontWeight: 500, fontSize: '13px' }}>Expert Routing</span>
+                  <span style={{ fontWeight: 500, fontSize: '13px' }}>Specialized Advisory</span>
                 </div>
                 {AGENT_OPTIONS.map((option) => (
                   <button
@@ -205,7 +205,7 @@ export const Composer: React.FC<ComposerProps> = ({
             className="input-field"
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
-            placeholder={isThinking ? "Consulting agents..." : "Message Orbit AI..."}
+            placeholder={isThinking ? "Consulting specialized agents..." : "Inquire with Advisory..."}
             disabled={isThinking}
             style={{ fontSize: '16px', fontWeight: 500, color: 'var(--text-primary)' }}
           />

@@ -112,7 +112,7 @@ export const Header: React.FC<HeaderProps> = ({
                   {notifications.length === 0 ? (
                     <div style={{ padding: 60, textAlign: "center", color: "var(--text-tertiary)", fontSize: "14px" }}>
                       <div style={{ marginBottom: 12, opacity: 0.5 }}><Bell size={32} style={{ margin: "0 auto" }} /></div>
-                      No new intelligence.
+                      No new notifications.
                     </div>
                   ) : (
                     notifications.map((n) => (

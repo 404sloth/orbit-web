@@ -66,7 +66,7 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
     }
     const success = await handleKbSubmit();
     if (success) {
-      setToast({ message: "Strategic intelligence ingested successfully.", type: "success" });
+      setToast({ message: "Knowledge base updated successfully.", type: "success" });
     } else {
       setToast({ message: "Failed to ingest knowledge payload.", type: "error" });
     }
@@ -123,7 +123,7 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
             onDragLeave={() => setIsDragOver(false)} 
             onDrop={(e) => { e.preventDefault(); setIsDragOver(false); const file = e.dataTransfer.files?.[0]; if (file) handleFileChange(file); }}
           >
-            <div style={{ marginBottom: 16 }}><span style={{ fontSize: 18, fontWeight: 500, color: '#202124', fontFamily: "'Google Sans', sans-serif" }}>Upload Strategic Intelligence</span></div>
+            <div style={{ marginBottom: 16 }}><span style={{ fontSize: 18, fontWeight: 500, color: '#202124', fontFamily: "'Google Sans', sans-serif" }}>Ingest Documents</span></div>
             <p style={{ fontSize: 14, color: "#5f6368", marginBottom: 24 }}>Upload internal documents for RAG-based strategic reasoning and recall.</p>
             <div onClick={() => fileInputRef.current?.click()} style={{ height: 180, border: `2px dashed ${isDragOver ? "#1a73e8" : (kbFile ? "#1a73e8" : "#dadce0")}`, borderRadius: 8, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s ease", background: kbFile ? "#e8f0fe" : "#f8f9fa", position: "relative" }}>
               <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={(e) => handleFileChange(e.target.files?.[0] || null)} accept=".pdf,.json,.md,.txt" />
@@ -144,8 +144,8 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
             </div>
             <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
               <div>
-                <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Strategic Source Label</label>
-                <input id="kbSourceFile" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14 }} placeholder="e.g., Q4 Performance Audit" disabled={kbLoading} />
+                <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Source Label</label>
+                <input id="kbSourceFile" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14 }} placeholder="e.g., Q4 Internal Report" disabled={kbLoading} />
               </div>
               <div>
                 <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Access Scope</label>
@@ -169,13 +169,13 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
           </div>
         ) : (
           <div style={{ ...contentCardStyle, background: "#fff", padding: "24px", borderRadius: 8, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15)" }}>
-            <div style={{ marginBottom: 16 }}><span style={{ fontSize: 18, fontWeight: 500, color: '#202124', fontFamily: "'Google Sans', sans-serif" }}>Paste Strategic Intelligence</span></div>
-            <p style={{ fontSize: 14, color: "#5f6368", marginBottom: 24 }}>Commit raw tactical data directly into the knowledge base.</p>
-            <textarea value={kbText} onChange={(event) => setKbText(event.target.value)} rows={10} style={{ width: "100%", border: "1px solid #dadce0", borderRadius: 4, padding: "12px", fontSize: 14, background: "#f8f9fa" }} placeholder="Paste raw documentation here..." disabled={kbLoading} />
+            <div style={{ marginBottom: 16 }}><span style={{ fontSize: 18, fontWeight: 500, color: '#202124', fontFamily: "'Google Sans', sans-serif" }}>Ingest Text</span></div>
+            <p style={{ fontSize: 14, color: "#5f6368", marginBottom: 24 }}>Add structured text content directly to the knowledge repository.</p>
+            <textarea value={kbText} onChange={(event) => setKbText(event.target.value)} rows={10} style={{ width: "100%", border: "1px solid #dadce0", borderRadius: 4, padding: "12px", fontSize: 14, background: "#f8f9fa" }} placeholder="Enter or paste content here..." disabled={kbLoading} />
             <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
               <div>
-                <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Source Attribution</label>
-                <input id="kbSourceText" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14 }} placeholder="e.g., Tactical Update" disabled={kbLoading} />
+                <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Source Label</label>
+                <input id="kbSourceText" value={kbSource} onChange={(event) => setKbSource(event.target.value)} style={{ width: "100%", height: 40, border: "1px solid #dadce0", borderRadius: 4, padding: "0 12px", fontSize: 14 }} placeholder="e.g., Knowledge Snippet" disabled={kbLoading} />
               </div>
               <div>
                 <label style={{ fontSize: 12, fontWeight: 500, color: "#5f6368", display: "block", marginBottom: 8 }}>Access Scope</label>
@@ -194,7 +194,7 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
             </div>
             <button style={{ width: "100%", marginTop: 24, height: 40, borderRadius: 4, background: '#1a73e8', color: '#fff', border: 'none', fontWeight: 500, fontSize: 14, cursor: kbLoading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)" }} onClick={() => void handleSubmit()} disabled={kbLoading || !kbText.trim()}>
               {kbLoading ? <Loader2 size={16} className="spin" /> : <Database size={16} />}
-              {kbLoading ? "Indexing Knowledge..." : "Commit Intelligence"}
+              {kbLoading ? "Indexing Knowledge..." : "Commit Knowledge"}
             </button>
           </div>
         )}

@@ -25,7 +25,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ suggestions, onSelect })
       >
         <Sparkles size={42} color="var(--brand-primary)" />
       </motion.div>
-      <div style={{ ...emptyStateTitleStyle, color: 'var(--text-primary)', fontSize: 24, fontWeight: 900 }}>Orbit Intelligence</div>
+      <div style={{ ...emptyStateTitleStyle, color: 'var(--text-primary)', fontSize: 24, fontWeight: 900 }}>Strategic Advisory</div>
       <div style={{ ...emptyStateSubtitleStyle, color: 'var(--text-secondary)' }}>Strategic orchestration across vendors, projects, and compliance.</div>
       <div style={suggestionsContainerStyle}>
         {suggestions.map((suggestion, i) => (

@@ -48,7 +48,7 @@ export const TracePanel: React.FC<TracePanelProps> = ({ lastRouting, isThinking,
   return (
     <div style={{ ...detailsCardStyle, borderRadius: 8, background: "#fff", border: "1px solid #dadce0", boxShadow: "0 1px 2px 0 rgba(60,64,67,.30)", padding: "16px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-        <div style={{ color: '#202124', fontSize: 14, fontWeight: 500, fontFamily: "'Google Sans', sans-serif" }}>Live Trace</div>
+        <div style={{ color: '#202124', fontSize: 14, fontWeight: 500, fontFamily: "'Google Sans', sans-serif" }}>Execution Trace</div>
         <div style={{ 
           display: "flex", alignItems: "center", gap: 6,
           background: '#e8f0fe', 

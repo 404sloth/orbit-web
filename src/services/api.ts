@@ -74,6 +74,7 @@ export const dashboardApi = {
     body: JSON.stringify({ action }),
   }),
   getAccessGaps: () => fetchJson<any[]>(`${API_URL}/audit/access-gaps`),
+  resolveAccessGap: (id: string) => fetchJson(`${API_URL}/audit/access-gaps/${id}/resolve`, { method: "POST" }),
 };
 
 export const knowledgeApi = {

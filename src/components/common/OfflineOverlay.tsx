@@ -37,7 +37,7 @@ export const OfflineOverlay: React.FC<OfflineOverlayProps> = ({ connected, onRet
           <div style={{ textAlign: "center", maxWidth: 400 }}>
             <h2 style={{ fontSize: 24, fontWeight: 800, color: "#1e293b", marginBottom: 8 }}>System Offline</h2>
             <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6 }}>
-              Synchronization with core intelligence lost. Please check your network or re-establish connection.
+              Connection to core advisory lost. Please check your network or re-establish connection.
             </p>
           </div>
           {onRetry && (

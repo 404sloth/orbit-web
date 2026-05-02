@@ -11,11 +11,11 @@ import {
 export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
 export const NAV = [
-  { id: "conversations", icon: MessageSquare, label: "Chat" },
-  { id: "dashboard", icon: LayoutDashboard, label: "Pulse" },
-  { id: "knowledge", icon: Database, label: "Assets" },
-  { id: "audit", icon: ShieldCheck, label: "Guard" },
-  { id: "credits", icon: CreditCard, label: "Credits" },
+  { id: "conversations", icon: MessageSquare, label: "Advisory" },
+  { id: "dashboard", icon: LayoutDashboard, label: "Portfolio" },
+  { id: "knowledge", icon: Database, label: "Knowledge" },
+  { id: "audit", icon: ShieldCheck, label: "Security" },
+  { id: "credits", icon: CreditCard, label: "Billing" },
 ] as const;
 
 export const RESEARCH_CATEGORIES = [
@@ -57,6 +57,6 @@ export const AGENT_COLORS: Record<string, string> = {
 
 export const AGENT_OPTIONS = [
   { id: "vendor_management", label: "Vendor Management", description: "Contracts, SLA, and scoring" },
-  { id: "meetings_communication", label: "Communication", description: "Meetings and transcripts" },
+  { id: "meetings_communication", label: "Communications", description: "Meetings and transcripts" },
   { id: "knowledge_base", label: "Knowledge Base", description: "Search docs and notes" },
 ] as const;

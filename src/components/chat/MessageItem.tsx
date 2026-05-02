@@ -169,7 +169,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
               transition={{ delay: 0.2 }}
             >
               <Target size={14} color="var(--brand-primary)" />
-              <span style={{ textTransform: "uppercase", letterSpacing: "0.08em" }}>Intelligence Context:</span>
+              <span style={{ textTransform: "uppercase", letterSpacing: "0.08em" }}>Advisory Context:</span>
               <span style={{ color: "var(--text-primary)", fontWeight: 900 }}>
                 {String(
                   (msg.metadata as any).agent_description ?? "Core"
@@ -202,7 +202,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ msg }) => {
                    <Target size={20} color="var(--brand-primary)" />
                 </div>
                 <div style={{ flex: 1 }}>
-                   <div style={{ fontSize: "14px", fontWeight: 800, color: "var(--text-primary)" }}>Intelligence Dataset</div>
+                   <div style={{ fontSize: "14px", fontWeight: 800, color: "var(--text-primary)" }}>Knowledge Set</div>
                    <div style={{ fontSize: "11px", color: "var(--text-tertiary)", fontWeight: 600 }}>{Object.keys(detailedData).length} high-fidelity dimensions mapped</div>
                 </div>
                 <button style={{ 
