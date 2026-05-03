@@ -59,7 +59,7 @@ export default function App() {
   const { token, currentUser, handleLogin, handleLogout } = useAuth();
   const {
     messages, sessions, activeSession, setActiveSession, isThinking, lastRouting, liveTrace,
-    dynamicSuggestions, quickActions, loadSessions, loadHistory, loadReports, handleSend, handleNewChat, handleDeleteChat,
+    dynamicSuggestions, quickActions, loadSessions, loadHistory, handleSend, handleNewChat, handleDeleteChat,
     pendingApproval, setPendingApproval, generatedReports, endRef
   } = useChat(token);
   
@@ -261,7 +261,7 @@ export default function App() {
                     {statusOpen ? (
                       <TracePanel liveTrace={liveTrace} lastRouting={lastRouting} isThinking={isThinking} />
                     ) : (
-                      <ReportPanel reports={generatedReports} onRefresh={loadReports} />
+                      <ReportPanel reports={generatedReports} />
                     )}
                   </div>
                 </div>
@@ -310,7 +310,7 @@ export default function App() {
     pathname, messages, isThinking, dynamicSuggestions, quickActions, isListening, 
     selectedAgentHint, lastRouting, liveTrace, generatedReports, statusOpen, 
     pulseProjects, selectedPid, pulseTimeline, pulseLoading, kbText, kbSource, 
-    kbScope, kbFile, kbLoading, endRef, loadReports
+    kbScope, kbFile, kbLoading, endRef
   ]);
 
   if (!token) return <Login onLogin={handleLogin} />;

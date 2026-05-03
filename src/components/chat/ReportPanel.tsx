@@ -11,7 +11,15 @@ interface ReportPanelProps {
 export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) => {
   const handleDownload = async (url: string, filename: string) => {
     try {
-      const response = await fetch(url);
+      const token = localStorage.getItem("copilot_token");
+      const response = await fetch(url, {
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to download: ${response.statusText}`);
+      }
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -51,25 +59,6 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
           <Layers size={18} color="var(--brand-primary)" />
           STRATEGIC ASSETS
         </div>
-        <button 
-          onClick={onRefresh}
-          style={{
-            background: "none",
-            border: "none",
-            color: "var(--text-tertiary)",
-            cursor: "pointer",
-            padding: "4px",
-            borderRadius: "4px",
-            display: "flex",
-            alignItems: "center",
-            transition: "all 0.2s ease"
-          }}
-          title="Refresh Artifacts"
-          onMouseOver={(e) => e.currentTarget.style.color = "var(--brand-primary)"}
-          onMouseOut={(e) => e.currentTarget.style.color = "var(--text-tertiary)"}
-        >
-          <RefreshCw size={14} />
-        </button>
       </div>
 
       {reports.length === 0 ? (
@@ -134,7 +123,7 @@ export const ReportPanel: React.FC<ReportPanelProps> = ({ reports, onRefresh }) 
                   textOverflow: 'ellipsis',
                   textTransform: 'capitalize'
                 }}>
-                  {report.filename.split('_')[0].replace(/-/g, ' ')}
+                  {report.filename.split('_').slice(1, -1).join(' ').replace(/-/g, ' ')}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: "6px", marginTop: "2px" }}>
                   <span style={{ 
