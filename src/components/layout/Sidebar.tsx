@@ -69,33 +69,77 @@ export const Sidebar: React.FC<SidebarProps> = ({
         ...(isCollapsed ? { width: 72, padding: "16px 8px" } : {}),
       }}
     >
-      <div
+      <motion.div
+        layout
         style={{
           ...sidebarHeaderStyle,
-          padding: isCollapsed ? "0 0 28px" : "0 8px 32px",
+          padding: isCollapsed ? "0 0 28px" : "0 12px 32px",
           justifyContent: isCollapsed ? "center" : "flex-start",
         }}
       >
-        <div style={{ 
-          ...logoBadgeStyle, 
-          width: isCollapsed ? 40 : 44, 
-          height: isCollapsed ? 40 : 44, 
-          background: 'var(--brand-primary)',
-          borderRadius: 8,
-        }}>
-          <Sparkles size={isCollapsed ? 20 : 24} color="#fff" />
-        </div>
+        <motion.div 
+          whileHover={{ scale: 1.05, rotate: 5 }}
+          whileTap={{ scale: 0.95 }}
+          style={{ 
+            ...logoBadgeStyle, 
+            width: isCollapsed ? 40 : 42, 
+            height: isCollapsed ? 40 : 42, 
+            background: 'linear-gradient(135deg, var(--brand-primary) 0%, #1557b0 100%)',
+            borderRadius: 10,
+            boxShadow: '0 4px 12px rgba(26, 115, 232, 0.25)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            overflow: 'hidden'
+          }}
+        >
+          <motion.div
+            animate={{ 
+              opacity: [0.3, 0.6, 0.3],
+              x: [-20, 40],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            style={{ 
+              position: 'absolute', 
+              top: 0, left: 0, width: '20%', height: '100%', 
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+              transform: 'skewX(-20deg)'
+            }}
+          />
+          <Sparkles size={isCollapsed ? 20 : 22} color="#fff" />
+        </motion.div>
+        
         {!isCollapsed && (
-          <div style={{ marginLeft: 4 }}>
-            <div style={{ fontSize: 22, fontWeight: 400, color: "var(--text-primary)", fontFamily: "'Google Sans', sans-serif", letterSpacing: "-0.01em" }}>
+          <motion.div 
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            style={{ marginLeft: 12 }}
+          >
+            <div style={{ 
+              fontSize: 20, 
+              fontWeight: 700, 
+              color: "var(--text-primary)", 
+              fontFamily: "'Outfit', 'Google Sans', sans-serif", 
+              letterSpacing: "-0.02em",
+              lineHeight: 1.1
+            }}>
               Orbit
             </div>
-            <div style={{ fontSize: 10, fontWeight: 500, color: "var(--brand-primary)", letterSpacing: "0.05em", textTransform: "uppercase" }}>
+            <div style={{ 
+              fontSize: 9, 
+              fontWeight: 800, 
+              color: "var(--brand-primary)", 
+              letterSpacing: "0.15em", 
+              textTransform: "uppercase",
+              marginTop: 1,
+              opacity: 0.9
+            }}>
               Executive AI
             </div>
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
 
       <button
         style={{

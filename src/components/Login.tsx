@@ -180,12 +180,39 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
         style={cardStyle}
       >
         <div style={logoSectionStyle}>
-          <div style={logoIconStyle}>
-            <Shield size={32} color="var(--brand-primary)" />
-          </div>
-          <h1 style={titleStyle}>
-            {isRegister ? 'Create Account' : 'Executive Gateway'}
-          </h1>
+          <motion.div 
+            whileHover={{ scale: 1.05, rotate: 5 }}
+            style={{ 
+              ...logoIconStyle, 
+              background: 'linear-gradient(135deg, var(--brand-primary) 0%, #1557b0 100%)',
+              color: '#fff',
+              boxShadow: '0 8px 25px rgba(26, 115, 232, 0.2)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+          >
+            <motion.div
+              animate={{ 
+                opacity: [0.2, 0.4, 0.2],
+                x: [-30, 60],
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              style={{ 
+                position: 'absolute', 
+                top: 0, left: 0, width: '20%', height: '100%', 
+                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+                transform: 'skewX(-20deg)'
+              }}
+            />
+            <Sparkles size={28} />
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{ ...titleStyle, letterSpacing: '-0.02em', fontWeight: 700 }}
+          >
+            Orbit <span style={{ fontWeight: 400, opacity: 0.6 }}>Executive</span>
+          </motion.h1>
           <p style={subtitleStyle}>
             {isRegister
               ? 'Join the secure AI orchestration platform'

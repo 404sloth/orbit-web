@@ -19,19 +19,38 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ suggestions, onSelect })
   return (
     <div style={{ ...emptyStateWrapStyle, paddingTop: "80px" }}>
       <motion.div
-        initial={{ scale: 0.8, opacity: 0, rotate: -10 }}
+        initial={{ scale: 0.8, opacity: 0, rotate: -15 }}
         animate={{ scale: 1, opacity: 1, rotate: 0 }}
-        transition={{ type: "spring", damping: 12 }}
+        transition={{ type: "spring", damping: 15, stiffness: 100 }}
+        whileHover={{ scale: 1.05, rotate: 5 }}
         style={{ 
           ...emptyLogoWrap, 
-          background: 'var(--brand-light)', 
-          color: 'var(--brand-primary)',
+          background: 'linear-gradient(135deg, var(--brand-primary) 0%, #1557b0 100%)',
+          color: '#fff',
           width: 80, height: 80,
           borderRadius: 24,
           marginBottom: 32,
-          boxShadow: '0 8px 30px rgba(37, 99, 235, 0.15)'
+          boxShadow: '0 12px 40px rgba(26, 115, 232, 0.25)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          overflow: 'hidden'
         }}
       >
+        <motion.div
+          animate={{ 
+            opacity: [0.2, 0.5, 0.2],
+            x: [-40, 80],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+          style={{ 
+            position: 'absolute', 
+            top: 0, left: 0, width: '30%', height: '100%', 
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+            transform: 'skewX(-20deg)'
+          }}
+        />
         <Sparkles size={40} />
       </motion.div>
       <motion.div
